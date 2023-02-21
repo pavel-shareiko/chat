@@ -1,8 +1,8 @@
 package by.shareiko.chat.mapper;
 
 import by.shareiko.chat.domain.User;
-import by.shareiko.chat.domain.dto.LoginUser;
-import by.shareiko.chat.domain.dto.RegisterUser;
+import by.shareiko.chat.dto.LoginUser;
+import by.shareiko.chat.dto.RegisterUser;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

@@ -1,4 +1,4 @@
-package by.shareiko.chat.domain.dto;
+package by.shareiko.chat.dto;
 
 import lombok.*;
 
