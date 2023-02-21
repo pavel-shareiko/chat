@@ -17,5 +17,9 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+jwt:
+  token:
+    secret: ${CHAT_JWT_SECRET}
+    expiration-time: 1800000
 server:
   port: 8080
