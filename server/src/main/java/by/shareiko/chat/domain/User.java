@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "user")
 @Getter
@@ -32,4 +34,12 @@ public class User {
 
     @Column(name = "active", nullable = false)
     private boolean isActive = true;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_authority",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_id")}
+    )
+    private Set<Authority> authorities;
 }
