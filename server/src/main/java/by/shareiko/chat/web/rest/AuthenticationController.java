@@ -1,6 +1,7 @@
 package by.shareiko.chat.web.rest;
 
 import by.shareiko.chat.domain.User;
+import by.shareiko.chat.security.exceptions.UserDeactivatedException;
 import by.shareiko.chat.web.rest.response.AuthenticationResponse;
 import by.shareiko.chat.dto.LoginUser;
 import by.shareiko.chat.dto.RegisterUser;
@@ -48,6 +49,9 @@ public class AuthenticationController {
             Optional<User> user = userService.findByUsername(username);
             if (user.isEmpty()) {
                 throw new UsernameNotFoundException("User with username: " + username + " not found");
+            }
+            if (!user.get().isActive()) {
+                throw new UserDeactivatedException("User with username " + username + " is inactive");
             }
 
             String token = jwtTokenProvider.createToken(user.get());
