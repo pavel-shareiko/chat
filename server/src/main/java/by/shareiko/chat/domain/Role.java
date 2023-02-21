@@ -8,10 +8,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "authority")
+@Table(name = "role")
 @Getter
 @Setter
-public class Authority {
+public class Role {
     @Id
     private Long id;
 
