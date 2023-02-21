@@ -12,7 +12,8 @@ import java.util.Set;
 @Setter
 public class Chat {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chat_id_generator")
+    @SequenceGenerator(name = "chat_id_generator", sequenceName = "chat_id_seq", allocationSize = 1)
     private Long id;
 
     @ManyToMany

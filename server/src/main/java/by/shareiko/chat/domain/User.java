@@ -4,14 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "user")
 @Getter
 @Setter
-public class User extends AbstractAuditingEntity {
+@ToString
+public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
+    @SequenceGenerator(name = "user_id_generator", sequenceName = "user_id_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "username", nullable = false, unique = true)
@@ -28,5 +31,5 @@ public class User extends AbstractAuditingEntity {
     private String lastName;
 
     @Column(name = "active", nullable = false)
-    private boolean isActive;
+    private boolean isActive = true;
 }
