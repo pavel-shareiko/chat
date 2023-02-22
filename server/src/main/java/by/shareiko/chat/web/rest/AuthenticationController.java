@@ -39,7 +39,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginUser loginUser) {
+    public ResponseEntity<AuthenticationResponse> login(@Valid @RequestBody LoginUser loginUser) {
         log.debug("REST request to login user: {}", loginUser.getUsername());
         try {
             String username = loginUser.getUsername();
