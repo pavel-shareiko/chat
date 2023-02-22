@@ -1,6 +1,7 @@
 package by.shareiko.chat.web.rest;
 
 import by.shareiko.chat.domain.User;
+import by.shareiko.chat.security.exceptions.JwtAuthenticationException;
 import by.shareiko.chat.security.exceptions.UserDeactivatedException;
 import by.shareiko.chat.web.rest.response.AuthenticationResponse;
 import by.shareiko.chat.dto.LoginUser;
@@ -16,10 +17,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -41,26 +39,22 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@Valid @RequestBody LoginUser loginUser) {
         log.debug("REST request to login user: {}", loginUser.getUsername());
-        try {
-            String username = loginUser.getUsername();
-            String password = loginUser.getPassword();
+        String username = loginUser.getUsername();
+        String password = loginUser.getPassword();
 
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-            Optional<User> user = userService.findByUsername(username);
-            if (user.isEmpty()) {
-                throw new UsernameNotFoundException("User with username: " + username + " not found");
-            }
-            if (!user.get().isActive()) {
-                throw new UserDeactivatedException("User with username " + username + " is inactive");
-            }
-
-            String token = jwtTokenProvider.createToken(user.get());
-            AuthenticationResponse response = new AuthenticationResponse(username, token);
-
-            return ResponseEntity.ok(response);
-        } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid username or password");
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        Optional<User> user = userService.findByUsername(username);
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException("User with username: " + username + " not found");
         }
+        if (!user.get().isActive()) {
+            throw new UserDeactivatedException("User with username " + username + " is inactive");
+        }
+
+        String token = jwtTokenProvider.createToken(user.get());
+        AuthenticationResponse response = new AuthenticationResponse(username, token);
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/register")
@@ -68,7 +62,7 @@ public class AuthenticationController {
         log.info("REST request to register user: {}", registerUser);
 
         if (!userService.isUsernameUnique(registerUser.getUsername())) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Username is already taken");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username is already taken");
         }
         User user = userService.register(registerUser);
         return ResponseEntity.ok(user);
