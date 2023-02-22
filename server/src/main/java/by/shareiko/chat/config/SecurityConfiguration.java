@@ -1,5 +1,6 @@
 package by.shareiko.chat.config;
 
+import by.shareiko.chat.security.jwt.JwtAuthFilter;
 import by.shareiko.chat.security.jwt.JwtConfigurerAdapter;
 import by.shareiko.chat.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -28,19 +30,26 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .httpBasic().disable()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                    .authorizeHttpRequests()
-                        .requestMatchers("/api/v1/auth/login", "/api/v1/auth/register").permitAll()
-                        .requestMatchers("/**").authenticated()
-                .and()
-                    .apply(new JwtConfigurerAdapter(jwtTokenProvider))
-                .and()
-                    .exceptionHandling()
-                    .authenticationEntryPoint(authenticationEntryPoint);
+            .httpBasic().disable()
+            .csrf().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+                .authorizeHttpRequests()
+                .requestMatchers("/api/v1/auth/login").permitAll()
+                .requestMatchers("/api/v1/auth/register").permitAll()
+                .requestMatchers("/**").authenticated()
+            .and()
+                .apply(new JwtConfigurerAdapter(jwtTokenProvider))
+            .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint)
+            .and()
+                .addFilterBefore(getJwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
+    }
+
+    private JwtAuthFilter getJwtAuthFilter() {
+        return new JwtAuthFilter(jwtTokenProvider);
     }
 
     @Bean
