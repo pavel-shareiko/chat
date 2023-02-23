@@ -1,26 +1,23 @@
 package by.shareiko.chat.web.rest;
 
 import by.shareiko.chat.domain.User;
-import by.shareiko.chat.security.exceptions.JwtAuthenticationException;
-import by.shareiko.chat.security.exceptions.UserDeactivatedException;
-import by.shareiko.chat.web.rest.response.AuthenticationResponse;
 import by.shareiko.chat.dto.LoginUser;
 import by.shareiko.chat.dto.RegisterUser;
+import by.shareiko.chat.security.exceptions.UserDeactivatedException;
 import by.shareiko.chat.security.jwt.JwtTokenProvider;
 import by.shareiko.chat.service.UserService;
+import by.shareiko.chat.web.rest.response.AuthenticationResponse;
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Optional;
 
 @Log4j2
 @RestController
@@ -43,15 +40,14 @@ public class AuthenticationController {
         String password = loginUser.getPassword();
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        Optional<User> user = userService.findByUsername(username);
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException("User with username: " + username + " not found");
-        }
-        if (!user.get().isActive()) {
+
+        // we are sure that the user exists after 'authenticate' call
+        User user = userService.findByUsername(username).orElseThrow();
+        if (!user.isActive()) {
             throw new UserDeactivatedException("User with username " + username + " is inactive");
         }
 
-        String token = jwtTokenProvider.createToken(user.get());
+        String token = jwtTokenProvider.createToken(user);
         AuthenticationResponse response = new AuthenticationResponse(username, token);
 
         return ResponseEntity.ok(response);
