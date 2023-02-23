@@ -19,8 +19,8 @@ public class Chat {
     @ManyToMany
     @JoinTable(
             name = "user_chat",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "chat_id")}
+            joinColumns = {@JoinColumn(name = "chat_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
     private Set<User> participants;
 }
