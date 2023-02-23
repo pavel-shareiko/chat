@@ -1,0 +1,66 @@
+$text-color: #ffffff;
+$font-family: "Abel";
+$font-style: normal;
+$font-weight: 400;
+$font-size: 20px;
+$line-height: 22px;
+
+$header-size: 32px;
+
+$submit-btn-bg-color: #42566c;
+$darken-ratio: 10%;
+
+.form-text {
+  font-family: $font-family;
+  font-style: $font-style;
+  font-weight: $font-weight;
+  font-size: $font-size;
+  line-height: $line-height;
+  color: $text-color;
+}
+
+.app-header {
+  text-align: center;
+  color: $text-color;
+  font-size: $header-size;
+}
+
+.login-form {
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 230px;
+}
+
+.form-input {
+  height: 1.8rem;
+  width: 100%;
+  background: #292f3f;
+  border-color: #818182;
+  border-radius: 10px;
+  border-style: ridge;
+  color: $text-color;
+}
+
+.form-label {
+  margin-bottom: 0.4rem;
+}
+
+.login-btn {
+  /* stick button to the bottom of the parent div */
+  position: absolute;
+  right: 0;
+  bottom: 0;
+
+  width: 100%;
+  border-radius: 10px;
+  border-style: none;
+  background-color: $submit-btn-bg-color;
+}
+
+.login-btn:hover {
+  filter: brightness(100% - $darken-ratio);
+}
