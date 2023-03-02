@@ -23,12 +23,10 @@ export class LoginComponent {
   }
   login (){
     const val = this.form.value;
-    console.log(val)
     if (val.login && val.password) {
       this.authService.login(val.login, val.password)
           .subscribe(
               () => {
-                  console.log("User is logged in");
                   this.router.navigateByUrl('/chats');
               }
           );
