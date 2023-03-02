@@ -36,6 +36,8 @@ $darken-ratio: 10%;
 }
 
 .form-input {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
   height: 1.8rem;
   width: 100%;
   background: #292f3f;
@@ -43,10 +45,6 @@ $darken-ratio: 10%;
   border-radius: 10px;
   border-style: ridge;
   color: $text-color;
-}
-
-.form-label {
-  margin-bottom: 0.4rem;
 }
 
 .login-btn {
@@ -63,4 +61,10 @@ $darken-ratio: 10%;
 
 .login-btn:hover {
   filter: brightness(100% - $darken-ratio);
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border-style: none;
 }
