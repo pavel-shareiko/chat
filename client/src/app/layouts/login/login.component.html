@@ -1,0 +1,19 @@
+<h3 class="app-header form-text">Chat</h3>
+<form class="login-form" [formGroup]="form">
+  <fieldset>
+    <div class="form-field">
+      <label class="form-text form-label" for="login-input">Login</label>
+      <input class="form-input" formControlName="login" id="login-input" />
+    </div>
+    <div class="form-field">
+      <label class="form-text form-label" for="password-input">Password</label>
+      <input
+        class="form-input"
+        type="password"
+        formControlName="password"
+        id="password-input"
+      />
+    </div>
+  </fieldset>
+  <button class="login-btn form-text" type="submit" (click)="login()">Log in</button>
+</form>
