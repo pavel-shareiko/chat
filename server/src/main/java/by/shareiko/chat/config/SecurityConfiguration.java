@@ -21,7 +21,8 @@ public class SecurityConfiguration {
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationEntryPoint authenticationEntryPoint;
 
-    public SecurityConfiguration(JwtTokenProvider jwtTokenProvider, @Qualifier("delegatedAuthenticationEntryPoint") AuthenticationEntryPoint authenticationEntryPoint
+    public SecurityConfiguration(JwtTokenProvider jwtTokenProvider,
+                                 @Qualifier("delegatedAuthenticationEntryPoint") AuthenticationEntryPoint authenticationEntryPoint
     ) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.authenticationEntryPoint = authenticationEntryPoint;
@@ -35,9 +36,9 @@ public class SecurityConfiguration {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/login").permitAll()
-                .requestMatchers("/api/v1/auth/register").permitAll()
-                .requestMatchers("/**").authenticated()
+                    .requestMatchers("/api/v1/auth/login").permitAll()
+                    .requestMatchers("/api/v1/auth/register").permitAll()
+                    .requestMatchers("/**").authenticated()
             .and()
                 .apply(new JwtConfigurerAdapter(jwtTokenProvider))
             .and()
