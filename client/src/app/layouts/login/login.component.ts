@@ -21,13 +21,14 @@ export class LoginComponent {
       password: ["", Validators.required],
     });
   }
+
   login (){
     const val = this.form.value;
     if (val.login && val.password) {
       this.authService.login(val.login, val.password)
           .subscribe(
               () => {
-                  this.router.navigateByUrl('/chats');
+                  this.router.navigateByUrl('/');
               }
           );
     }

@@ -10,6 +10,12 @@ $header-size: 32px;
 $submit-btn-bg-color: #42566c;
 $darken-ratio: 10%;
 
+fieldset {
+  margin: 0;
+  padding: 0;
+  border-style: none;
+}
+
 .form-text {
   font-family: $font-family;
   font-style: $font-style;
@@ -36,8 +42,6 @@ $darken-ratio: 10%;
 }
 
 .form-input {
-  margin-top: 1rem;
-  margin-bottom: 1.5rem;
   height: 1.8rem;
   width: 100%;
   background: #292f3f;
@@ -45,26 +49,41 @@ $darken-ratio: 10%;
   border-radius: 10px;
   border-style: ridge;
   color: $text-color;
+  box-sizing: border-box;
+}
+
+.form-field {
+  margin-bottom: 0.8rem;
+}
+
+.form-field:last-child {
+  margin: 3px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 7px;
 }
 
 .login-btn {
-  /* stick button to the bottom of the parent div */
-  position: absolute;
-  right: 0;
-  bottom: 0;
-
+  margin-top: 1.3rem;
   width: 100%;
   border-radius: 10px;
   border-style: none;
   background-color: $submit-btn-bg-color;
 }
 
-.login-btn:hover {
-  filter: brightness(100% - $darken-ratio);
+.register-block {
+  float: right;
+  font-size: calc(0.8 * $font-size);
+  color: rgb(138, 139, 143);
+
+  a {
+    text-decoration: underline;
+    color: inherit;
+  }
 }
 
-fieldset {
-  margin: 0;
-  padding: 0;
-  border-style: none;
+.login-btn:hover {
+  filter: brightness(100% - $darken-ratio);
 }
