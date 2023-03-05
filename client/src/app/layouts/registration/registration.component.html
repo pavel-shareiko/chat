@@ -1,0 +1,42 @@
+<h3 class="app-header form-text">Chat</h3>
+<form class="login-form" [formGroup]="form">
+  <fieldset>
+    <div class="form-field">
+      <label class="form-text form-label" for="firstname-input"
+        >First name</label
+      >
+      <input
+        class="form-input"
+        formControlName="firstname"
+        id="firstname-input"
+      />
+    </div>
+    <div class="form-field">
+      <label class="form-text form-label" for="secondname-input"
+        >Last name</label
+      >
+      <input
+        class="form-input"
+        formControlName="secondname"
+        id="secondname-input"
+      />
+    </div>
+    <div class="form-field">
+      <label class="form-text form-label" for="login-input">Login</label>
+      <input class="form-input" formControlName="login" id="login-input" />
+    </div>
+    <div class="form-field">
+      <label class="form-text form-label" for="password-input">Password</label>
+      <input
+        class="form-input"
+        type="password"
+        formControlName="password"
+        id="password-input"
+      />
+    </div>
+  </fieldset>
+  <div class="form-text register-block">
+    Already have an account? <a href="/login">Login</a>
+  </div>
+  <button class="login-btn form-text" type="submit">Log in</button>
+</form>
