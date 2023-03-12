@@ -18,16 +18,16 @@ export class RegistrationComponent {
     private router: Router
   ) {
     this.form = this.fb.group({
-      firstname: ["", Validators.required],
-      lastname: ["", Validators.required],
-      login: ["", Validators.required],
-      password: ["", Validators.required],
+      firstname: ["", [Validators.required, Validators.minLength(3)]],
+      lastname: ["", [Validators.required, Validators.minLength(3)]],
+      username: ["", [Validators.required, Validators.minLength(3)]],
+      password: ["", [Validators.required, Validators.minLength(8)]],
     });
   }
 
   register() {
     const val = this.form.value;
-    if ((val.login, val.password, val.firstname, val.lastname)) {
+    if (this.form.valid) {
       const user: RegistrationUser = {firstName: val.firstname, lastName: val.lastname, username: val.login, password: val.password}
       console.log(user)
       this.authService
