@@ -1,21 +1,39 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, shareReplay } from "rxjs";
+import { shareReplay, tap } from "rxjs";
+import { ApplicationConfigService } from "../config/application-config.service";
+import { LoginUser, RegistrationUser } from "../models/user.model";
 
-interface User {
-    username: string;
-    password: string;
-}
-
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: "root" })
 export class AuthService {
-     
-    constructor(private http: HttpClient) {
-    }
-      
-    login(username:string, password:string): Observable<User> {
-        return this.http.post<User>('localhost:8080/api/v1/auth/login', {username, password});
-        shareReplay();
-    }
+  constructor(
+    private http: HttpClient,
+    private config: ApplicationConfigService
+  ) {}
 
+  register(user: RegistrationUser) {
+    return this.http
+      .post(this.config.getEndpointFor("api/v1/auth/register"), {
+        ...user,
+      })
+      .pipe(shareReplay())
+
+  }
+
+  login(user: LoginUser) {
+    return this.http
+      .post(this.config.getEndpointFor("api/v1/auth/login"), {
+        ...user
+      })
+      .pipe(shareReplay())
+      .pipe(tap((res) => this.saveSession(res)));
+  }
+
+  logout() {
+    localStorage.removeItem("id_token");
+  }
+
+  private saveSession(token: any) {
+    localStorage.setItem("id_token", token.token);
+  }
 }

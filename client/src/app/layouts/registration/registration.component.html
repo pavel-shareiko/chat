@@ -12,13 +12,13 @@
       />
     </div>
     <div class="form-field">
-      <label class="form-text form-label" for="secondname-input"
+      <label class="form-text form-label" for="lastname-input"
         >Last name</label
       >
       <input
         class="form-input"
-        formControlName="secondname"
-        id="secondname-input"
+        formControlName="lastname"
+        id="lastname-input"
       />
     </div>
     <div class="form-field">
@@ -38,5 +38,5 @@
   <div class="form-text register-block">
     Already have an account? <a href="/login">Login</a>
   </div>
-  <button class="login-btn form-text" type="submit">Log in</button>
+  <button class="submit-btn form-text" type="submit" (click)="register()">Register</button>
 </form>

@@ -10,6 +10,8 @@ $header-size: 32px;
 $submit-btn-bg-color: #42566c;
 $darken-ratio: 10%;
 
+$form-input-border-color: #818182;
+
 fieldset {
   margin: 0;
   padding: 0;
@@ -42,14 +44,16 @@ fieldset {
 }
 
 .form-input {
-  height: 1.8rem;
+  height: 2rem;
   width: 100%;
-  background: #292f3f;
-  border-color: #818182;
+  background: inherit;
+  border-color: $form-input-border-color;
   border-radius: 10px;
   border-style: ridge;
   color: $text-color;
   box-sizing: border-box;
+  padding-left: 0.4rem;
+  font-size: 15px;
 }
 
 .form-field {
@@ -65,7 +69,7 @@ fieldset {
   margin-bottom: 7px;
 }
 
-.login-btn {
+.submit-btn {
   margin-top: 1.3rem;
   width: 100%;
   border-radius: 10px;
@@ -84,6 +88,6 @@ fieldset {
   }
 }
 
-.login-btn:hover {
+.submit-btn:hover {
   filter: brightness(100% - $darken-ratio);
 }
