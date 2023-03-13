@@ -9,6 +9,7 @@ import { LoginComponent } from "./layouts/login/login.component";
 import { AuthInterceptor } from "./auth/auth.interceptor";
 import { RegistrationComponent } from "./layouts/registration/registration.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { NotFoundComponent } from "./not-found/not-found.component";
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgbModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
