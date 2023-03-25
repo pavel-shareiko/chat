@@ -4,19 +4,19 @@ import {Injectable} from "@angular/core";
     providedIn: "root",
 })
 export class ApplicationConfigService {
-    private endpointPrefix = "http://localhost:8080/";
+    private serverUrl = "http://localhost:8080/"
 
-    setEndpointPrefix(endpointPrefix: string): void {
+    setServerUrl(endpointPrefix: string): void {
         if (!endpointPrefix.endsWith("/")) {
             endpointPrefix += "/";
         }
-        this.endpointPrefix = endpointPrefix;
+        this.serverUrl = endpointPrefix;
     }
 
     getEndpointFor(api: string): string {
         if (api.startsWith("/")) {
             api = api.substring(1);
         }
-        return `${this.endpointPrefix}${api}`;
+        return `${this.serverUrl}${api}`;
     }
 }
