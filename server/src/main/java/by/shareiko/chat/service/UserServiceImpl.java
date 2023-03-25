@@ -2,7 +2,7 @@ package by.shareiko.chat.service;
 
 import by.shareiko.chat.domain.Role;
 import by.shareiko.chat.domain.User;
-import by.shareiko.chat.dto.RegisterUser;
+import by.shareiko.chat.security.user.RegisterUser;
 import by.shareiko.chat.exception.NotFoundException;
 import by.shareiko.chat.mapper.UserMapper;
 import by.shareiko.chat.repository.RoleRepository;

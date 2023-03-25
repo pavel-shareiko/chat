@@ -3,7 +3,7 @@ package by.shareiko.chat.service;
 import by.shareiko.chat.domain.Chat;
 import by.shareiko.chat.repository.ChatRepository;
 import by.shareiko.chat.security.SecurityUtils;
-import by.shareiko.chat.security.UserPrincipal;
+import by.shareiko.chat.security.user.UserPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

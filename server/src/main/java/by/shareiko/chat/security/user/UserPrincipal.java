@@ -1,4 +1,4 @@
-package by.shareiko.chat.security;
+package by.shareiko.chat.security.user;
 
 import by.shareiko.chat.domain.Role;
 import by.shareiko.chat.domain.User;

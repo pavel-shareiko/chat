@@ -1,8 +1,8 @@
 package by.shareiko.chat.controller;
 
 import by.shareiko.chat.domain.User;
-import by.shareiko.chat.dto.LoginUser;
-import by.shareiko.chat.dto.RegisterUser;
+import by.shareiko.chat.security.user.LoginUser;
+import by.shareiko.chat.security.user.RegisterUser;
 import by.shareiko.chat.security.exceptions.UserDeactivatedException;
 import by.shareiko.chat.security.jwt.JwtTokenProvider;
 import by.shareiko.chat.service.UserService;

@@ -1,7 +1,7 @@
 package by.shareiko.chat.service;
 
 import by.shareiko.chat.domain.User;
-import by.shareiko.chat.dto.RegisterUser;
+import by.shareiko.chat.security.user.RegisterUser;
 
 import java.util.List;
 import java.util.Optional;
