@@ -10,7 +10,14 @@ import java.util.List;
 @Repository
 public interface ChatRepository extends JpaRepository<Chat, Long> {
 
-    @Query(value = "select chat from Chat chat left join fetch chat.participants participant where participant.id = ?#{principal.id}")
+    @Query(value = "select distinct chat " +
+                   "from Chat chat " +
+                   "left join fetch chat.participants " +
+                   "where chat.id in " +
+                   "(select distinct c.id " +
+                   "from Chat c " +
+                   "inner join c.participants p " +
+                   "where p.id = ?#{principal.id})")
     List<Chat> findCurrentUserChats();
 
 }
