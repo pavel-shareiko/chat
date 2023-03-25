@@ -1,42 +1,51 @@
-import { Component } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { AuthService } from "src/app/auth/auth.service";
-import {RegistrationUser} from "src/app/models/user.model"
+import {Component} from "@angular/core";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import {AuthService} from "src/app/auth/auth.service";
+import {CustomValidators} from "../../shared/validators";
 
 @Component({
-  selector: "app-registration",
-  templateUrl: "./registration.component.html",
-  styleUrls: ["../login/login.component.scss"],
+    selector: "app-registration",
+    templateUrl: "./registration.component.html",
+    styleUrls: ["../login/login.component.scss"],
 })
 export class RegistrationComponent {
-  form: FormGroup;
+    form: FormGroup;
+    isSubmitted = false;
+    requestSubmitted = false;
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {
-    this.form = this.fb.group({
-      firstname: ["", [Validators.required, Validators.minLength(3)]],
-      lastname: ["", [Validators.required, Validators.minLength(3)]],
-      username: ["", [Validators.required, Validators.minLength(3)]],
-      password: ["", [Validators.required, Validators.minLength(8)]],
-    });
-  }
-
-  register() {
-    const val = this.form.value;
-    if (this.form.valid) {
-      const user: RegistrationUser = {firstName: val.firstname, lastName: val.lastname, username: val.login, password: val.password}
-      console.log(user)
-      this.authService
-        .register(user)
-        .subscribe(() => {
-          this.router.navigateByUrl("/login");
+    constructor(
+        private fb: FormBuilder,
+        private authService: AuthService,
+        private router: Router
+    ) {
+        this.form = this.fb.group({
+            firstname: ["", [Validators.required, Validators.minLength(3)]],
+            lastname: ["", [Validators.required, Validators.minLength(3)]],
+            username: ["", [Validators.required, Validators.minLength(3)]],
+            password: ["", [Validators.required, CustomValidators.passwordValidator]],
+        }, {
+            updateOn: 'blur'
         });
-        
     }
-    
-  }
+
+    register() {
+        this.isSubmitted = true;
+        if (this.form.invalid) {
+            return;
+        }
+        if (this.requestSubmitted) {
+            return;
+        }
+
+        this.requestSubmitted = true;
+        this.authService.register({
+            firstName: this.form.value.firstname,
+            lastName: this.form.value.lastname,
+            username: this.form.value.login,
+            password: this.form.value.password,
+        }).subscribe(() => {
+            this.router.navigateByUrl("/login");
+        });
+    }
 }

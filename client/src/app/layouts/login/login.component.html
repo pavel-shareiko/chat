@@ -1,5 +1,5 @@
 <h3 class="app-header form-text mt-4">Chat</h3>
-<form class="login-form" [formGroup]="form">
+<form class="login-form" [formGroup]="form" (ngSubmit)="login()">
   <fieldset>
     <div class="form-field">
       <label class="form-text form-label" for="login-input">Username</label>
@@ -18,5 +18,5 @@
   <div class="form-text register-block">
     Don't have an account? <a href="/register">Register</a>
   </div>
-  <button class="submit-btn form-text" type="submit" (click)="login()">Log in</button>
+  <button class="submit-btn form-text" type="submit">Log in</button>
 </form>

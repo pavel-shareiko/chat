@@ -12,6 +12,7 @@ $darken-ratio: 10%;
 
 $form-input-border-color: #818182;
 
+
 fieldset {
   margin: 0;
   padding: 0;
@@ -39,8 +40,8 @@ fieldset {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 300px;
-  height: 230px;
+  width: 350px;
+  height: auto;
 }
 
 .form-input {
@@ -49,7 +50,7 @@ fieldset {
   background: inherit;
   border-color: $form-input-border-color;
   border-radius: 10px;
-  border-style: ridge;
+  border-style: solid;
   color: $text-color;
   box-sizing: border-box;
   padding-left: 0.4rem;
@@ -71,6 +72,7 @@ fieldset {
 
 .submit-btn {
   margin-top: 1.3rem;
+  height: 1.9rem;
   width: 100%;
   border-radius: 10px;
   border-style: none;
