@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {AbstractControl, FormGroup} from '@angular/forms';
+import {AbstractControl} from '@angular/forms';
 import {FormValidationService} from "./form-validation.service";
 
 export interface FormError {
@@ -19,17 +19,15 @@ export interface FormError {
 export class FormValidationComponent {
     @Input() validations!: FormError[];
     @Input() formSubmitted: boolean | undefined;
+    errorMessage: string = "";
 
     constructor(private formValidationService: FormValidationService) {
 
     }
 
-    errorMessage: string = "";
-
     shouldDisplayError() {
         for (let validation of this.validations) {
             const wasTouched = this.formValidationService.isControlTouched(validation.control, this.formSubmitted);
-            console.log(wasTouched)
             if (!wasTouched) return false;
 
             if (validation.control.hasError(validation.errorKey)) {

@@ -5,36 +5,38 @@ import {AuthService} from "src/app/auth/auth.service";
 import {FormValidationService} from "../../shared/form-validation.service";
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.scss"],
+    selector: "app-login",
+    templateUrl: "./login.component.html",
+    styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent {
-  form: FormGroup;
-  isSubmitted = false;
+    form: FormGroup;
+    isSubmitted = false;
 
-  constructor(
-    public formValidationService: FormValidationService,
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {
-    this.form = this.fb.group({
-      username: ["", Validators.required],
-      password: ["", Validators.required],
-    });
-  }
-
-  login() {
-    this.isSubmitted = true;
-    const val = this.form.value;
-    if (this.form.valid) {
-      this.authService.login({username: val.login, password: val.password})
-        .subscribe(
-          () => {
-            this.router.navigateByUrl('/');
-          }
-        );
+    constructor(
+        public formValidationService: FormValidationService,
+        private fb: FormBuilder,
+        private authService: AuthService,
+        private router: Router
+    ) {
+        this.form = this.fb.group({
+            username: ["", Validators.required],
+            password: ["", Validators.required],
+        }, {
+            updateOn: 'blur'
+        });
     }
-  }
+
+    login() {
+        this.isSubmitted = true;
+        const val = this.form.value;
+        if (this.form.valid) {
+            this.authService.login({username: val.login, password: val.password})
+                .subscribe(
+                    () => {
+                        this.router.navigateByUrl('/');
+                    }
+                );
+        }
+    }
 }
