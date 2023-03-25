@@ -1,19 +1,44 @@
-<h3 class="app-header form-text">Chat</h3>
-<form class="login-form" [formGroup]="form">
+<h3 class="app-header form-text mt-4">Chat</h3>
+<form (ngSubmit)="login()" [formGroup]="form" class="login-form">
   <fieldset>
-    <div class="form-field">
-      <label class="form-text form-label" for="login-input">Login</label>
-      <input class="form-input" formControlName="login" id="login-input" />
+    <div [ngClass]="{'shake': formValidationService.isControlTouchedAndInvalid(form.controls['username'], isSubmitted)}"
+         class="form-field form-group">
+      <label class="form-text form-label" for="username-input">Username</label>
+      <input class="form-input" formControlName="username" id="username-input"/>
+      <app-form-validation
+          [formSubmitted]="isSubmitted"
+          [validations]="[
+            {
+              control: form.controls['username'],
+              errorKey: 'required',
+              errorMessage: 'Please, enter your username'
+            }
+          ]"
+      />
     </div>
-    <div class="form-field">
+    <div [ngClass]="{'shake': formValidationService.isControlTouchedAndInvalid(form.controls['password'], isSubmitted)}"
+         class="form-field form-group">
       <label class="form-text form-label" for="password-input">Password</label>
       <input
-        class="form-input"
-        type="password"
-        formControlName="password"
-        id="password-input"
+          class="form-input"
+          formControlName="password"
+          id="password-input"
+          type="password"
+      />
+      <app-form-validation
+          [formSubmitted]="isSubmitted"
+          [validations]="[
+            {
+              control: form.controls['password'],
+              errorKey: 'required',
+              errorMessage: 'Please, enter your password'
+            }
+          ]"
       />
     </div>
   </fieldset>
-  <button class="login-btn form-text" type="submit" (click)="login()">Log in</button>
+  <div class="form-text register-block">
+    Don't have an account? <a href="/register">Register</a>
+  </div>
+  <button class="submit-btn form-text" type="submit">Log in</button>
 </form>
