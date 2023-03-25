@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "src/app/auth/auth.service";
 import {CustomValidators} from "../../shared/validators";
+import {FormValidationService} from "../../shared/form-validation.service";
 
 @Component({
     selector: "app-registration",
@@ -15,6 +16,7 @@ export class RegistrationComponent {
     requestSubmitted = false;
 
     constructor(
+        public formValidationService: FormValidationService,
         private fb: FormBuilder,
         private authService: AuthService,
         private router: Router

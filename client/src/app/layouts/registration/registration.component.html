@@ -1,7 +1,7 @@
 <h3 class="form-text app-header mt-4">Chat</h3>
 <form (ngSubmit)="register()" [formGroup]="form" class="login-form">
   <fieldset>
-    <div class="form-field form-group">
+    <div class="form-field form-group" [ngClass]="{'shake': formValidationService.isControlTouchedAndInvalid(form.controls['firstname'], isSubmitted)}">
       <label class="form-text form-label" for="firstname-input"
       >First name</label
       >
@@ -26,7 +26,7 @@
           ]"
       />
     </div>
-    <div class="form-field form-group">
+    <div class="form-field form-group" [ngClass]="{'shake': formValidationService.isControlTouchedAndInvalid(form.controls['lastname'], isSubmitted)}">
       <label class="form-text form-label" for="lastname-input">Last name</label>
       <input
           class="form-input"
@@ -50,7 +50,7 @@
           ]"
       />
     </div>
-    <div class="form-field form-group">
+    <div class="form-field form-group" [ngClass]="{'shake': formValidationService.isControlTouchedAndInvalid(form.controls['username'], isSubmitted)}">
       <label class="form-text form-label" for="username-input">Username</label>
       <input
           class="form-input"
@@ -73,7 +73,7 @@
           ]"
       />
     </div>
-    <div class="form-field form-group">
+    <div class="form-field form-group" [ngClass]="{'shake': formValidationService.isControlTouchedAndInvalid(form.controls['password'], isSubmitted)}">
       <label class="form-text form-label" for="password-input">Password</label>
       <input
           class="form-input"
@@ -92,7 +92,7 @@
             {
               control: form.controls['password'],
               errorKey: 'passwordValidator',
-              errorMessage: 'Password doesn\'t meet the requirements'
+              errorMessage: 'Password doesn\'t match the requirements'
             }
           ]"
       />
