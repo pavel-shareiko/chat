@@ -1,7 +1,7 @@
-package by.shareiko.chat.web.rest;
+package by.shareiko.chat.controller;
 
-import by.shareiko.chat.domain.Chat;
-import by.shareiko.chat.service.ChatService;
+import by.shareiko.chat.dto.ChatDTO;
+import by.shareiko.chat.service.ChatCascadeService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,17 +11,17 @@ import java.util.List;
 
 @RestController
 @Log4j2
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1/chats")
 public class ChatController {
-    private final ChatService chatService;
+    private final ChatCascadeService chatService;
 
-    public ChatController(ChatService chatService) {
+    public ChatController(ChatCascadeService chatService) {
         this.chatService = chatService;
     }
 
-    @GetMapping("/chats")
-    public List<Chat> getCurrentUserChats() {
-        log.debug("REST request to get all chats");
+    @GetMapping
+    public List<ChatDTO> getCurrentUserChats() {
+        log.debug("REST request to get current user chats");
         return chatService.getCurrentUserChats();
     }
 }
