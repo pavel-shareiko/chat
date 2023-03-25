@@ -2,11 +2,10 @@ package by.shareiko.chat.service;
 
 import by.shareiko.chat.domain.Chat;
 import by.shareiko.chat.domain.Message;
-import by.shareiko.chat.dto.ChatDTO;
+import by.shareiko.chat.dto.ExtendedChatDTO;
 import by.shareiko.chat.mapper.ChatMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +22,7 @@ public class ChatCascadeServiceImpl implements ChatCascadeService {
     }
 
     @Override
-    public List<ChatDTO> getCurrentUserChats() {
+    public List<ExtendedChatDTO> getCurrentUserChats() {
         List<Chat> currentUserChats = chatService.getCurrentUserChats();
         return currentUserChats.stream()
                 .map(chat -> {

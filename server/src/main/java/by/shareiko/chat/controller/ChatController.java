@@ -1,6 +1,6 @@
 package by.shareiko.chat.controller;
 
-import by.shareiko.chat.dto.ChatDTO;
+import by.shareiko.chat.dto.ExtendedChatDTO;
 import by.shareiko.chat.service.ChatCascadeService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,7 @@ public class ChatController {
     }
 
     @GetMapping
-    public List<ChatDTO> getCurrentUserChats() {
+    public List<ExtendedChatDTO> getCurrentUserChats() {
         log.debug("REST request to get current user chats");
         return chatService.getCurrentUserChats();
     }
