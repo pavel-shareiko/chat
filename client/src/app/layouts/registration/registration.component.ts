@@ -24,7 +24,7 @@ export class RegistrationComponent {
         this.form = this.fb.group({
             firstname: ["", [Validators.required, Validators.minLength(3)]],
             lastname: ["", [Validators.required, Validators.minLength(3)]],
-            username: ["", [Validators.required, Validators.minLength(3)]],
+            username: ["", [Validators.required, CustomValidators.usernameValidator]],
             password: ["", [Validators.required, CustomValidators.passwordValidator]],
         }, {
             updateOn: 'blur'
