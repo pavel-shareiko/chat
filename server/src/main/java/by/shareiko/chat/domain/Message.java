@@ -21,9 +21,13 @@ public class Message {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="author_id", nullable = false)
     private User sender;
+
+    @ManyToOne
+    @JoinColumn(name = "chat_id", nullable = false)
+    private Chat chat;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
