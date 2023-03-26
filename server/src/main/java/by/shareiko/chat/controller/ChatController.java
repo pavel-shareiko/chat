@@ -1,7 +1,7 @@
 package by.shareiko.chat.controller;
 
 import by.shareiko.chat.dto.ExtendedChatDTO;
-import by.shareiko.chat.service.ChatCascadeService;
+import by.shareiko.chat.service.ChatService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,15 +13,15 @@ import java.util.List;
 @Log4j2
 @RequestMapping("/api/v1/chats")
 public class ChatController {
-    private final ChatCascadeService chatService;
+    private final ChatService chatService;
 
-    public ChatController(ChatCascadeService chatService) {
+    public ChatController(ChatService chatService) {
         this.chatService = chatService;
     }
 
     @GetMapping
     public List<ExtendedChatDTO> getCurrentUserChats() {
         log.debug("REST request to get current user chats");
-        return chatService.getCurrentUserChats();
+        return chatService.getCurrentUserChatsWithLastMessage();
     }
 }
