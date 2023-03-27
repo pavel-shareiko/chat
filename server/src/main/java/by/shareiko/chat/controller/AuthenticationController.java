@@ -1,12 +1,12 @@
-package by.shareiko.chat.web.rest;
+package by.shareiko.chat.controller;
 
 import by.shareiko.chat.domain.User;
-import by.shareiko.chat.dto.LoginUser;
-import by.shareiko.chat.dto.RegisterUser;
+import by.shareiko.chat.security.user.LoginUser;
+import by.shareiko.chat.security.user.RegisterUser;
 import by.shareiko.chat.security.exceptions.UserDeactivatedException;
 import by.shareiko.chat.security.jwt.JwtTokenProvider;
 import by.shareiko.chat.service.UserService;
-import by.shareiko.chat.web.rest.response.AuthenticationResponse;
+import by.shareiko.chat.dto.AuthenticationResponse;
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;

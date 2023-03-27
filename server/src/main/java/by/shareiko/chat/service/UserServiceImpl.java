@@ -2,7 +2,8 @@ package by.shareiko.chat.service;
 
 import by.shareiko.chat.domain.Role;
 import by.shareiko.chat.domain.User;
-import by.shareiko.chat.dto.RegisterUser;
+import by.shareiko.chat.security.user.RegisterUser;
+import by.shareiko.chat.exception.NotFoundException;
 import by.shareiko.chat.mapper.UserMapper;
 import by.shareiko.chat.repository.RoleRepository;
 import by.shareiko.chat.repository.UserRepository;
@@ -38,6 +39,7 @@ public class UserServiceImpl implements UserService {
     public User register(RegisterUser registerUser) {
         User user = userMapper.registerUserToUser(registerUser);
 
+        // FIXME: roleRepository -> roleService
         Role userRole = roleRepository.findByName(RoleConstants.ROLE_USER);
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(userRole);
@@ -67,7 +69,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOpt = userRepository.findById(id);
         if (userOpt.isEmpty()) {
             log.warn("User with id {} not found", id);
-            throw new IllegalArgumentException("User with id " + id + " not found");
+            throw new NotFoundException("User with id " + id + " not found");
         }
 
         User user = userOpt.get();

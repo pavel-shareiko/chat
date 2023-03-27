@@ -1,4 +1,4 @@
-package by.shareiko.chat.dto;
+package by.shareiko.chat.security.user;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
