@@ -31,7 +31,7 @@ export class LoginComponent {
         this.isSubmitted = true;
         const val = this.form.value;
         if (this.form.valid) {
-            this.authService.login({username: val.login, password: val.password})
+            this.authService.login({username: val.username, password: val.password})
                 .subscribe(
                     () => {
                         this.router.navigateByUrl('/');
