@@ -41,7 +41,7 @@ public class MessageServiceImpl implements MessageService {
         }
 
         Message message = messageMapper.newMessageDTOToMessage(newMessage);
-        if (chatService.doesCurrentUserParticipateInChat(newMessage.getChat().getId())) {
+        if (!chatService.doesCurrentUserParticipateInChat(newMessage.getChat().getId())) {
             throw new UserUnauthorizedException("Current user doesn't have enough permissions to send a message to a chat with id " + newMessage.getChat().getId());
         }
 
