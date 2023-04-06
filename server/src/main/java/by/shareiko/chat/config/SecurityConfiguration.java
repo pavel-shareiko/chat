@@ -32,14 +32,14 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+            .cors().and()
             .httpBasic().disable()
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
                 .authorizeHttpRequests()
-                    .requestMatchers("/api/v1/auth/login").permitAll()
-                    .requestMatchers("/api/v1/auth/register").permitAll()
-                    .requestMatchers("/**").authenticated()
+                    .requestMatchers("/api/v1/auth/**").permitAll()
+                    .requestMatchers("/api/**").authenticated()
             .and()
                 .apply(new JwtConfigurerAdapter(jwtTokenProvider))
             .and()
