@@ -1,4 +1,3 @@
-<h3 class="form-text app-header mt-4">Chat</h3>
 <form (ngSubmit)="register()" [formGroup]="form" class="login-form">
   <fieldset>
     <div [ngClass]="{'shake': formValidationService.isControlTouchedAndInvalid(form.controls['firstname'], isSubmitted)}"
