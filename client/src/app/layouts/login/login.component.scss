@@ -1,11 +1,10 @@
-$text-color: #ffffff;
+@import 'src/styles.scss';
+
 $font-family: "Abel";
 $font-style: normal;
 $font-weight: 400;
 $font-size: 20px;
 $line-height: 22px;
-
-$header-size: 32px;
 
 $submit-btn-bg-color: #42566c;
 $darken-ratio: 10%;
@@ -26,12 +25,6 @@ fieldset {
   font-size: $font-size;
   line-height: $line-height;
   color: $text-color;
-}
-
-.app-header {
-  text-align: center;
-  color: $text-color;
-  font-size: $header-size;
 }
 
 .login-form {
