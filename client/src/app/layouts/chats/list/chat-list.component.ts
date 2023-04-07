@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { ChatListService } from './chat-list.service';
-import { IChat } from '../chat.model';
+import { ChatType, IChat } from '../chat.model';
 
 
 @Component({
@@ -17,12 +17,10 @@ export class ChatListComponent implements OnInit {
   }
   
   ngOnInit(): void { 
-      this.chatListService.getAllChats().subscribe(res => {
-        this.chats = res;
+      this.chatListService.getAllChats().subscribe(response => {
+        this.chats = response.map(chat => {
+          return chat;
+        });
       });
-  }
-
-  trackById(index: number, chat: IChat): number {
-    return chat.chatId;
   }
 }

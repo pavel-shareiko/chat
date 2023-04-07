@@ -14,9 +14,10 @@ export class ChatListService {
 
     constructor(
         private configService: ApplicationConfigService,
-        private httpClient: HttpClient) {}
+        private httpClient: HttpClient
+    ) {}
 
     getAllChats(): Observable<IChat[]> {
-        return this.httpClient.get<IChat[]>("http://localhost:8080/api/v1/chats");
+        return this.httpClient.get<IChat[]>(this.resourceUrl);
     }
 }

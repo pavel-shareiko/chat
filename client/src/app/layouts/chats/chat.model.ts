@@ -1,6 +1,6 @@
 export interface IChat {
   chatId: number;
-  lastMessage: IMessage;
+  lastMessage: IMessage | undefined;
   chatType: ChatType;
   participants: IParticipant[];
 }
@@ -13,16 +13,16 @@ export interface IMessage {
   modifiedAt: Date;
 }
 
-export enum ChatType {
-  PERSONAL_CHAT,
-  GROUP_CHAT,
-  SELF_CHAT
-}
-
 export interface IParticipant{
     id: number,
     username: string,
     firstName: string,
     lastName: string,
     active: boolean 
+}
+
+export enum ChatType {
+  PERSONAL_CHAT = "PERSONAL_CHAT",
+  GROUP_CHAT = "GROUP_CHAT",
+  SELF_CHAT = "SELF_CHAT"
 }

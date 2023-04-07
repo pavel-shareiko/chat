@@ -1,32 +1,28 @@
 import { AfterContentInit, Component, Input, OnInit } from '@angular/core';
-import { ChatType, IChat } from '../chat.model';
+import { ChatType, IChat, IMessage } from '../chat.model';
 
 @Component({
-  selector: 'app-chat',
+  selector: 'app-chat[chat]',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements AfterContentInit {
+export class ChatComponent {
   @Input() chat!: IChat;
-  displayName: string = "";
   
-  ngAfterContentInit(): void {
-    console.log(this.chat);
+  getDisplayName(): string {
     if (this.chat.chatType === ChatType.PERSONAL_CHAT) {
-      const receiver = this.chat.participants[1]
-      this.displayName = receiver.firstName + receiver.lastName;
-
-      return;
+      const receiver = this.chat.participants[0]
+      return `${receiver.firstName} ${receiver.lastName}`;
     }
 
     if (this.chat.chatType === ChatType.SELF_CHAT) {
-      this.displayName = "Self Chat";
-      return;
+      return "Self Chat";
     }
 
     if (this.chat.chatType === ChatType.GROUP_CHAT) {
-      this.displayName = "Group Chat";
-      return;
-    }  
+      return "Group Chat";
+    }
+
+    return "Unknown chat";
   }
 }
