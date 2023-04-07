@@ -11,8 +11,7 @@ public class WebConfiguration implements WebMvcConfigurer {
         registry
                 .addMapping("/api/**")
                 .allowedOrigins("http://localhost:4200")
-                .allowedMethods("GET","PUT","POST","DELETE")
-                .allowedHeaders("*")
+                .allowedMethods("*")
                 .allowCredentials(true);
     }
 }
