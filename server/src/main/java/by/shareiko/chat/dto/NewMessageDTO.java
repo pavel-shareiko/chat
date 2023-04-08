@@ -1,6 +1,5 @@
 package by.shareiko.chat.dto;
 
-import by.shareiko.chat.domain.Chat;
 import by.shareiko.chat.domain.Message;
 import lombok.Data;
 
@@ -12,5 +11,5 @@ import java.io.Serializable;
 @Data
 public class NewMessageDTO implements Serializable {
     private final String content;
-    private final Chat chat;
+    private final Long chatId;
 }
