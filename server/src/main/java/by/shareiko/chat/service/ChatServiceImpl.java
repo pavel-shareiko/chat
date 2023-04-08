@@ -53,12 +53,6 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public boolean doesCurrentUserParticipateInChat(Long chatId) {
-        if (!chatRepository.existsById(chatId)) {
-            throw new BadRequestException("Chat with id " + chatId + " doesn't exist");
-        }
-
-        return chatRepository.findCurrentUserChats().stream()
-                .flatMap(c -> c.getParticipants().stream())
-                .anyMatch(participant -> participant.getId().equals(chatId));
+        return chatRepository.doesCurrentUserParticipateInChat(chatId);
     }
 }
