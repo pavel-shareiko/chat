@@ -28,8 +28,20 @@ public class MessageController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> createMessage(@RequestBody NewMessageDTO newMessage) {
+    public ResponseEntity<Message> createMessage(@RequestBody NewMessageDTO newMessage) {
         Message savedMessage = messageService.saveMessage(newMessage);
-        return ResponseEntity.ok(savedMessage.getId());
+        return ResponseEntity.ok(savedMessage);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMessage(@PathVariable Long id) {
+        messageService.deleteMessage(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Message> updateMessage(@PathVariable Long id, @RequestBody String newContent) {
+        Message updatedMessage = messageService.updateMessage(id, newContent);
+        return ResponseEntity.ok(updatedMessage);
     }
 }

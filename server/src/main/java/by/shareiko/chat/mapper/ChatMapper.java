@@ -38,5 +38,5 @@ public abstract class ChatMapper {
     @Mapping(source = "lastMessage.createdAt", target = "lastMessage.createdAt")
     @Mapping(source = "lastMessage.modifiedAt", target = "lastMessage.modifiedAt")
     @Mapping(source = "chat.participants", target = "participants")
-    public abstract ExtendedChatDTO chatToChatDTO(Chat chat, Message lastMessage);
+    public abstract ExtendedChatDTO chatToExtendedChatDTO(Chat chat, Message lastMessage);
 }

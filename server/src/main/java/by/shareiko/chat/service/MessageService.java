@@ -9,4 +9,8 @@ public interface MessageService {
     List<Message> getChatMessages(Long chatId);
 
     Message saveMessage(NewMessageDTO newMessage);
+
+    void deleteMessage(Long id);
+
+    Message updateMessage(Long messageId, String newContent);
 }
