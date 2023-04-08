@@ -18,9 +18,7 @@ export class ChatListComponent implements OnInit {
   
   ngOnInit(): void { 
       this.chatListService.getAllChats().subscribe(response => {
-        this.chats = response.map(chat => {
-          return chat;
-        });
+        this.chats = response ?? []
       });
   }
 }

@@ -15,6 +15,7 @@ import { NotFoundComponent } from "./layouts/not-found/not-found.component";
 import { ChatListComponent } from "./layouts/chats/list/chat-list.component";
 import { ChatComponent } from "./layouts/chats/chat/chat.component";
 import { HeaderComponent } from './header/header.component';
+import { AuthExpiredInterceptor } from "./auth/auth-expired.interceptor";
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { HeaderComponent } from './header/header.component';
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+        {provide: HTTP_INTERCEPTORS, useClass: AuthExpiredInterceptor, multi: true}
     ],
     bootstrap: [MainComponent],
 })
