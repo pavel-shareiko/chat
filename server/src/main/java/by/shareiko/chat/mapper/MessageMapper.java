@@ -7,6 +7,7 @@ import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface MessageMapper {
+    @Mapping(source = "chatId", target = "chat.id")
     Message newMessageDTOToMessage(NewMessageDTO newMessageDTO);
 
     NewMessageDTO messageToNewMessageDTO(Message message);

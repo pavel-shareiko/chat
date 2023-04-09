@@ -2,12 +2,17 @@ package by.shareiko.chat.service;
 
 import by.shareiko.chat.domain.Chat;
 import by.shareiko.chat.domain.Message;
+import by.shareiko.chat.domain.User;
 import by.shareiko.chat.dto.ExtendedChatDTO;
 import by.shareiko.chat.dto.SimpleUserDTO;
 import by.shareiko.chat.exception.BadRequestException;
+import by.shareiko.chat.exception.ChatAlreadyExists;
+import by.shareiko.chat.exception.ChatNotAllowedException;
+import by.shareiko.chat.exception.UserUnauthorizedException;
 import by.shareiko.chat.mapper.ChatMapper;
 import by.shareiko.chat.repository.ChatRepository;
 import by.shareiko.chat.security.SecurityUtils;
+import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.comparator.Comparators;
@@ -22,6 +27,7 @@ public class ChatServiceImpl implements ChatService {
     private final ChatRepository chatRepository;
     private final ChatMapper chatMapper;
     private final ChatMessageService chatMessageService;
+    private final UserService userService;
 
     @Override
     public List<Chat> getCurrentUserChats() {
@@ -35,6 +41,36 @@ public class ChatServiceImpl implements ChatService {
                 .map(this::getExtendedChat)
                 .sorted((o1, o2) -> Comparators.nullsLow().compare(o2.getLastMessage(), o1.getLastMessage()))
                 .toList();
+    }
+
+    @Override
+    public Chat startChat(String username) {
+        if (StringUtils.isBlank(username)) {
+            throw new BadRequestException("Username cannot be blank");
+        }
+
+        User currentUser = SecurityUtils.getCurrentUser().orElseThrow(() -> new UserUnauthorizedException("Current user is not logged in")).getDomainUser();
+        if (currentUser.getUsername().equals(username)) {
+            throw new ChatNotAllowedException("Current user is not allowed to start chat with [" + username + "]");
+        }
+        User otherUser = userService.findByUsername(username).orElseThrow(() -> new BadRequestException("User with name [" + username + "] not found"));
+
+        if (hasChatWithUser(username)) {
+            throw new ChatAlreadyExists("Chat with user [" + username + "] already exists");
+        }
+
+        Chat newChat = new Chat();
+        newChat.setParticipants(Set.of(currentUser, otherUser));
+        return chatRepository.save(newChat);
+    }
+
+    @Override
+    public boolean hasChatWithUser(String username) {
+        if (StringUtils.isBlank(username)) {
+            throw new BadRequestException("Username cannot be blank");
+        }
+
+        return chatRepository.existsByOtherUsernameAndCurrentUser(username);
     }
 
     private ExtendedChatDTO getExtendedChat(Chat chat) {

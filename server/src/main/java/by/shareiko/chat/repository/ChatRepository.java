@@ -28,4 +28,10 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
                    "and p.id = ?#{principal.id}")
     boolean doesCurrentUserParticipateInChat(@Param("chatId") Long chatId);
 
+    @Query("select COUNT(c) > 0 " +
+           "from Chat c where " +
+           "size(c.participants) = 2 " +
+           "and :username in (select cp.username from c.participants cp)" +
+           "and ?#{principal.id} in (select cp.id from c.participants cp)")
+    boolean existsByOtherUsernameAndCurrentUser(String username);
 }
