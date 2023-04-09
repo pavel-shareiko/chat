@@ -1,4 +1,7 @@
 spring:
+  security:
+    filter:
+      dispatcher-types: ASYNC, FORWARD, INCLUDE, REQUEST
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: ${CHAT_DB_URL}
@@ -23,3 +26,5 @@ jwt:
     expiration-time: 1800000
 server:
   port: 8080
+  error:
+    include-stacktrace: never
