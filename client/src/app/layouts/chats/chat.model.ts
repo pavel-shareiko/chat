@@ -13,16 +13,16 @@ export interface IMessage {
   modifiedAt: Date;
 }
 
-export interface IParticipant{
-    id: number,
-    username: string,
-    firstName: string,
-    lastName: string,
-    active: boolean 
+export interface IParticipant {
+  id: number;
+  username: string;
+  firstName: string;
+  lastName: string;
+  active: boolean;
 }
 
 export enum ChatType {
-  PERSONAL_CHAT = "PERSONAL_CHAT",
-  GROUP_CHAT = "GROUP_CHAT",
-  SELF_CHAT = "SELF_CHAT"
+  PERSONAL_CHAT = 'PERSONAL_CHAT',
+  GROUP_CHAT = 'GROUP_CHAT',
+  SELF_CHAT = 'SELF_CHAT',
 }
