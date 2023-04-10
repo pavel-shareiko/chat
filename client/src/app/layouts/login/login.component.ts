@@ -13,8 +13,6 @@ import {FormValidationService} from "../../shared/form-validation.service";
 export class LoginComponent {
     form: FormGroup;
     isSubmitted = false;
-    input = "";
-    output = "";
 
     constructor(
         public formValidationService: FormValidationService,
@@ -29,15 +27,6 @@ export class LoginComponent {
         }, {
             updateOn: 'blur'
         });
-    }
-
-    
-    get() {
-        this.http.get(this.input).subscribe(res => this.output = res.toString());
-    }
-
-    post() {
-        this.http.post(this.input, {}).subscribe(res => this.output = res.toString());
     }
 
     login() {
