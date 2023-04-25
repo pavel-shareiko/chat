@@ -4,6 +4,7 @@ import by.shareiko.chat.domain.Chat;
 import by.shareiko.chat.domain.Message;
 import by.shareiko.chat.domain.User;
 import by.shareiko.chat.dto.ExtendedChatDTO;
+import by.shareiko.chat.dto.SimpleMessageDTO;
 import by.shareiko.chat.dto.SimpleUserDTO;
 import by.shareiko.chat.exception.BadRequestException;
 import by.shareiko.chat.exception.ChatAlreadyExists;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.comparator.Comparators;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -39,7 +41,14 @@ public class ChatServiceImpl implements ChatService {
         List<Chat> currentUserChats = getCurrentUserChats();
         return currentUserChats.stream()
                 .map(this::getExtendedChat)
-                .sorted((o1, o2) -> Comparators.nullsLow().compare(o2.getLastMessage(), o1.getLastMessage()))
+                .sorted((o1, o2) -> Comparators.nullsLow().compare(
+                        Optional.ofNullable(o2.getLastMessage())
+                                .map(SimpleMessageDTO::getCreatedAt)
+                                .orElse(null),
+                        Optional.ofNullable(o1.getLastMessage())
+                                .map(SimpleMessageDTO::getCreatedAt)
+                                .orElse(null))
+                )
                 .toList();
     }
 
