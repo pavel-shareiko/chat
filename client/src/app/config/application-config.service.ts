@@ -1,22 +1,22 @@
-import {Injectable} from "@angular/core";
+import { Injectable } from '@angular/core';
 
 @Injectable({
-    providedIn: "root",
+  providedIn: 'root',
 })
 export class ApplicationConfigService {
-    private serverUrl = "http://localhost:8080/"
+  private serverUrl = 'http://localhost:8080/';
 
-    setServerUrl(endpointPrefix: string): void {
-        if (!endpointPrefix.endsWith("/")) {
-            endpointPrefix += "/";
-        }
-        this.serverUrl = endpointPrefix;
+  setServerUrl(endpointPrefix: string): void {
+    if (!endpointPrefix.endsWith('/')) {
+      endpointPrefix += '/';
     }
+    this.serverUrl = endpointPrefix;
+  }
 
-    getEndpointFor(api: string): string {
-        if (api.startsWith("/")) {
-            api = api.substring(1);
-        }
-        return `${this.serverUrl}${api}`;
+  getEndpointFor(api: string): string {
+    if (api.startsWith('/')) {
+      api = api.substring(1);
     }
+    return `${this.serverUrl}${api}`;
+  }
 }

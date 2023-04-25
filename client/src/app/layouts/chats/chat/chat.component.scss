@@ -1,0 +1,45 @@
+@import 'src/styles.scss';
+
+.chat-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.chat-item img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.chat-details {
+  flex-grow: 1;
+}
+
+.chat-header {
+  color: $text-color;
+  display: inline-block;
+}
+
+.chat-label {
+  color: #999;
+  font-size: 1rem;
+}
+
+.chat-details h2 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.chat-details .last-message {
+  color: #999;
+  margin: 0;
+}
+
+.timestamp {
+  font-size: 0.8rem;
+  color: #999;
+  margin-left: 10px;
+}

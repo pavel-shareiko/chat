@@ -1,53 +1,90 @@
-import {Component} from "@angular/core";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
-import {AuthService} from "src/app/auth/auth.service";
-import {CustomValidators} from "../../shared/validators";
-import {FormValidationService} from "../../shared/form-validation.service";
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
+import { CustomValidators } from '../../shared/validators';
+import { FormValidationService } from '../../shared/form-validation.service';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-    selector: "app-registration",
-    templateUrl: "./registration.component.html",
-    styleUrls: ["../login/login.component.scss"],
+  selector: 'app-registration',
+  templateUrl: './registration.component.html',
+  styleUrls: ['../login/login.component.scss'],
+  animations: [
+    trigger('fadeInOut', [
+      state(
+        'void',
+        style({
+          opacity: 0,
+        })
+      ),
+      transition('void <=> *', animate('500ms ease-in-out')),
+    ]),
+  ],
 })
 export class RegistrationComponent {
-    form: FormGroup;
-    isSubmitted = false;
-    requestSubmitted = false;
+  form: FormGroup;
+  isSubmitted = false;
+  requestSubmitted = false;
+  errorMessage = '';
 
-    constructor(
-        public formValidationService: FormValidationService,
-        private fb: FormBuilder,
-        private authService: AuthService,
-        private router: Router
-    ) {
-        this.form = this.fb.group({
-            firstname: ["", [Validators.required, Validators.minLength(3)]],
-            lastname: ["", [Validators.required, Validators.minLength(3)]],
-            username: ["", [Validators.required, CustomValidators.usernameValidator]],
-            password: ["", [Validators.required, CustomValidators.passwordValidator]],
-        }, {
-            updateOn: 'blur'
-        });
+  constructor(
+    public formValidationService: FormValidationService,
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.form = this.fb.group(
+      {
+        firstname: ['', [Validators.required, Validators.minLength(3)]],
+        lastname: ['', [Validators.required, Validators.minLength(3)]],
+        username: ['', [Validators.required, CustomValidators.usernameValidator]],
+        password: ['', [Validators.required, CustomValidators.passwordValidator]],
+      },
+      {
+        updateOn: 'blur',
+      }
+    );
+  }
+
+  register() {
+    // Set isSubmitted flag to true
+    this.isSubmitted = true;
+  
+    // Only continue if the form is valid and a request hasn't already been submitted
+    if (this.form.invalid || this.requestSubmitted) {
+      return;
     }
-
-    register() {
-        this.isSubmitted = true;
-        if (this.form.invalid) {
-            return;
-        }
-        if (this.requestSubmitted) {
-            return;
-        }
-
-        this.requestSubmitted = true;
-        this.authService.register({
-            firstName: this.form.value.firstname,
-            lastName: this.form.value.lastname,
-            username: this.form.value.login,
-            password: this.form.value.password,
-        }).subscribe(() => {
-            this.router.navigateByUrl("/login");
+  
+    // Set requestSubmitted flag to true to prevent multiple form submissions
+    this.requestSubmitted = true;
+  
+    // Extract form values into an object with more descriptive keys
+    const { firstname, lastname, username, password } = this.form.value;
+    const registrationData = { firstName: firstname, lastName: lastname, username, password };
+  
+    // Call the register function in the auth service
+    this.authService.register(registrationData).subscribe({
+      // If the registration is successful, log the user in
+      complete: () => {
+        const loginData = { username, password };
+        this.authService.login(loginData).subscribe(() => {
+          this.router.navigate(['/chats']);
         });
-    }
+      },
+      // If there is an error, display a message to the user and clear the form
+      error: errorResponse => {
+        if (!this.errorMessage) {
+          this.errorMessage = errorResponse.error.message;
+          this.requestSubmitted = false;
+  
+          // Clear the error message after 5 seconds
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 5000);
+        }
+      },
+    });
+  }
 }

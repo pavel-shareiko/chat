@@ -1,42 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
 
+$text-color: #ffffff;
+
 :root {
-    --bs-body-bg: #292f3f !important;
+  --bs-body-bg: #292f3f !important;
 }
 
 // common form properties
 .form-group.invalid-input {
-    input {
-        border-color: var(--bs-red) !important;
-    }
+  input {
+    border-color: var(--bs-red) !important;
+  }
 
-    label {
-        color: var(--bs-red) !important;
-    }
+  label {
+    color: var(--bs-red) !important;
+  }
 }
 
 /* Define the shake animation */
 @keyframes shake {
-    0% {
-        transform: translateX(0);
-    }
-    25% {
-        transform: translateX(-10px);
-    }
-    50% {
-        transform: translateX(10px);
-    }
-    75% {
-        transform: translateX(-10px);
-    }
-    100% {
-        transform: translateX(0);
-    }
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  75% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 /* Apply the shake animation to the form field */
 .shake {
-    animation: shake 0.5s;
+  animation: shake 0.5s;
 }
 
 /* Importing Bootstrap SCSS file. */
