@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { shareReplay, tap } from 'rxjs';
+import { Observable, shareReplay, tap } from 'rxjs';
 import { ApplicationConfigService } from '../config/application-config.service';
 import { LoginUser, RegistrationUser } from '../models/user.model';
 
@@ -8,9 +8,9 @@ import { LoginUser, RegistrationUser } from '../models/user.model';
 export class AuthService {
   constructor(private http: HttpClient, private config: ApplicationConfigService) {}
 
-  register(user: RegistrationUser) {
+  register(user: RegistrationUser): Observable<RegistrationUser> {
     return this.http
-      .post(this.config.getEndpointFor('api/v1/auth/register'), {
+      .post<RegistrationUser>(this.config.getEndpointFor('api/v1/auth/register'), {
         ...user,
       })
       .pipe(shareReplay());
