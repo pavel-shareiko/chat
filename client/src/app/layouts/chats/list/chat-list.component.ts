@@ -10,12 +10,14 @@ import { ChatType, IChat } from '../chat.model';
 })
 export class ChatListComponent implements OnInit {
   chats: IChat[] = [];
+  chatsLoaded = false;
 
   constructor(private chatListService: ChatListService) {}
 
   ngOnInit(): void {
     this.chatListService.getAllChats().subscribe(response => {
       this.chats = response ?? [];
+      this.chatsLoaded = true;
     });
   }
 }
