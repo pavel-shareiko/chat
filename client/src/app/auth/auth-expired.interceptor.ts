@@ -16,7 +16,6 @@ export class AuthExpiredInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService, private router: Router) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log(request);
     return next.handle(request).pipe(
       tap({
         error: (err: HttpErrorResponse) => {
