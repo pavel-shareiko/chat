@@ -1,7 +1,8 @@
 <div class="chat-item">
   <img src="profile-picture.jpg" alt="Profile Picture" />
   <div class="chat-details">
-    <h2 class="chat-header">{{ getDisplayName() }}</h2>
+    <h2 class="chat-header">{{ getDisplayName() }}</h2> 
+    <span class="chat-label ml-2" *ngIf="getLabel()"> (@{{getLabel()}})</span>
     <p class="last-message">{{ chat.lastMessage?.content ?? 'No messages yet' }}</p>
   </div>
   <div class="timestamp">

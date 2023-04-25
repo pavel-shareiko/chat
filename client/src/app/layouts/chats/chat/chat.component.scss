@@ -1,4 +1,5 @@
-$text-color: #ffffff;
+@import 'src/styles.scss';
+
 .chat-item {
   display: flex;
   align-items: center;
@@ -18,7 +19,13 @@ $text-color: #ffffff;
 }
 
 .chat-header {
-  color: #ffffff;
+  color: $text-color;
+  display: inline-block;
+}
+
+.chat-label {
+  color: #999;
+  font-size: 1rem;
 }
 
 .chat-details h2 {

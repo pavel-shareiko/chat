@@ -25,4 +25,12 @@ export class ChatComponent {
 
     return 'Unknown chat';
   }
+
+  getLabel(): string {
+    if (this.chat.chatType !== ChatType.PERSONAL_CHAT) {
+      return '';
+    }
+
+    return this.chat.participants[0].username;
+  }
 }
