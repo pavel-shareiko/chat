@@ -26,6 +26,12 @@ public class ChatController {
         return ResponseEntity.ok(chatService.getCurrentUserChatsWithLastMessage());
     }
 
+    @GetMapping("/{chatId}/exists")
+    public ResponseEntity<Boolean> doesChatExist(@PathVariable Long chatId) {
+        log.debug("REST request to check if chat with id {} exists", chatId);
+        return ResponseEntity.ok(chatService.doesCurrentUserParticipateInChat(chatId));
+    }
+
     @PostMapping("/{username}")
     public ResponseEntity<Chat> createChat(@PathVariable String username) {
         log.debug("REST request to create chat with user {}", username);
