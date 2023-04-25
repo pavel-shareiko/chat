@@ -1,4 +1,9 @@
 <form (ngSubmit)="login()" [formGroup]="form" class="login-form">
+  <div *ngIf="errorMessage">
+    <div class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+  </div>
   <fieldset>
     <div
       [ngClass]="{

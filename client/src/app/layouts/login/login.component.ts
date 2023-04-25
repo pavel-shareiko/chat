@@ -12,12 +12,13 @@ import { FormValidationService } from '../../shared/form-validation.service';
 export class LoginComponent {
   form: FormGroup;
   isSubmitted = false;
+  errorMessage = '';
 
   constructor(
     public formValidationService: FormValidationService,
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router,
+    private router: Router
   ) {
     this.form = this.fb.group(
       {
@@ -33,10 +34,30 @@ export class LoginComponent {
   login() {
     this.isSubmitted = true;
     const val = this.form.value;
-    if (this.form.valid) {
-      this.authService.login({ username: val.username, password: val.password }).subscribe(() => {
-        this.router.navigateByUrl('/chats');
-      });
+  
+    if (!val) {
+      throw new Error('Form value is null or undefined');
     }
+  
+    const { username, password } = val;
+  
+    if (!username || !password) {
+      throw new Error('Username or password is missing');
+    }
+  
+    this.authService.login({ username, password }).subscribe({
+      complete: () => {
+        this.router.navigateByUrl('/chats');
+      },
+      error: errorResponse => {
+        if (!this.errorMessage) {
+          this.errorMessage = errorResponse.error.message;
+          this.isSubmitted = false;
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 5000);
+        }
+      },
+    });
   }
 }
