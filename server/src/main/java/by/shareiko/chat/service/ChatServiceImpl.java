@@ -23,12 +23,16 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static by.shareiko.chat.dto.ExtendedChatDTO.ChatType.GROUP_CHAT;
+import static by.shareiko.chat.dto.ExtendedChatDTO.ChatType.PERSONAL_CHAT;
+
 @Service
 @RequiredArgsConstructor
 public class ChatServiceImpl implements ChatService {
     private final ChatRepository chatRepository;
     private final ChatMapper chatMapper;
     private final ChatMessageService chatMessageService;
+    private final ChatNameResolver chatNameResolver;
     private final UserService userService;
 
     @Override
@@ -88,10 +92,13 @@ public class ChatServiceImpl implements ChatService {
         ExtendedChatDTO extendedChatDTO = chatMapper.chatToExtendedChatDTO(chat, lastMessage);
 
         String currentUsername = SecurityUtils.getCurrentUserLogin().orElse(null);
-        Set<SimpleUserDTO> participants = extendedChatDTO.getParticipants().stream()
+        List<SimpleUserDTO> participants = extendedChatDTO.getParticipants().stream()
                 .filter(participant -> !participant.getUsername().equals(currentUsername))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
         extendedChatDTO.setParticipants(participants);
+
+        String chatName = chatNameResolver.resolveName(extendedChatDTO);
+        extendedChatDTO.setDisplayName(chatName);
 
         return extendedChatDTO;
     }

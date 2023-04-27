@@ -1,7 +1,7 @@
 <div class="chat-item" (click)="openDialogue()">
   <div class="chat-item__content">
     <div class="chat-item__header">
-      <h4 class="chat-item__name">{{ getDisplayName() }}</h4>
+      <h4 class="chat-item__name">{{ chat.displayName }}</h4>
       <span class="chat-item__time">{{
         chat.lastMessage?.createdAt
           | date : dateFormatter.getDateFormat(chat.lastMessage?.createdAt ?? '')
