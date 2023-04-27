@@ -1,6 +1,7 @@
 package by.shareiko.chat.controller;
 
 import by.shareiko.chat.domain.User;
+import by.shareiko.chat.dto.UserWithAuthorities;
 import by.shareiko.chat.security.user.LoginUser;
 import by.shareiko.chat.security.user.RegisterUser;
 import by.shareiko.chat.security.exceptions.UserDeactivatedException;
@@ -13,10 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @Log4j2
@@ -62,5 +60,11 @@ public class AuthenticationController {
         }
         User user = userService.register(registerUser);
         return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/me")
+    public UserWithAuthorities getCurrentUser() {
+        log.debug("REST request to get current user");
+        return userService.getUserWithAuthorities();
     }
 }

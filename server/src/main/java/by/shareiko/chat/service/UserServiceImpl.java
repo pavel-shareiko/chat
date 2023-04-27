@@ -2,12 +2,16 @@ package by.shareiko.chat.service;
 
 import by.shareiko.chat.domain.Role;
 import by.shareiko.chat.domain.User;
+import by.shareiko.chat.dto.UserWithAuthorities;
+import by.shareiko.chat.exception.UserUnauthorizedException;
+import by.shareiko.chat.security.SecurityUtils;
 import by.shareiko.chat.security.user.RegisterUser;
 import by.shareiko.chat.exception.NotFoundException;
 import by.shareiko.chat.mapper.UserMapper;
 import by.shareiko.chat.repository.RoleRepository;
 import by.shareiko.chat.repository.UserRepository;
 import by.shareiko.chat.security.RoleConstants;
+import by.shareiko.chat.security.user.UserPrincipal;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -34,6 +38,13 @@ public class UserServiceImpl implements UserService {
 
     public List<User> getAll() {
         return userRepository.findAll();
+    }
+
+    public UserWithAuthorities getUserWithAuthorities() {
+        return userMapper.userToUserWithAuthorities(SecurityUtils.getCurrentUser()
+                .orElseThrow(() -> new UserUnauthorizedException("Current user is not logged in"))
+                .getDomainUser()
+        );
     }
 
     public User register(RegisterUser registerUser) {
