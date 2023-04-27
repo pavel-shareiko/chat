@@ -36,13 +36,13 @@ export class LoginComponent {
     const val = this.form.value;
   
     if (!val) {
-      throw new Error('Form value is null or undefined');
+      return;
     }
   
     const { username, password } = val;
   
     if (!username || !password) {
-      throw new Error('Username or password is missing');
+      return;
     }
   
     this.authService.login({ username, password }).subscribe({

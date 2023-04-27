@@ -9,3 +9,14 @@ export interface RegistrationUser {
   username: string;
   password: string;
 }
+
+export interface IUser {
+  firstName: string;
+  lastName: string;
+  username: string;
+  roles: IRole[];
+}
+
+export interface IRole {
+  name: string;
+}
