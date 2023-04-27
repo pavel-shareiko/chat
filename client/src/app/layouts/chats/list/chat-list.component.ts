@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { ChatListService } from './chat-list.service';
-import { ChatType, IChat } from '../chat.model';
+import { ChatService } from '../chat.service';
+import { IChat } from '../chat.model';
 
 @Component({
   selector: 'app-chat-list',
@@ -12,10 +12,10 @@ export class ChatListComponent implements OnInit {
   chats: IChat[] = [];
   chatsLoaded = false;
 
-  constructor(private chatListService: ChatListService) {}
+  constructor(private chatService: ChatService) {}
 
   ngOnInit(): void {
-    this.chatListService.getAllChats().subscribe(response => {
+    this.chatService.getAllChats().subscribe(response => {
       this.chats = response ?? [];
       this.chatsLoaded = true;
     });
