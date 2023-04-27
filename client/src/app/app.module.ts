@@ -16,6 +16,7 @@ import { ChatListComponent } from './layouts/chats/list/chat-list.component';
 import { ChatComponent } from './layouts/chats/chat/chat.component';
 import { HeaderComponent } from './header/header.component';
 import { AuthExpiredInterceptor } from './auth/auth-expired.interceptor';
+import { MessageGroupingPipe } from './common/pipes/message-grouping.pipe';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AuthExpiredInterceptor } from './auth/auth-expired.interceptor';
     ChatComponent,
     ChatListComponent,
     HeaderComponent,
+    MessageGroupingPipe,
   ],
   imports: [
     BrowserModule,
