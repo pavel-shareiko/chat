@@ -16,7 +16,9 @@ import { ChatListComponent } from './layouts/chats/list/chat-list.component';
 import { ChatComponent } from './layouts/chats/chat/chat.component';
 import { HeaderComponent } from './header/header.component';
 import { AuthExpiredInterceptor } from './auth/auth-expired.interceptor';
+import { ChatDialogueComponent } from './layouts/chats/dialogue/chat-dialogue.component';
 import { MessageGroupingPipe } from './common/pipes/message-grouping.pipe';
+import { MessageHtmlPipe } from './common/pipes/message-html.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { MessageGroupingPipe } from './common/pipes/message-grouping.pipe';
     ChatComponent,
     ChatListComponent,
     HeaderComponent,
+    ChatDialogueComponent,
     MessageGroupingPipe,
+    MessageHtmlPipe,
   ],
   imports: [
     BrowserModule,

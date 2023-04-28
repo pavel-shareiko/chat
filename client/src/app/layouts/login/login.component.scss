@@ -1,5 +1,3 @@
-@import 'src/styles.scss';
-
 $font-family: 'Abel';
 $font-style: normal;
 $font-weight: 400;
@@ -23,7 +21,7 @@ fieldset {
   font-weight: $font-weight;
   font-size: $font-size;
   line-height: $line-height;
-  color: $text-color;
+  color: var(--bs-white);
 }
 
 .login-form {
@@ -43,7 +41,7 @@ fieldset {
   border-color: $form-input-border-color;
   border-radius: 10px;
   border-style: solid;
-  color: $text-color;
+  color: var(--bs-white);
   box-sizing: border-box;
   padding-left: 0.4rem;
   font-size: 15px;

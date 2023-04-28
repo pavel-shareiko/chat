@@ -16,6 +16,10 @@ export class ChatService {
     return this.httpClient.get<IChat[]>(this.resourceUrl);
   }
 
+  getChat(chatId: number): Observable<IChat> {
+    return this.httpClient.get<IChat>(`${this.resourceUrl}/${chatId}`);
+  }
+
   doesChatExist(chatId: number): Observable<boolean> {
     return this.httpClient.get<boolean>(`${this.resourceUrl}/${chatId}/exists`);
   }

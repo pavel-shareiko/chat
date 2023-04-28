@@ -1,7 +1,5 @@
-@import 'src/styles.scss';
-
 .chats-container {
-  color: $text-color;
+  color: var(--bs-white);
 }
 
 .no-chats {

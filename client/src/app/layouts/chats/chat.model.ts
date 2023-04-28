@@ -1,5 +1,6 @@
 export interface IChat {
   chatId: number;
+  displayName: string;
   lastMessage: IMessage | undefined;
   chatType: ChatType;
   participants: IParticipant[];

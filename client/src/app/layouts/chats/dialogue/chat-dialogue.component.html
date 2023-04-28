@@ -1,0 +1,28 @@
+<div class="container text-white">
+  <div class="row mt-3 mb-3">
+    <hr class="my-1" />
+    <div class="chat-header">
+      <button class="btn btn-primary chat-header__back" (click)="goBack()">&lt; Back</button>
+      <h5 class="chat-header__chat-name">{{ chatName }}</h5>
+    </div>
+    <hr class="my-1" />
+  </div>
+
+  <div class="message-container" #messageContainer>
+    <div class="px-2" *ngIf="!loadingMessages">
+      <div class="message-group" *ngFor="let group of messages | messageGrouping">
+        <div class="message-group__date text-center my-3">
+          {{ group[0].createdAt | date : dateFormatter.getDateFormat(group[0].createdAt) }}
+        </div>
+        <div
+          *ngFor="let message of group"
+          class="text-white message"
+          [ngClass]="
+            message.sender.username === currentUser?.username ? 'message-left' : 'message-right'
+          ">
+          <p class="mx-2 message__content" [innerHTML]="message.content | messageHtml"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

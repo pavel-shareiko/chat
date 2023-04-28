@@ -55,7 +55,6 @@ export class AccountService {
    */
   identity(force?: boolean): Observable<IUser | null> {
     if (!this.currentUserCache$ || force) {
-      console.log(`making request to backend to fetch the user data...`);
       this.currentUserCache$ = this.fetchCurrentUser().pipe(
         tap((account: IUser) => {
           this.authenticate(account);

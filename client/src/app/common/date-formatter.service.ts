@@ -16,7 +16,7 @@ export class DateFormatterService {
       return 'HH:mm';
     }
     if (inputDate.getFullYear() === today.getFullYear()) {
-      return 'dd MMM HH:mm';
+      return 'd MMM HH:mm';
     }
     return 'YYYY, dd MMM HH:mm';
   }
