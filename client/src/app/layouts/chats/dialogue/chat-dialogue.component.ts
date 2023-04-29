@@ -1,3 +1,4 @@
+import { style } from '@angular/animations';
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChatService } from '../chat.service';
@@ -13,6 +14,7 @@ import { IUser } from 'src/app/models/user.model';
 })
 export class ChatDialogueComponent implements OnInit, AfterViewChecked {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
+  @ViewChild('chatInput') chatInput!: ElementRef;
   public chatName: string = '';
   public messages: IMessage[] = [];
   public currentUser: IUser | null = null;
@@ -51,6 +53,18 @@ export class ChatDialogueComponent implements OnInit, AfterViewChecked {
     });
   }
 
+  onInput(textarea: HTMLTextAreaElement) {
+    const maxRows = 5;
+    const lineHeight = parseInt(getComputedStyle(textarea).lineHeight);
+    const rows = Math.floor(textarea.scrollHeight / lineHeight);
+    if (rows > maxRows) {
+      textarea.style.height = `${maxRows * lineHeight}px`;
+    } else {
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  }
+
   ngAfterViewChecked(): void {
     this.messageContainer.nativeElement.scrollTop =
       this.messageContainer.nativeElement.scrollHeight;
@@ -87,15 +101,15 @@ export class ChatDialogueComponent implements OnInit, AfterViewChecked {
     if (!this.newMessage) {
       return;
     }
-    this.newMessage = '';
-    // this.messagesService.sendMessage(this.dialogueId, this.newMessage).subscribe({
-    //   next: () => {
-    //     this.newMessage = '';
-    //     this.loadMessages();
-    //   },
-    //   error: err => {
-    //     console.error(err);
-    //   },
-    // });
+    this.messagesService.sendMessage(this.dialogueId, this.newMessage).subscribe({
+      next: () => {
+        this.newMessage = '';
+        this.chatInput.nativeElement.style.height = 'auto';
+        this.loadMessages();
+      },
+      error: err => {
+        console.error(err);
+      },
+    });
   }
 }

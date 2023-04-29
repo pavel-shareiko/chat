@@ -15,4 +15,11 @@ export class MessagesService {
   getChatMessages(chatId: number): Observable<IMessage[]> {
     return this.httpClient.get<IMessage[]>(`${this.resourceUrl}/chat/${chatId}`);
   }
+
+  sendMessage(chatId: number, message: string): Observable<IMessage> {
+    return this.httpClient.post<IMessage>(`${this.resourceUrl}`, {
+      content: message,
+      chatId: chatId,
+    });
+  }
 }

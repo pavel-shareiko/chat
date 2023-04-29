@@ -18,7 +18,7 @@
           *ngFor="let message of group"
           class="text-white message"
           [ngClass]="
-            message.sender.username === currentUser?.username ? 'message-left' : 'message-right'
+            message.sender.username === currentUser?.username ? 'message-right' : 'message-left'
           ">
           <p class="mx-2 message__content" [innerHTML]="message.content | messageHtml"></p>
         </div>
@@ -31,12 +31,16 @@
       <textarea
         class="form-control chat-input"
         placeholder="Type a message"
-        #autosize="cdkTextareaAutosize"
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="1"
-        cdkAutosizeMaxRows="5"
-        [(ngModel)]="newMessage"></textarea>
-      <button class="send-button" (click)="sendMessage()">Send</button>
+        [(ngModel)]="newMessage"
+        #chatInput
+        (input)="onInput(chatInput)"></textarea>
+
+      <button
+        class="btn send-button"
+        (click)="sendMessage()"
+        [disabled]="!newMessage || newMessage.trim().length === 0">
+        Send
+      </button>
     </div>
   </div>
 </div>

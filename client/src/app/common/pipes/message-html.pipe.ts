@@ -24,6 +24,9 @@ export class MessageHtmlPipe implements PipeTransform {
       return `<a href="mailto:${email}">${email}</a>`;
     });
 
+    // Replace newlines with <br>
+    message = message.replace(/\n/g, '<br />');
+
     // Sanitize the resulting HTML to prevent XSS attacks
     return this.sanitizer.bypassSecurityTrustHtml(message);
   }
