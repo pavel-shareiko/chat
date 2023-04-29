@@ -20,6 +20,7 @@ import { ChatDialogueComponent } from './layouts/chats/dialogue/chat-dialogue.co
 import { MessageGroupingPipe } from './common/pipes/message-grouping.pipe';
 import { MessageHtmlPipe } from './common/pipes/message-html.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     NgbModule,
     BrowserAnimationsModule,
+    TextFieldModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

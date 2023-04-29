@@ -13,16 +13,11 @@ import { IUser } from 'src/app/models/user.model';
 })
 export class ChatDialogueComponent implements OnInit, AfterViewChecked {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
-  @ViewChild('myTextarea') myTextarea!: ElementRef;
   public chatName: string = '';
   public messages: IMessage[] = [];
   public currentUser: IUser | null = null;
   public loadingMessages = true;
   public newMessage: string = '';
-  public rows: number = 1;
-  public textareaWidth: number = 0;
-  public maxHeight: string = '100px';
-
   private dialogueId!: number;
 
   constructor(
@@ -86,39 +81,6 @@ export class ChatDialogueComponent implements OnInit, AfterViewChecked {
         this.loadingMessages = false;
       },
     });
-  }
-  onInput() {
-    const textarea = this.myTextarea.nativeElement;
-    const { scrollHeight, clientWidth } = textarea;
-    const maxHeight = parseInt(this.maxHeight);
-    const newMessageLength = this.newMessage.length;
-    const rowHeight = 20;
-    const prevHeight = parseInt(textarea.style.height);
-
-    if (clientWidth !== this.textareaWidth) {
-      textarea.style.height = 'auto';
-      this.textareaWidth = clientWidth;
-    }
-
-    if (scrollHeight > maxHeight) {
-      textarea.style.overflow = 'auto';
-    } else {
-      textarea.style.overflow = 'hidden';
-    }
-
-    textarea.style.height = 'auto';
-    const height = Math.min(scrollHeight, maxHeight);
-    textarea.style.height = height + 'px';
-
-    this.rows = Math.ceil(scrollHeight / rowHeight);
-
-    if (
-      (textarea.style.overflow === 'hidden' && parseInt(textarea.style.height) < prevHeight) ||
-      textarea.value.length < newMessageLength
-    ) {
-      textarea.style.height = 'auto';
-      this.rows = Math.ceil(textarea.scrollHeight / rowHeight);
-    }
   }
 
   sendMessage(): void {
