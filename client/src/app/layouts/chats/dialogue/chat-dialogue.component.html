@@ -25,4 +25,18 @@
       </div>
     </div>
   </div>
+
+  <div class="input-group mb-3">
+    <div class="chat-input-container">
+      <textarea
+        #myTextarea
+        class="form-control chat-input"
+        placeholder="Type a message"
+        [(ngModel)]="newMessage"
+        (input)="onInput()"
+        [rows]="rows"
+        [style.maxHeight]="maxHeight"></textarea>
+      <button class="send-button" (click)="sendMessage()">Send</button>
+    </div>
+  </div>
 </div>
