@@ -10,6 +10,8 @@ public interface ChatService {
 
     List<ExtendedChatDTO> getCurrentUserChatsWithLastMessage();
 
+    ExtendedChatDTO getChat(Long chatId);
+
     Chat startChat(String username);
 
     boolean hasChatWithUser(String username);

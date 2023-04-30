@@ -16,6 +16,11 @@ import { ChatListComponent } from './layouts/chats/list/chat-list.component';
 import { ChatComponent } from './layouts/chats/chat/chat.component';
 import { HeaderComponent } from './header/header.component';
 import { AuthExpiredInterceptor } from './auth/auth-expired.interceptor';
+import { ChatDialogueComponent } from './layouts/chats/dialogue/chat-dialogue.component';
+import { MessageGroupingPipe } from './common/pipes/message-grouping.pipe';
+import { MessageHtmlPipe } from './common/pipes/message-html.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 @NgModule({
   declarations: [
@@ -27,6 +32,9 @@ import { AuthExpiredInterceptor } from './auth/auth-expired.interceptor';
     ChatComponent,
     ChatListComponent,
     HeaderComponent,
+    ChatDialogueComponent,
+    MessageGroupingPipe,
+    MessageHtmlPipe,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +43,8 @@ import { AuthExpiredInterceptor } from './auth/auth-expired.interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
+    BrowserAnimationsModule,
+    TextFieldModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

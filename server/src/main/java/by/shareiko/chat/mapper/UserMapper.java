@@ -2,6 +2,7 @@ package by.shareiko.chat.mapper;
 
 import by.shareiko.chat.domain.User;
 import by.shareiko.chat.dto.SimpleUserDTO;
+import by.shareiko.chat.dto.UserWithAuthorities;
 import by.shareiko.chat.security.user.LoginUser;
 import by.shareiko.chat.security.user.RegisterUser;
 import org.mapstruct.BeanMapping;
@@ -25,4 +26,11 @@ public interface UserMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     User updateUserFromSimpleUserDTO(SimpleUserDTO simpleUserDTO, @MappingTarget User user);
+
+    User userWithAuthoritiesToUser(UserWithAuthorities userWithAuthorities);
+
+    UserWithAuthorities userToUserWithAuthorities(User user);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    User updateUserFromUserWithAuthorities(UserWithAuthorities userWithAuthorities, @MappingTarget User user);
 }

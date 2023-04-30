@@ -9,6 +9,7 @@ import by.shareiko.chat.dto.SimpleUserDTO;
 import by.shareiko.chat.exception.BadRequestException;
 import by.shareiko.chat.exception.ChatAlreadyExists;
 import by.shareiko.chat.exception.ChatNotAllowedException;
+import by.shareiko.chat.exception.NotFoundException;
 import by.shareiko.chat.exception.UserUnauthorizedException;
 import by.shareiko.chat.mapper.ChatMapper;
 import by.shareiko.chat.repository.ChatRepository;
@@ -29,6 +30,7 @@ public class ChatServiceImpl implements ChatService {
     private final ChatRepository chatRepository;
     private final ChatMapper chatMapper;
     private final ChatMessageService chatMessageService;
+    private final ChatNameResolver chatNameResolver;
     private final UserService userService;
 
     @Override
@@ -50,6 +52,15 @@ public class ChatServiceImpl implements ChatService {
                                 .orElse(null))
                 )
                 .toList();
+    }
+
+    @Override
+    public ExtendedChatDTO getChat(Long chatId) {
+        if (!doesCurrentUserParticipateInChat(chatId)) {
+            throw new UserUnauthorizedException("Current user is not allowed to access chat with id [" + chatId + "]");
+        }
+        Chat chat = chatRepository.findById(chatId).orElseThrow(() -> new NotFoundException("Chat with id [" + chatId + "] not found"));
+        return getExtendedChat(chat);
     }
 
     @Override
@@ -88,10 +99,13 @@ public class ChatServiceImpl implements ChatService {
         ExtendedChatDTO extendedChatDTO = chatMapper.chatToExtendedChatDTO(chat, lastMessage);
 
         String currentUsername = SecurityUtils.getCurrentUserLogin().orElse(null);
-        Set<SimpleUserDTO> participants = extendedChatDTO.getParticipants().stream()
+        List<SimpleUserDTO> participants = extendedChatDTO.getParticipants().stream()
                 .filter(participant -> !participant.getUsername().equals(currentUsername))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
         extendedChatDTO.setParticipants(participants);
+
+        String chatName = chatNameResolver.resolveName(extendedChatDTO);
+        extendedChatDTO.setDisplayName(chatName);
 
         return extendedChatDTO;
     }

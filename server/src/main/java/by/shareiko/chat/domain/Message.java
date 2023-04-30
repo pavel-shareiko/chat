@@ -21,7 +21,7 @@ public class Message {
     @SequenceGenerator(name = "message_id_generator", sequenceName = "message_id_seq", allocationSize = 1)
     private Long id;
 
-    @Column(name = "content", nullable = false)
+    @Column(name = "content", nullable = false, length = Integer.MAX_VALUE)
     private String content;
 
     @CreatedBy

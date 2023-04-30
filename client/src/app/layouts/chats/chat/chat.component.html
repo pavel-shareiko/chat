@@ -1,11 +1,14 @@
-<div class="chat-item">
-  <img src="profile-picture.jpg" alt="Profile Picture" />
-  <div class="chat-details">
-    <h2 class="chat-header">{{ getDisplayName() }}</h2> 
-    <span class="chat-label ml-2" *ngIf="getLabel()"> (@{{getLabel()}})</span>
-    <p class="last-message">{{ chat.lastMessage?.content ?? 'No messages yet' }}</p>
-  </div>
-  <div class="timestamp">
-    <p>{{ chat.lastMessage?.createdAt | date : 'MMM d, y h:mm a' }}</p>
+<div class="chat-item" (click)="openDialogue()">
+  <div class="chat-item__content">
+    <div class="chat-item__header">
+      <h4 class="chat-item__name">{{ chat.displayName }}</h4>
+      <span class="chat-item__time">{{
+        chat.lastMessage?.createdAt
+          | date : dateFormatter.getDateFormat(chat.lastMessage?.createdAt ?? '')
+      }}</span>
+    </div>
+    <p class="chat-item__message" [ngClass]="chat.lastMessage ? '' : 'chat-item__empty'">
+      {{ chat.lastMessage?.content ?? 'No messages yet' }}
+    </p>
   </div>
 </div>

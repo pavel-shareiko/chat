@@ -4,13 +4,14 @@ import by.shareiko.chat.domain.Chat;
 import by.shareiko.chat.domain.Message;
 import by.shareiko.chat.domain.User;
 import by.shareiko.chat.dto.ExtendedChatDTO;
+import by.shareiko.chat.dto.SimpleUserDTO;
 import lombok.extern.log4j.Log4j2;
-import org.mapstruct.BeforeMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
+import org.springframework.security.core.parameters.P;
 
 import java.util.Set;
+
+import static by.shareiko.chat.dto.ExtendedChatDTO.ChatType.*;
 
 @Log4j2
 @Mapper(componentModel = "spring")
@@ -19,16 +20,21 @@ public abstract class ChatMapper {
     protected void determineChatType(Chat chat, @MappingTarget ExtendedChatDTO extendedChatDTO) {
         Set<User> participants = chat.getParticipants();
         if (participants.size() == 1) {
-            extendedChatDTO.setChatType(ExtendedChatDTO.ChatType.SELF_CHAT);
+            extendedChatDTO.setChatType(SELF_CHAT);
             return;
         }
 
         if (participants.size() == 2) {
-            extendedChatDTO.setChatType(ExtendedChatDTO.ChatType.PERSONAL_CHAT);
+            extendedChatDTO.setChatType(PERSONAL_CHAT);
             return;
         }
 
-        extendedChatDTO.setChatType(ExtendedChatDTO.ChatType.GROUP_CHAT);
+        extendedChatDTO.setChatType(GROUP_CHAT);
+    }
+
+    @AfterMapping
+    protected void setDisplayName(Chat chat, @MappingTarget ExtendedChatDTO extendedChatDTO) {
+        extendedChatDTO.setDisplayName("Chat #%d".formatted(chat.getId()));
     }
 
     @Mapping(source = "chat.id", target = "chatId")

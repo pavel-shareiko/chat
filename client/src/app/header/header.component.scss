@@ -1,11 +1,7 @@
-@import 'src/styles.scss';
-
-$header-size: 32px;
-
 .app-header {
   text-align: center;
-  color: $text-color;
-  font-size: $header-size;
+  color: var(--bs-white);
+  font-size: 32px;
 
   a {
     text-decoration: none;

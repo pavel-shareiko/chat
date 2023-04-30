@@ -6,23 +6,27 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
+import { Observable, map } from 'rxjs';
+import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private accountService: AccountService, private router: Router) {}
 
   canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    _route: ActivatedRouteSnapshot,
+    _state: RouterStateSnapshot
   ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/']);
-      return false;
-    }
-    return true;
+    return this.accountService.identity().pipe(
+      map(() => {
+        if (this.accountService.isLoggedIn()) {
+          this.router.navigate(['/']);
+          return false;
+        }
+        return true;
+      })
+    );
   }
 }

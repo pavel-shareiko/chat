@@ -5,7 +5,7 @@ import by.shareiko.chat.dto.NewMessageDTO;
 import by.shareiko.chat.dto.SimpleMessageDTO;
 import org.mapstruct.*;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring", uses = StringTrimmer.class)
 public interface MessageMapper {
     @Mapping(source = "chatId", target = "chat.id")
     Message newMessageDTOToMessage(NewMessageDTO newMessageDTO);
