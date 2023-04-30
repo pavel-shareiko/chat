@@ -20,7 +20,10 @@
           [ngClass]="
             message.sender.username === currentUser?.username ? 'message-right' : 'message-left'
           ">
-          <p class="mx-2 message__content" [innerHTML]="message.content | messageHtml"></p>
+          <div class="message__content" [innerHTML]="message.content | messageHtml"></div>
+          <div class="message__timestamp text-muted small">
+            {{ message.createdAt | date : 'HH:mm' }}
+          </div>
         </div>
       </div>
     </div>

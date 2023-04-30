@@ -84,18 +84,18 @@
 }
 
 .message {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 10px;
+  position: relative;
   border-radius: 20px;
   max-width: 70%;
   padding: 10px;
   margin-bottom: 12px;
-
   font-weight: 300;
   font-size: 13px;
   line-height: 18px;
-
-  display: flex;
   letter-spacing: 1px;
-
   word-break: break-word;
   overflow-wrap: break-word;
 }
@@ -112,7 +112,6 @@
 
 .message__content {
   margin-bottom: 0;
-
   ::ng-deep a {
     text-decoration: underline;
     color: var(--bs-white);
@@ -121,6 +120,13 @@
   ::ng-deep a:hover {
     text-decoration: none;
   }
+}
+
+.message__timestamp {
+  white-space: nowrap;
+  text-align: right;
+  align-self: flex-end;
+  letter-spacing: 0px;
 }
 
 .message-container {
