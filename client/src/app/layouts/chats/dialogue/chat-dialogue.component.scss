@@ -69,6 +69,10 @@
   line-height: 1.2;
   flex-grow: 1;
   margin-right: 8px;
+
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
 }
 
 .send-button {
@@ -138,4 +142,8 @@
 
 ::-webkit-scrollbar-thumb {
   background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #666;
 }
