@@ -1,4 +1,3 @@
-import { style } from '@angular/animations';
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChatService } from '../chat.service';
@@ -7,6 +6,7 @@ import { MessagesService } from '../messages.service';
 import { DateFormatterService } from '../../../common/date-formatter.service';
 import { AccountService } from 'src/app/auth/account.service';
 import { IUser } from 'src/app/models/user.model';
+
 @Component({
   selector: 'app-chat-dialogue',
   templateUrl: './chat-dialogue.component.html',
@@ -53,18 +53,6 @@ export class ChatDialogueComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  onInput(textarea: HTMLTextAreaElement) {
-    const maxRows = 5;
-    const lineHeight = parseInt(getComputedStyle(textarea).lineHeight);
-    const rows = Math.floor(textarea.scrollHeight / lineHeight);
-    if (rows > maxRows) {
-      textarea.style.height = `${maxRows * lineHeight}px`;
-    } else {
-      textarea.style.height = 'auto';
-      textarea.style.height = `${textarea.scrollHeight}px`;
-    }
-  }
-
   ngAfterViewChecked(): void {
     this.messageContainer.nativeElement.scrollTop =
       this.messageContainer.nativeElement.scrollHeight;
@@ -79,6 +67,7 @@ export class ChatDialogueComponent implements OnInit, AfterViewChecked {
       this.chatName = chat.displayName;
     });
   }
+  
   extractChatIdFromRoute(): number | undefined {
     const id = +this.route.snapshot.paramMap.get('id')!;
     return isNaN(id) ? undefined : id;
@@ -111,5 +100,25 @@ export class ChatDialogueComponent implements OnInit, AfterViewChecked {
         console.error(err);
       },
     });
+  }
+
+  /* Event listeners */
+  onInput(textarea: HTMLTextAreaElement) {
+    const maxRows = 5;
+    const lineHeight = parseInt(getComputedStyle(textarea).lineHeight);
+    const rows = Math.floor(textarea.scrollHeight / lineHeight);
+    if (rows > maxRows) {
+      textarea.style.height = `${maxRows * lineHeight}px`;
+    } else {
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  }
+
+  onKeydown(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault(); // prevent default behavior of adding a new line
+      this.sendMessage();
+    }
   }
 }

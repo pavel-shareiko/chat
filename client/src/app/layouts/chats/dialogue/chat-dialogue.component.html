@@ -33,7 +33,8 @@
         placeholder="Type a message"
         [(ngModel)]="newMessage"
         #chatInput
-        (input)="onInput(chatInput)"></textarea>
+        (input)="onInput(chatInput)"
+        (keydown)="onKeydown($event)"></textarea>
 
       <button
         class="btn send-button"
