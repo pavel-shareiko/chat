@@ -6,6 +6,8 @@ import { MessagesService } from '../messages.service';
 import { DateFormatterService } from '../../../common/date-formatter.service';
 import { AccountService } from 'src/app/auth/account.service';
 import { IUser } from 'src/app/models/user.model';
+import { Message } from '@stomp/stompjs';
+import { RxStompService } from 'src/app/shared/stomp/rx-stomp.service';
 
 @Component({
   selector: 'app-chat-dialogue',
@@ -28,7 +30,8 @@ export class ChatDialogueComponent implements OnInit, AfterViewChecked {
     private route: ActivatedRoute,
     private router: Router,
     private chatService: ChatService,
-    private messagesService: MessagesService
+    private messagesService: MessagesService,
+    private stompService: RxStompService
   ) {}
 
   ngOnInit(): void {
@@ -51,6 +54,20 @@ export class ChatDialogueComponent implements OnInit, AfterViewChecked {
         this.loadMessages();
       }
     });
+
+    this.stompService.watch(`/user/queue/messages`).subscribe((message: Message) => {
+      this.onMessageReceived(message);
+    });
+  }
+  async onMessageReceived(message: Message) {
+    const newMessage = JSON.parse(message.body) as IMessage;
+    this.messages = [newMessage, ...this.messages];
+
+    if (newMessage.sender.username !== this.currentUser?.username) {
+      const audio = new Audio();
+      audio.src = 'assets/audio/notifications/new-message.mp3';
+      audio.play();
+    }
   }
 
   ngAfterViewChecked(): void {
@@ -67,7 +84,7 @@ export class ChatDialogueComponent implements OnInit, AfterViewChecked {
       this.chatName = chat.displayName;
     });
   }
-  
+
   extractChatIdFromRoute(): number | undefined {
     const id = +this.route.snapshot.paramMap.get('id')!;
     return isNaN(id) ? undefined : id;
@@ -93,8 +110,6 @@ export class ChatDialogueComponent implements OnInit, AfterViewChecked {
     this.messagesService.sendMessage(this.dialogueId, this.newMessage).subscribe({
       next: () => {
         this.newMessage = '';
-        this.chatInput.nativeElement.style.height = 'auto';
-        this.loadMessages();
       },
       error: err => {
         console.error(err);
@@ -117,7 +132,7 @@ export class ChatDialogueComponent implements OnInit, AfterViewChecked {
 
   onKeydown(event: KeyboardEvent) {
     if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault(); // prevent default behavior of adding a new line
+      event.preventDefault();
       this.sendMessage();
     }
   }
