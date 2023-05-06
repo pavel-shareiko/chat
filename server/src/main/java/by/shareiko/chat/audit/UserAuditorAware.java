@@ -13,10 +13,6 @@ public class UserAuditorAware implements AuditorAware<User> {
     @Override
     public Optional<User> getCurrentAuditor() {
         Optional<UserPrincipal> currentUser = SecurityUtils.getCurrentUser();
-        if (currentUser.isEmpty()) {
-            return Optional.empty();
-        }
-
-        return Optional.ofNullable(currentUser.get().getDomainUser());
+        return currentUser.map(UserPrincipal::getDomainUser);
     }
 }
