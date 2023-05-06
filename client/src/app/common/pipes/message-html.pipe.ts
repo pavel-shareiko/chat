@@ -16,12 +16,12 @@ export class MessageHtmlPipe implements PipeTransform {
     // Replace URLs with clickable links
     message = message.replace(urlRegex, url => {
       const href = url.startsWith('http') ? url : `//${url}`;
-      return `<a href="${href}" target="_blank">${url}</a>`;
+      return `<a href="${href}" tabindex="-1">${url}</a>`;
     });
 
     // Replace email addresses with mailto links
     message = message.replace(emailRegex, email => {
-      return `<a href="mailto:${email}">${email}</a>`;
+      return `<a href="mailto:${email}" tabindex="-1">${email}</a>`;
     });
 
     // Replace newlines with <br>
