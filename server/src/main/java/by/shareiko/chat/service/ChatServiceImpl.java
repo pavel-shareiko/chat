@@ -64,6 +64,14 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
+    public Chat getChatWithParticipants(Long chatId) {
+        if (!doesCurrentUserParticipateInChat(chatId)) {
+            throw new UserUnauthorizedException("Current user is not allowed to access chat with id [" + chatId + "]");
+        }
+        return chatRepository.findById(chatId).orElseThrow(() -> new NotFoundException("Chat with id [" + chatId + "] not found"));
+    }
+
+    @Override
     public Chat startChat(String username) {
         if (StringUtils.isBlank(username)) {
             throw new BadRequestException("Username cannot be blank");
