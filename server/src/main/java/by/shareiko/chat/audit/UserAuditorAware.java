@@ -2,7 +2,7 @@ package by.shareiko.chat.audit;
 
 import by.shareiko.chat.domain.User;
 import by.shareiko.chat.security.SecurityUtils;
-import by.shareiko.chat.security.user.UserPrincipal;
+import by.shareiko.chat.dto.user.UserPrincipal;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 

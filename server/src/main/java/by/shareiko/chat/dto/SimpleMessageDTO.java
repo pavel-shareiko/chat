@@ -1,5 +1,6 @@
 package by.shareiko.chat.dto;
 
+import by.shareiko.chat.dto.user.SimpleUserDTO;
 import lombok.Data;
 
 import java.io.Serializable;

@@ -4,10 +4,8 @@ import by.shareiko.chat.domain.Chat;
 import by.shareiko.chat.domain.Message;
 import by.shareiko.chat.domain.User;
 import by.shareiko.chat.dto.ExtendedChatDTO;
-import by.shareiko.chat.dto.SimpleUserDTO;
 import lombok.extern.log4j.Log4j2;
 import org.mapstruct.*;
-import org.springframework.security.core.parameters.P;
 
 import java.util.Set;
 

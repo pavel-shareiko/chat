@@ -1,4 +1,4 @@
-package by.shareiko.chat.dto;
+package by.shareiko.chat.dto.user;
 
 import by.shareiko.chat.domain.Role;
 import lombok.Data;

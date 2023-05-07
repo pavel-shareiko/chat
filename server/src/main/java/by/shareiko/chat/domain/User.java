@@ -19,17 +19,17 @@ public class User {
     @SequenceGenerator(name = "user_id_generator", sequenceName = "user_id_seq", allocationSize = 1)
     private Long id;
 
-    @Column(name = "username", nullable = false, unique = true)
+    @Column(name = "username", nullable = false, unique = true, length = 20)
     private String username;
 
     @Column(name = "password", nullable = false)
     @JsonIgnore
     private String password;
 
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name", nullable = false, length = 35)
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name", nullable = false, length = 35)
     private String lastName;
 
     @Column(name = "active", nullable = false)

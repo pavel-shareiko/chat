@@ -1,7 +1,7 @@
 package by.shareiko.chat.security.jwt;
 
 import by.shareiko.chat.domain.User;
-import by.shareiko.chat.security.user.UserPrincipal;
+import by.shareiko.chat.dto.user.UserPrincipal;
 import by.shareiko.chat.security.exceptions.UserDeactivatedException;
 import by.shareiko.chat.service.UserService;
 import lombok.extern.log4j.Log4j2;

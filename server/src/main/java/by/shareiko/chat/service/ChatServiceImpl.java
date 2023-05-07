@@ -5,7 +5,7 @@ import by.shareiko.chat.domain.Message;
 import by.shareiko.chat.domain.User;
 import by.shareiko.chat.dto.ExtendedChatDTO;
 import by.shareiko.chat.dto.SimpleMessageDTO;
-import by.shareiko.chat.dto.SimpleUserDTO;
+import by.shareiko.chat.dto.user.SimpleUserDTO;
 import by.shareiko.chat.exception.BadRequestException;
 import by.shareiko.chat.exception.ChatAlreadyExists;
 import by.shareiko.chat.exception.ChatNotAllowedException;

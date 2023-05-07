@@ -1,7 +1,7 @@
 package by.shareiko.chat.service;
 
 import by.shareiko.chat.dto.ExtendedChatDTO;
-import by.shareiko.chat.dto.SimpleUserDTO;
+import by.shareiko.chat.dto.user.SimpleUserDTO;
 import by.shareiko.chat.exception.ChatNameResolutionException;
 import by.shareiko.chat.security.SecurityUtils;
 import org.springframework.stereotype.Service;

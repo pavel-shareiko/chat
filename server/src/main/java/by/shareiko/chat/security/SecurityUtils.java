@@ -2,7 +2,7 @@ package by.shareiko.chat.security;
 
 import java.util.Optional;
 
-import by.shareiko.chat.security.user.UserPrincipal;
+import by.shareiko.chat.dto.user.UserPrincipal;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
