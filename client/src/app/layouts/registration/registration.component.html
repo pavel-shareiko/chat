@@ -27,6 +27,11 @@
             control: form.controls['firstname'],
             errorKey: 'minlength',
             errorMessage: 'First name must be at least 3 characters long'
+          },
+          {
+            control: form.controls['firstname'],
+            errorKey: 'maxlength',
+            errorMessage: 'First name must be at most 35 characters long'
           }
         ]" />
     </div>
@@ -53,6 +58,11 @@
             control: form.controls['lastname'],
             errorKey: 'minlength',
             errorMessage: 'Last name must be at least 3 characters long'
+          },
+          {
+            control: form.controls['lastname'],
+            errorKey: 'maxlength',
+            errorMessage: 'Last name must be at most 35 characters long'
           }
         ]" />
     </div>
@@ -76,8 +86,7 @@
           },
           {
             control: form.controls['username'],
-            errorKey: 'usernameValidator',
-            errorMessage: 'Username doesn\'t match the requirements'
+            errorKey: 'usernameValidator'
           }
         ]" />
     </div>
@@ -101,8 +110,7 @@
           },
           {
             control: form.controls['password'],
-            errorKey: 'passwordValidator',
-            errorMessage: 'Password doesn\'t match the requirements'
+            errorKey: 'passwordValidator'
           }
         ]" />
     </div>

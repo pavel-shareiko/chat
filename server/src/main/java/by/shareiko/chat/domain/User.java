@@ -2,6 +2,7 @@ package by.shareiko.chat.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,6 +21,7 @@ public class User {
     private Long id;
 
     @Column(name = "username", nullable = false, unique = true, length = 20)
+    @Size(min = 5, max = 20)
     private String username;
 
     @Column(name = "password", nullable = false)
@@ -27,9 +29,11 @@ public class User {
     private String password;
 
     @Column(name = "first_name", nullable = false, length = 35)
+    @Size(min = 2, max = 35)
     private String firstName;
 
     @Column(name = "last_name", nullable = false, length = 35)
+    @Size(min = 2, max = 35)
     private String lastName;
 
     @Column(name = "active", nullable = false)

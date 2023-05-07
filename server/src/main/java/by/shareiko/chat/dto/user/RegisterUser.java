@@ -12,10 +12,12 @@ import lombok.Getter;
 public class RegisterUser {
     @NotEmpty(message = "Username is required")
     @Pattern(regexp = "^[a-zA-Z\\d]{5,}$", message = "Username must be at least 5 characters and must not contain spaces")
+    @Size(min = 5, max = 20, message = "Username must be between 5 and 20 characters")
     private String username;
 
     @NotEmpty(message = "Password is required")
     @Pattern(regexp = "^\\S{8,}$", message = "Username must be at least 5 characters and must not contain spaces")
+    @Size(min = 8)
     private String password;
 
     @NotEmpty(message = "First name is required")

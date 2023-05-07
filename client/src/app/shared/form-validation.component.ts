@@ -5,7 +5,8 @@ import { FormValidationService } from './form-validation.service';
 export interface FormError {
   control: AbstractControl;
   errorKey: string;
-  errorMessage: string | undefined;
+  errorMessage?: string;
+  preventDefault?: boolean;
 }
 
 @Component({
@@ -29,13 +30,21 @@ export class FormValidationComponent {
         validation.control,
         this.formSubmitted
       );
-      if (!wasTouched) return false;
+      if (!wasTouched) {
+        return false;
+      }
 
       if (validation.control.hasError(validation.errorKey)) {
         if (!validation.errorMessage) {
-          this.errorMessage = 'Please, enter valid data';
+          const error = validation.control.getError(validation.errorKey);
+          if (!validation.preventDefault && error && error['message']) {
+            this.errorMessage = error['message'];
+            return true;
+          }
+          this.errorMessage = 'Please provide a valid value';
           return true;
         }
+
         this.errorMessage = validation.errorMessage;
         return true;
       }
