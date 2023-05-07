@@ -12,7 +12,7 @@ export interface FormError {
 @Component({
   selector: 'app-form-validation[validations]',
   template: `
-    <div *ngIf="shouldDisplayError()" class="text-danger">
+    <div *ngIf="shouldDisplayError()" class="text-danger small">
       {{ errorMessage }}
     </div>
   `,

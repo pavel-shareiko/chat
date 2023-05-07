@@ -7,7 +7,7 @@
   <fieldset>
     <div
       [ngClass]="{
-        shake: formValidationService.isControlTouchedAndInvalid(
+        'shake invalid-input': formValidationService.isControlTouchedAndInvalid(
           form.controls['username'],
           isSubmitted
         )
@@ -27,7 +27,7 @@
     </div>
     <div
       [ngClass]="{
-        shake: formValidationService.isControlTouchedAndInvalid(
+        'shake invalid-input': formValidationService.isControlTouchedAndInvalid(
           form.controls['password'],
           isSubmitted
         )
