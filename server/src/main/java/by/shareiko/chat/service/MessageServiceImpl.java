@@ -59,7 +59,7 @@ public class MessageServiceImpl implements MessageService {
         Chat chat = chatService.getChatWithParticipants(newMessage.getChatId());
         SimpleMessageDTO simpleMessage = messageMapper.messageToSimpleMessageDTO(savedMessage);
         for (User receiver : chat.getParticipants()) {
-            messagingTemplate.convertAndSendToUser(receiver.getUsername(), "/queue/messages", simpleMessage);
+            messagingTemplate.convertAndSendToUser(receiver.getUsername(), "/queue/messages/new", simpleMessage);
         }
 
         return savedMessage;

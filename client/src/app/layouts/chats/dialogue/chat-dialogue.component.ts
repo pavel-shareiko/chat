@@ -55,7 +55,7 @@ export class ChatDialogueComponent implements OnInit, AfterViewChecked {
       }
     });
 
-    this.stompService.watch(`/user/queue/messages`).subscribe((message: Message) => {
+    this.stompService.watch(`/user/queue/messages/new`).subscribe((message: Message) => {
       this.onMessageReceived(message);
     });
   }
