@@ -33,13 +33,21 @@
   font-size: 14px;
   line-height: 16px;
   color: #888;
-  
-  display: inline-block;
-  width: 100%;
-
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+  p {
+    margin-bottom: 0;
+    display: inline-block;
+    max-width: 80%;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.chat-item__sender {
+  display: inline;
+  color: #c4baba;
 }
 
 .chat-item__empty {
