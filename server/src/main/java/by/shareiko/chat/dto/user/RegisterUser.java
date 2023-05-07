@@ -25,6 +25,6 @@ public class RegisterUser {
     private String firstName;
 
     @NotEmpty(message = "Last name is required")
-    @Size(min = 2, max = 35, message = "First name must be between 2 and 35 characters")
+    @Size(min = 2, max = 35, message = "Last name must be between 2 and 35 characters")
     private String lastName;
 }

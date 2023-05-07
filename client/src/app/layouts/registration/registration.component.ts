@@ -4,8 +4,6 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { CustomValidators } from '../../shared/validators';
 import { FormValidationService } from '../../shared/form-validation.service';
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-registration',
@@ -64,16 +62,35 @@ export class RegistrationComponent {
       },
       // If there is an error, display a message to the user and clear the form
       error: errorResponse => {
+        this.requestSubmitted = false;
+
         if (!this.errorMessage) {
-          this.errorMessage = errorResponse.error.message;
-          this.requestSubmitted = false;
+          if (
+            errorResponse.status === 400 &&
+            errorResponse.error.message.includes('Validation failed')
+          ) {
+            this.errorMessage = this.extractComposedErrorMessage(errorResponse.error.errors);
+          } else {
+            this.errorMessage = errorResponse.error.message;
+          }
 
           // Clear the error message after 5 seconds
           setTimeout(() => {
             this.errorMessage = '';
-          }, 5000);
+          }, 8000);
         }
       },
     });
+  }
+  extractComposedErrorMessage(errors: any): string {
+    const errorMessages = errors.map((error: any) => {
+      return `<li>${error.defaultMessage}</li>`;
+    });
+    return `
+      <p>Your registration form contains following errors:</p>
+      <ul> 
+        ${errorMessages.join('')} 
+      </ul>
+    `;
   }
 }
