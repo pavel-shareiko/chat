@@ -39,6 +39,7 @@ public class SecurityConfiguration {
             .and()
                 .authorizeHttpRequests()
                     .requestMatchers("/api/v1/auth/**").permitAll()
+                    .requestMatchers("/ws/**").permitAll()
                     .requestMatchers("/api/**").authenticated()
             .and()
                 .apply(new JwtConfigurerAdapter(jwtTokenProvider))

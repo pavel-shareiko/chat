@@ -17,6 +17,7 @@ public interface MessageMapper {
 
     Message simpleMessageDTOToMessage(SimpleMessageDTO simpleMessageDTO);
 
+    @Mapping(source = "chat.id", target = "chatId")
     SimpleMessageDTO messageToSimpleMessageDTO(Message message);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

@@ -80,6 +80,12 @@ fieldset {
   }
 }
 
+.error-container {
+  ::ng-deep ul {
+    margin: 0;
+  }
+}
+
 .submit-btn:hover {
   filter: brightness(100% - $darken-ratio);
 }

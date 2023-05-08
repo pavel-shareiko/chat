@@ -8,7 +8,7 @@ import java.util.List;
 public interface MessageService {
     List<Message> getChatMessages(Long chatId);
 
-    Message saveMessage(NewMessageDTO newMessage);
+    Message saveMessageAndNotifyListeners(NewMessageDTO newMessage);
 
     void deleteMessage(Long id);
 

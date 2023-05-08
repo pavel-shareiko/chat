@@ -5,7 +5,7 @@ import by.shareiko.chat.domain.Message;
 import by.shareiko.chat.domain.User;
 import by.shareiko.chat.dto.ExtendedChatDTO;
 import by.shareiko.chat.dto.SimpleMessageDTO;
-import by.shareiko.chat.dto.SimpleUserDTO;
+import by.shareiko.chat.dto.user.SimpleUserDTO;
 import by.shareiko.chat.exception.BadRequestException;
 import by.shareiko.chat.exception.ChatAlreadyExists;
 import by.shareiko.chat.exception.ChatNotAllowedException;
@@ -61,6 +61,14 @@ public class ChatServiceImpl implements ChatService {
         }
         Chat chat = chatRepository.findById(chatId).orElseThrow(() -> new NotFoundException("Chat with id [" + chatId + "] not found"));
         return getExtendedChat(chat);
+    }
+
+    @Override
+    public Chat getChatWithParticipants(Long chatId) {
+        if (!doesCurrentUserParticipateInChat(chatId)) {
+            throw new UserUnauthorizedException("Current user is not allowed to access chat with id [" + chatId + "]");
+        }
+        return chatRepository.findById(chatId).orElseThrow(() -> new NotFoundException("Chat with id [" + chatId + "] not found"));
     }
 
     @Override

@@ -1,7 +1,10 @@
 package by.shareiko.chat.service;
 
+import by.shareiko.chat.domain.Chat;
 import by.shareiko.chat.domain.Message;
+import by.shareiko.chat.domain.User;
 import by.shareiko.chat.dto.NewMessageDTO;
+import by.shareiko.chat.dto.SimpleMessageDTO;
 import by.shareiko.chat.exception.BadRequestException;
 import by.shareiko.chat.exception.NotFoundException;
 import by.shareiko.chat.exception.UserUnauthorizedException;
@@ -11,6 +14,7 @@ import by.shareiko.chat.repository.MessageRepository;
 import by.shareiko.chat.security.SecurityUtils;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +26,7 @@ public class MessageServiceImpl implements MessageService {
     private final ChatRepository chatRepository;
     private final MessageMapper messageMapper;
     private final ChatService chatService;
+    private final SimpMessagingTemplate messagingTemplate;
 
     @Override
     public List<Message> getChatMessages(Long chatId) {
@@ -36,7 +41,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Message saveMessage(NewMessageDTO newMessage) {
+    public Message saveMessageAndNotifyListeners(NewMessageDTO newMessage) {
         if (StringUtils.isBlank(newMessage.getContent())) {
             throw new BadRequestException("Message content cannot be blank");
         }
@@ -49,7 +54,15 @@ public class MessageServiceImpl implements MessageService {
             throw new UserUnauthorizedException("Current user doesn't have enough permissions to send a message to a chat with id " + newMessage.getChatId());
         }
 
-        return messageRepository.save(message);
+        Message savedMessage = messageRepository.save(message);
+
+        Chat chat = chatService.getChatWithParticipants(newMessage.getChatId());
+        SimpleMessageDTO simpleMessage = messageMapper.messageToSimpleMessageDTO(savedMessage);
+        for (User receiver : chat.getParticipants()) {
+            messagingTemplate.convertAndSendToUser(receiver.getUsername(), "/queue/messages/new", simpleMessage);
+        }
+
+        return savedMessage;
     }
 
     @Override

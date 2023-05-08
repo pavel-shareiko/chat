@@ -1,10 +1,10 @@
 package by.shareiko.chat.mapper;
 
 import by.shareiko.chat.domain.User;
-import by.shareiko.chat.dto.SimpleUserDTO;
-import by.shareiko.chat.dto.UserWithAuthorities;
-import by.shareiko.chat.security.user.LoginUser;
-import by.shareiko.chat.security.user.RegisterUser;
+import by.shareiko.chat.dto.user.SimpleUserDTO;
+import by.shareiko.chat.dto.user.UserWithAuthorities;
+import by.shareiko.chat.dto.user.LoginUser;
+import by.shareiko.chat.dto.user.RegisterUser;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;

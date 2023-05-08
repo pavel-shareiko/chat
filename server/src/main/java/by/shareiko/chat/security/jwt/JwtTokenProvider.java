@@ -3,7 +3,6 @@ package by.shareiko.chat.security.jwt;
 import by.shareiko.chat.domain.Role;
 import by.shareiko.chat.domain.User;
 import by.shareiko.chat.security.SecurityConstantsProvider;
-import by.shareiko.chat.security.exceptions.JwtAuthenticationException;
 import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -5,6 +5,8 @@ import by.shareiko.chat.dto.NewMessageDTO;
 import by.shareiko.chat.service.MessageService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,10 +29,11 @@ public class MessageController {
         return ResponseEntity.ok(chatMessages);
     }
 
-    @PostMapping
-    public ResponseEntity<Message> createMessage(@RequestBody NewMessageDTO newMessage) {
-        Message savedMessage = messageService.saveMessage(newMessage);
-        return ResponseEntity.ok(savedMessage);
+    @Transactional
+    @MessageMapping("/chats/messages")
+    public void sendMessage(@Payload NewMessageDTO newMessage) {
+        log.info("Request to send message: {}", newMessage);
+        messageService.saveMessageAndNotifyListeners(newMessage);
     }
 
     @DeleteMapping("/{id}")

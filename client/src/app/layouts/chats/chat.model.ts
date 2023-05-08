@@ -8,6 +8,7 @@ export interface IChat {
 
 export interface IMessage {
   id: number;
+  chatId: number;
   content: string;
   sender: IParticipant;
   createdAt: Date;

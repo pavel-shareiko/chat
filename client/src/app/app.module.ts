@@ -21,6 +21,8 @@ import { MessageGroupingPipe } from './common/pipes/message-grouping.pipe';
 import { MessageHtmlPipe } from './common/pipes/message-html.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TextFieldModule } from '@angular/cdk/text-field';
+import { rxStompServiceFactory } from './shared/stomp/rx-stomp-service-factory';
+import { RxStompService } from './shared/stomp/rx-stomp.service';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthExpiredInterceptor, multi: true },
+    { provide: RxStompService, useFactory: rxStompServiceFactory },
   ],
   bootstrap: [MainComponent],
 })

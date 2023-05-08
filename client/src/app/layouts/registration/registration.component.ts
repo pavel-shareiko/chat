@@ -4,24 +4,11 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { CustomValidators } from '../../shared/validators';
 import { FormValidationService } from '../../shared/form-validation.service';
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['../login/login.component.scss'],
-  animations: [
-    trigger('fadeInOut', [
-      state(
-        'void',
-        style({
-          opacity: 0,
-        })
-      ),
-      transition('void <=> *', animate('500ms ease-in-out')),
-    ]),
-  ],
 })
 export class RegistrationComponent {
   form: FormGroup;
@@ -37,8 +24,8 @@ export class RegistrationComponent {
   ) {
     this.form = this.fb.group(
       {
-        firstname: ['', [Validators.required, Validators.minLength(3)]],
-        lastname: ['', [Validators.required, Validators.minLength(3)]],
+        firstname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(35)]],
+        lastname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(35)]],
         username: ['', [Validators.required, CustomValidators.usernameValidator]],
         password: ['', [Validators.required, CustomValidators.passwordValidator]],
       },
@@ -51,19 +38,19 @@ export class RegistrationComponent {
   register() {
     // Set isSubmitted flag to true
     this.isSubmitted = true;
-  
+
     // Only continue if the form is valid and a request hasn't already been submitted
     if (this.form.invalid || this.requestSubmitted) {
       return;
     }
-  
+
     // Set requestSubmitted flag to true to prevent multiple form submissions
     this.requestSubmitted = true;
-  
+
     // Extract form values into an object with more descriptive keys
     const { firstname, lastname, username, password } = this.form.value;
     const registrationData = { firstName: firstname, lastName: lastname, username, password };
-  
+
     // Call the register function in the auth service
     this.authService.register(registrationData).subscribe({
       // If the registration is successful, log the user in
@@ -75,16 +62,35 @@ export class RegistrationComponent {
       },
       // If there is an error, display a message to the user and clear the form
       error: errorResponse => {
+        this.requestSubmitted = false;
+
         if (!this.errorMessage) {
-          this.errorMessage = errorResponse.error.message;
-          this.requestSubmitted = false;
-  
+          if (
+            errorResponse.status === 400 &&
+            errorResponse.error.message.includes('Validation failed')
+          ) {
+            this.errorMessage = this.extractComposedErrorMessage(errorResponse.error.errors);
+          } else {
+            this.errorMessage = errorResponse.error.message;
+          }
+
           // Clear the error message after 5 seconds
           setTimeout(() => {
             this.errorMessage = '';
-          }, 5000);
+          }, 8000);
         }
       },
     });
+  }
+  extractComposedErrorMessage(errors: any): string {
+    const errorMessages = errors.map((error: any) => {
+      return `<li>${error.defaultMessage}</li>`;
+    });
+    return `
+      <p>Your registration form contains following errors:</p>
+      <ul> 
+        ${errorMessages.join('')} 
+      </ul>
+    `;
   }
 }

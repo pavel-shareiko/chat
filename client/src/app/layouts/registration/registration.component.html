@@ -1,13 +1,11 @@
 <form (ngSubmit)="register()" [formGroup]="form" class="login-form">
   <div *ngIf="errorMessage">
-    <div class="alert alert-danger" role="alert">
-      {{ errorMessage }}
-    </div>
+    <div class="alert alert-danger error-container" role="alert" [innerHTML]="errorMessage"></div>
   </div>
   <fieldset>
     <div
       [ngClass]="{
-        shake: formValidationService.isControlTouchedAndInvalid(
+        'shake invalid-input': formValidationService.isControlTouchedAndInvalid(
           form.controls['firstname'],
           isSubmitted
         )
@@ -27,12 +25,17 @@
             control: form.controls['firstname'],
             errorKey: 'minlength',
             errorMessage: 'First name must be at least 3 characters long'
+          },
+          {
+            control: form.controls['firstname'],
+            errorKey: 'maxlength',
+            errorMessage: 'First name must be at most 35 characters long'
           }
         ]" />
     </div>
     <div
       [ngClass]="{
-        shake: formValidationService.isControlTouchedAndInvalid(
+        'shake invalid-input': formValidationService.isControlTouchedAndInvalid(
           form.controls['lastname'],
           isSubmitted
         )
@@ -53,12 +56,17 @@
             control: form.controls['lastname'],
             errorKey: 'minlength',
             errorMessage: 'Last name must be at least 3 characters long'
+          },
+          {
+            control: form.controls['lastname'],
+            errorKey: 'maxlength',
+            errorMessage: 'Last name must be at most 35 characters long'
           }
         ]" />
     </div>
     <div
       [ngClass]="{
-        shake: formValidationService.isControlTouchedAndInvalid(
+        'shake invalid-input': formValidationService.isControlTouchedAndInvalid(
           form.controls['username'],
           isSubmitted
         )
@@ -76,14 +84,13 @@
           },
           {
             control: form.controls['username'],
-            errorKey: 'usernameValidator',
-            errorMessage: 'Username doesn\'t match the requirements'
+            errorKey: 'usernameValidator'
           }
         ]" />
     </div>
     <div
       [ngClass]="{
-        shake: formValidationService.isControlTouchedAndInvalid(
+        'shake invalid-input': formValidationService.isControlTouchedAndInvalid(
           form.controls['password'],
           isSubmitted
         )
@@ -101,8 +108,7 @@
           },
           {
             control: form.controls['password'],
-            errorKey: 'passwordValidator',
-            errorMessage: 'Password doesn\'t match the requirements'
+            errorKey: 'passwordValidator'
           }
         ]" />
     </div>

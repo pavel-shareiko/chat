@@ -12,6 +12,8 @@ public interface ChatService {
 
     ExtendedChatDTO getChat(Long chatId);
 
+    Chat getChatWithParticipants(Long chatId);
+
     Chat startChat(String username);
 
     boolean hasChatWithUser(String username);
