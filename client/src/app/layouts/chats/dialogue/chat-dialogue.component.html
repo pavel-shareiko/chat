@@ -1,9 +1,33 @@
 <div class="container text-white">
   <div class="row mt-3 mb-3">
     <hr class="my-1" />
-    <div class="chat-header">
+    <div class="chat-header" *ngIf="selectedMessages.length === 0">
       <button class="btn btn-primary chat-header__back" (click)="goBack()">&lt; Back</button>
       <h5 class="chat-header__chat-name">{{ chatName }}</h5>
+    </div>
+
+    <!-- selected messages management bar -->
+    <div class="chat-header selected-messages-bar" *ngIf="selectedMessages.length !== 0">
+      <div class="selected-messages-bar__count">
+        {{ selectedMessages.length }} messages selected
+      </div>
+      <div class="selected-messages-bar__controls">
+        <button
+          class="btn selected-messages-bar__delete"
+          *ngIf="allSelectedMessagesAreFromCurrentUser()"
+          (click)="deleteSelected()">
+          Delete
+        </button>
+        <button
+          class="btn selected-messages-bar__edit"
+          *ngIf="
+            selectedMessages.length === 1 &&
+            selectedMessages[0].sender.username === currentUser?.username
+          "
+          (click)="enterEditMode()">
+          Edit
+        </button>
+      </div>
     </div>
     <hr class="my-1" />
   </div>
@@ -16,13 +40,16 @@
         </div>
         <div
           *ngFor="let message of group"
+          id="message-{{ message.id }}"
           class="text-white message"
+          (click)="onMessageClick(message, $event)"
           [ngClass]="
             message.sender.username === currentUser?.username ? 'message-right' : 'message-left'
           ">
           <div class="message__content" [innerHTML]="message.content | messageHtml"></div>
           <div class="message__timestamp text-muted small">
             {{ message.createdAt | date : 'HH:mm' }}
+            <span *ngIf="message.createdAt !== message.modifiedAt" class="ml-1">(Edited)</span>
           </div>
         </div>
       </div>
@@ -43,7 +70,7 @@
         class="btn send-button"
         (click)="sendMessage()"
         [disabled]="!newMessage || newMessage.trim().length === 0">
-        Send
+        {{ editMode ? 'Edit' : 'Send' }}
       </button>
     </div>
   </div>

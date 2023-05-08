@@ -128,7 +128,7 @@ public class MessageServiceImplTest {
 
         // Act & Assert
         BadRequestException exception = assertThrows(BadRequestException.class,
-                () -> messageService.saveMessageAndNotifyListeners(newMessage));
+                () -> messageService.saveMessage(newMessage));
 
         assertEquals("Message content cannot be blank", exception.getMessage());
         verifyNoInteractions(messageRepository, chatService);
@@ -143,7 +143,7 @@ public class MessageServiceImplTest {
 
         // Act & Assert
         BadRequestException exception = assertThrows(BadRequestException.class,
-                () -> messageService.saveMessageAndNotifyListeners(newMessage));
+                () -> messageService.saveMessage(newMessage));
 
         assertEquals("Chat cannot be null", exception.getMessage());
         verifyNoInteractions(messageRepository, chatService);
@@ -160,7 +160,7 @@ public class MessageServiceImplTest {
 
         // Act & Assert
         UserUnauthorizedException exception = assertThrows(UserUnauthorizedException.class,
-                () -> messageService.saveMessageAndNotifyListeners(newMessage));
+                () -> messageService.saveMessage(newMessage));
 
         assertEquals("Current user doesn't have enough permissions to send a message to a chat with id " + newMessage.getChatId(), exception.getMessage());
         verify(chatService).doesCurrentUserParticipateInChat(newMessage.getChatId());
@@ -183,7 +183,7 @@ public class MessageServiceImplTest {
         when(messageMapper.newMessageDTOToMessage(newMessage)).thenReturn(message);
 
         // Act
-        Message savedMessage = messageService.saveMessageAndNotifyListeners(newMessage);
+        Message savedMessage = messageService.saveMessage(newMessage);
 
         // Assert
         assertEquals(message, savedMessage);
