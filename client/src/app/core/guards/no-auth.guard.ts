@@ -12,7 +12,7 @@ import { AccountService } from '../../shared/services/account.service';
 @Injectable({
   providedIn: 'root',
 })
-export class LoginGuard implements CanActivate {
+export class NoAuthGuard implements CanActivate {
   constructor(private accountService: AccountService, private router: Router) {}
 
   canActivate(
