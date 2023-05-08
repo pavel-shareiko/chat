@@ -1,11 +1,11 @@
 import { Message } from '@stomp/stompjs';
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { IChat, IMessage } from '../chat.model';
+import { IChat, IMessage } from '../../../core/models/chat.model';
 import { RxStompService } from 'src/app/shared/stomp/rx-stomp.service';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { IUser } from 'src/app/core/models/user.model';
-import { ChatService } from '../chat.service';
+import { ChatService } from '../services/chat.service';
 
 @Component({
   selector: 'app-chat-list',

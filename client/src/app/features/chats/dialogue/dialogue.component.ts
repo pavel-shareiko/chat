@@ -1,20 +1,19 @@
 import { Component, ElementRef, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IMessage } from '../chat.model';
+import { IMessage } from '../../../core/models/chat.model';
 import { DateFormatterService } from '../../../shared/services/date-formatter.service';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { IUser } from 'src/app/core/models/user.model';
 import { Message } from '@stomp/stompjs';
 import { RxStompService } from 'src/app/shared/stomp/rx-stomp.service';
-import { ChatService } from '../chat.service';
-import { MessagesService } from '../messages.service';
+import { ChatService } from '../services/chat.service';
+import { MessagesService } from '../services/messages.service';
 
 @Component({
-  selector: 'app-chat-dialogue',
-  templateUrl: './chat-dialogue.component.html',
-  styleUrls: ['./chat-dialogue.component.scss'],
+  templateUrl: './dialogue.component.html',
+  styleUrls: ['./dialogue.component.scss'],
 })
-export class ChatDialogueComponent implements OnInit, OnChanges {
+export class DialogueComponent implements OnInit, OnChanges {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
   @ViewChild('chatInput') chatInput!: ElementRef;
   public chatName: string = '';

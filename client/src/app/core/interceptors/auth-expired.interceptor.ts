@@ -9,9 +9,11 @@ import {
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-
 import { AuthService } from '../../shared/services/auth.service';
-@Injectable()
+
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthExpiredInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService, private router: Router) {}
 

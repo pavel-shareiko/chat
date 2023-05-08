@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApplicationConfigService } from 'src/app/core/config/application-config.service';
-import { IChat } from './chat.model';
+import { IChat } from '../../../core/models/chat.model';
 import { Observable } from 'rxjs';
 
 @Injectable({

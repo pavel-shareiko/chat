@@ -1,6 +1,6 @@
 import { DateFormatterService } from '../../../shared/services/date-formatter.service';
 import { Component, Input } from '@angular/core';
-import { ChatType, IChat } from '../chat.model';
+import { ChatType, IChat } from '../../../core/models/chat.model';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { IUser } from 'src/app/core/models/user.model';
