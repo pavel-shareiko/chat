@@ -1,3 +1,4 @@
+import { environment } from 'src/app/environment/environment';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  appName = 'Chat';
+  public readonly applicationName = environment.applicationName;
 }
