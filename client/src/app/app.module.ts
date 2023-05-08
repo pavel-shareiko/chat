@@ -1,58 +1,30 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
-import { MainComponent } from './layouts/main/main.component';
-import { LoginComponent } from './layouts/login/login.component';
-import { AuthInterceptor } from './auth/auth.interceptor';
-import { RegistrationComponent } from './layouts/registration/registration.component';
-
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormValidationComponent } from './shared/form-validation.component';
-import { NotFoundComponent } from './layouts/not-found/not-found.component';
-import { ChatListComponent } from './layouts/chats/list/chat-list.component';
-import { ChatComponent } from './layouts/chats/chat/chat.component';
-import { HeaderComponent } from './header/header.component';
-import { AuthExpiredInterceptor } from './auth/auth-expired.interceptor';
-import { ChatDialogueComponent } from './layouts/chats/dialogue/chat-dialogue.component';
-import { MessageGroupingPipe } from './common/pipes/message-grouping.pipe';
-import { MessageHtmlPipe } from './common/pipes/message-html.pipe';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TextFieldModule } from '@angular/cdk/text-field';
-import { rxStompServiceFactory } from './shared/stomp/rx-stomp-service-factory';
-import { RxStompService } from './shared/stomp/rx-stomp.service';
+import { MainComponent } from './core/components/main/main.component';
+import { CoreModule } from './core/core.module';
+import { FormValidationModule } from './shared/forms/form-validation.module';
+import { LoginModule } from './features/login/login.module';
+import { RegistrationModule } from './features/registration/registration.module';
+import { DialogueModule } from './features/chats/dialogue/dialogue.module';
+import { ChatsModule } from './features/chats/chats.module';
+import { NotFoundModule } from './core/components/not-found/not-found.module';
 
 @NgModule({
-  declarations: [
-    MainComponent,
-    LoginComponent,
-    RegistrationComponent,
-    NotFoundComponent,
-    FormValidationComponent,
-    ChatComponent,
-    ChatListComponent,
-    HeaderComponent,
-    ChatDialogueComponent,
-    MessageGroupingPipe,
-    MessageHtmlPipe,
-  ],
+  declarations: [MainComponent],
   imports: [
     BrowserModule,
-    FormsModule,
     AppRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    NgbModule,
-    BrowserAnimationsModule,
-    TextFieldModule,
+    NotFoundModule,
+    CoreModule,
+    DialogueModule,
+    FormValidationModule,
+    ChatsModule,
+    LoginModule,
+    RegistrationModule,
   ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthExpiredInterceptor, multi: true },
-    { provide: RxStompService, useFactory: rxStompServiceFactory },
-  ],
+  providers: [],
   bootstrap: [MainComponent],
 })
 export class AppModule {}
