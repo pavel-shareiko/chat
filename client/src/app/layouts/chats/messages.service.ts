@@ -30,6 +30,15 @@ export class MessagesService {
     );
   }
 
+  editMessage(messageId: number, content: string): Observable<void> {
+    return of(
+      this.stompService.publish({
+        destination: `/app/messages/edit`,
+        body: JSON.stringify({ messageId: messageId, newContent: content }),
+      })
+    );
+  }
+
   deleteMessage(message: IMessage | number): Observable<void> {
     const messageId: number = typeof message === 'number' ? message : message.id;
     return of(

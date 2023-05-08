@@ -1,6 +1,7 @@
 package by.shareiko.chat.controller;
 
 import by.shareiko.chat.domain.Message;
+import by.shareiko.chat.dto.MessageUpdateDTO;
 import by.shareiko.chat.dto.NewMessageDTO;
 import by.shareiko.chat.service.MessageService;
 import lombok.extern.log4j.Log4j2;
@@ -51,9 +52,10 @@ public class MessageController {
         messageService.deleteAllMessages(messageIds);
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<Message> updateMessage(@PathVariable Long id, @RequestBody String newContent) {
-        Message updatedMessage = messageService.updateMessage(id, newContent);
-        return ResponseEntity.ok(updatedMessage);
+    @Transactional
+    @MessageMapping("/messages/edit")
+    public void updateMessage(@Payload MessageUpdateDTO newMessage) {
+        log.info("Request to update message: {}", newMessage.getMessageId());
+        messageService.updateMessage(newMessage.getMessageId(), newMessage.getNewContent());
     }
 }

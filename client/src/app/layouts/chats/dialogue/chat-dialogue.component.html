@@ -24,7 +24,7 @@
             selectedMessages.length === 1 &&
             selectedMessages[0].sender.username === currentUser?.username
           "
-          (click)="editSelected()">
+          (click)="enterEditMode()">
           Edit
         </button>
       </div>
@@ -49,6 +49,7 @@
           <div class="message__content" [innerHTML]="message.content | messageHtml"></div>
           <div class="message__timestamp text-muted small">
             {{ message.createdAt | date : 'HH:mm' }}
+            <span *ngIf="message.createdAt !== message.modifiedAt" class="ml-1">(Edited)</span>
           </div>
         </div>
       </div>

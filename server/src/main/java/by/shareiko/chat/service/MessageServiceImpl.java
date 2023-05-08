@@ -37,6 +37,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    @Transactional
     public Message saveMessage(NewMessageDTO newMessage) {
         if (StringUtils.isBlank(newMessage.getContent())) {
             throw new BadRequestException("Message content cannot be blank");
@@ -54,6 +55,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    @Transactional
     public Message updateMessage(Long messageId, String newContent) {
         if (messageId == null) {
             throw new BadRequestException("Message id cannot be null");

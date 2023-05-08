@@ -47,8 +47,15 @@ public class MessageStompServiceImpl implements MessageService {
     }
 
     @Override
+    @Transactional
     public Message updateMessage(Long messageId, String newContent) {
-        return messageService.updateMessage(messageId, newContent);
+        Message updatedMessage = messageService.updateMessage(messageId, newContent);
+
+        for (User participant : updatedMessage.getChat().getParticipants()) {
+            messagingTemplate.convertAndSendToUser(participant.getUsername(), "/queue/messages/edit", updatedMessage);
+        }
+
+        return updatedMessage;
     }
 
     @Override
