@@ -1,4 +1,7 @@
 .chat-header {
+  height: 40px;
+  max-height: 40px;
+  min-height: 40px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
@@ -102,12 +105,12 @@
 
 .message-right {
   align-self: flex-end;
-  background-color: #272a35;
+  background-color: var(--msg-right);
 }
 
 .message-left {
   align-self: flex-start;
-  background-color: #373e4e;
+  background-color: var(--msg-left);
 }
 
 .message__content {
@@ -120,6 +123,52 @@
   ::ng-deep a:hover {
     text-decoration: none;
   }
+}
+
+.message__selected {
+  background-color: var(--msg-selected);
+}
+
+.selected-messages-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1e232e;
+  color: var(--bs-white);
+
+  button {
+    font-size: 16px;
+    border: none;
+    color: var(--bs-white);
+    cursor: pointer;
+  }
+}
+
+.selected-messages-bar__count {
+  font-size: 16px;
+}
+
+.selected-messages-bar__controls {
+  display: flex;
+  align-items: center;
+}
+
+.selected-messages-bar__delete {
+  background-color: #c0392b;
+  margin-right: 16px;
+}
+
+.selected-messages-bar__delete:hover {
+  background-color: #d35400;
+}
+
+.selected-messages-bar__edit {
+  background-color: #2980b9;
+}
+
+.selected-messages-bar__edit:hover {
+  background-color: #3498db;
+  cursor: pointer;
 }
 
 .message__timestamp {

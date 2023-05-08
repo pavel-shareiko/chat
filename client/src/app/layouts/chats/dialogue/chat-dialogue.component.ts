@@ -19,6 +19,7 @@ export class ChatDialogueComponent implements OnInit, AfterViewChecked {
   @ViewChild('chatInput') chatInput!: ElementRef;
   public chatName: string = '';
   public messages: IMessage[] = [];
+  public selectedMessages: IMessage[] = [];
   public currentUser: IUser | null = null;
   public loadingMessages = true;
   public newMessage: string = '';
@@ -117,6 +118,16 @@ export class ChatDialogueComponent implements OnInit, AfterViewChecked {
     });
   }
 
+  deleteSelected(): void {}
+
+  editSelected(): void {}
+
+  allSelectedMessagesAreFromCurrentUser(): boolean {
+    return this.selectedMessages.every(
+      message => message.sender.username === this.currentUser?.username
+    );
+  }
+
   /* Event listeners */
   onInput(textarea: HTMLTextAreaElement) {
     const maxRows = 5;
@@ -135,5 +146,23 @@ export class ChatDialogueComponent implements OnInit, AfterViewChecked {
       event.preventDefault();
       this.sendMessage();
     }
+  }
+  onMessageClick(clickedMessage: IMessage, event: MouseEvent) {
+    const messageIndex = this.selectedMessages.indexOf(clickedMessage);
+    console.log(event)
+    const target = event.currentTarget as HTMLElement;
+    if (messageIndex === -1) {
+      this.selectMessage(clickedMessage, target);
+    } else {
+      this.unselectMessage(messageIndex, target);
+    }
+  }
+  selectMessage(clickedMessage: IMessage, htmlElement: HTMLElement) {
+    this.selectedMessages.push(clickedMessage);
+    htmlElement.classList.add('message__selected');
+  }
+  unselectMessage(messageIndex: number, htmlElement: HTMLElement) {
+    this.selectedMessages.splice(messageIndex, 1);
+    htmlElement.classList.remove('message__selected');
   }
 }

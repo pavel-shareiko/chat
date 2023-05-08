@@ -41,6 +41,9 @@ $chat-theme: mat.define-light-theme(
   --bs-body-bg: #292f3f !important;
   --bs-white: #fff !important;
   --bs-red: #d32f2f !important;
+  --msg-left: #373e4e;
+  --msg-right: #272a35;
+  --msg-selected: #313b5c;
 }
 
 body {
