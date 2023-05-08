@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApplicationConfigService } from 'src/app/config/application-config.service';
+import { ApplicationConfigService } from 'src/app/core/config/application-config.service';
 import { IMessage } from './chat.model';
 import { Observable, of } from 'rxjs';
 import { RxStompService } from 'src/app/shared/stomp/rx-stomp.service';

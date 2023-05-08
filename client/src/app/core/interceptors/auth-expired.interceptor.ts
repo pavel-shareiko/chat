@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
-import { AuthService } from './auth.service';
+import { AuthService } from '../../shared/services/auth.service';
 @Injectable()
 export class AuthExpiredInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService, private router: Router) {}

@@ -1,9 +1,9 @@
-import { DateFormatterService } from '../../../common/date-formatter.service';
+import { DateFormatterService } from '../../../shared/services/date-formatter.service';
 import { Component, Input } from '@angular/core';
 import { ChatType, IChat } from '../chat.model';
 import { Router } from '@angular/router';
-import { AccountService } from 'src/app/auth/account.service';
-import { IUser } from 'src/app/models/user.model';
+import { AccountService } from 'src/app/shared/services/account.service';
+import { IUser } from 'src/app/core/models/user.model';
 
 @Component({
   selector: 'app-chat[chat]',

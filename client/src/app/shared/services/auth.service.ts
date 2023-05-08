@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject, catchError, mergeMap, of, shareReplay, tap } from 'rxjs';
-import { ApplicationConfigService } from '../config/application-config.service';
-import { IUser, LoginUser, RegistrationUser } from '../models/user.model';
+import { ApplicationConfigService } from '../../core/config/application-config.service';
+import { IUser, LoginUser, RegistrationUser } from '../../core/models/user.model';
 import { AccountService } from './account.service';
 
 @Injectable({ providedIn: 'root' })

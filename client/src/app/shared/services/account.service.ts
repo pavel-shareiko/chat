@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { IUser } from '../models/user.model';
+import { IUser } from '../../core/models/user.model';
 import { Observable, ReplaySubject, catchError, of, shareReplay, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { ApplicationConfigService } from '../config/application-config.service';
+import { ApplicationConfigService } from '../../core/config/application-config.service';
 
 @Injectable({
   providedIn: 'root',

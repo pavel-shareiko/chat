@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IMessage } from 'src/app/layouts/chats/chat.model';
+import { IMessage } from 'src/app/features/chats/chat.model';
 
 @Pipe({
   name: 'messageGrouping',

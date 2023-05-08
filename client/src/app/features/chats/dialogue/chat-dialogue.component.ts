@@ -1,13 +1,13 @@
 import { Component, ElementRef, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ChatService } from '../chat.service';
 import { IMessage } from '../chat.model';
-import { MessagesService } from '../messages.service';
-import { DateFormatterService } from '../../../common/date-formatter.service';
-import { AccountService } from 'src/app/auth/account.service';
-import { IUser } from 'src/app/models/user.model';
+import { DateFormatterService } from '../../../shared/services/date-formatter.service';
+import { AccountService } from 'src/app/shared/services/account.service';
+import { IUser } from 'src/app/core/models/user.model';
 import { Message } from '@stomp/stompjs';
 import { RxStompService } from 'src/app/shared/stomp/rx-stomp.service';
+import { ChatService } from '../chat.service';
+import { MessagesService } from '../messages.service';
 
 @Component({
   selector: 'app-chat-dialogue',
