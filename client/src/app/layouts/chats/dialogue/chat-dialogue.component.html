@@ -70,7 +70,7 @@
         class="btn send-button"
         (click)="sendMessage()"
         [disabled]="!newMessage || newMessage.trim().length === 0">
-        Send
+        {{ editMode ? 'Edit' : 'Send' }}
       </button>
     </div>
   </div>

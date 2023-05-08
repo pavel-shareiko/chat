@@ -1,11 +1,4 @@
-import {
-  AfterViewChecked,
-  Component,
-  ElementRef,
-  OnChanges,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChatService } from '../chat.service';
 import { IMessage } from '../chat.model';
@@ -93,6 +86,7 @@ export class ChatDialogueComponent implements OnInit, OnChanges {
     if (newMessage.sender.username !== this.currentUser?.username) {
       const audio = new Audio();
       audio.src = 'assets/audio/notifications/new-message.mp3';
+      audio.load();
       audio.play();
     }
     this.scrollToBottom();
