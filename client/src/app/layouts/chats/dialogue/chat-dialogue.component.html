@@ -40,6 +40,7 @@
         </div>
         <div
           *ngFor="let message of group"
+          id="message-{{ message.id }}"
           class="text-white message"
           (click)="onMessageClick(message, $event)"
           [ngClass]="

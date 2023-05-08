@@ -59,6 +59,9 @@ export class ChatDialogueComponent implements OnInit, AfterViewChecked {
     this.stompService.watch(`/user/queue/messages/new`).subscribe((message: Message) => {
       this.onMessageReceived(message);
     });
+    this.stompService.watch(`/user/queue/messages/delete`).subscribe((message: Message) => {
+      this.onMessageDeleted(message);
+    });
   }
   async onMessageReceived(message: Message) {
     const newMessage = JSON.parse(message.body) as IMessage;
@@ -69,6 +72,11 @@ export class ChatDialogueComponent implements OnInit, AfterViewChecked {
       audio.src = 'assets/audio/notifications/new-message.mp3';
       audio.play();
     }
+  }
+
+  async onMessageDeleted(message: Message) {
+    const messageIds = JSON.parse(message.body) as number[];
+    this.messages = this.messages.filter(m => !messageIds.includes(m.id));
   }
 
   ngAfterViewChecked(): void {
@@ -118,7 +126,22 @@ export class ChatDialogueComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  deleteSelected(): void {}
+  deleteSelected(): void {
+    this.messagesService.deleteMessages(this.selectedMessages).subscribe({
+      next: () => {
+        this.selectedMessages.forEach(message => {
+          const element = document.getElementById(`message-${message.id}`);
+          if (element) {
+            element.classList.remove('message__selected');
+          }
+        });
+        this.selectedMessages = [];
+      },
+      error: err => {
+        console.error(err);
+      },
+    });
+  }
 
   editSelected(): void {}
 
@@ -149,7 +172,6 @@ export class ChatDialogueComponent implements OnInit, AfterViewChecked {
   }
   onMessageClick(clickedMessage: IMessage, event: MouseEvent) {
     const messageIndex = this.selectedMessages.indexOf(clickedMessage);
-    console.log(event)
     const target = event.currentTarget as HTMLElement;
     if (messageIndex === -1) {
       this.selectMessage(clickedMessage, target);

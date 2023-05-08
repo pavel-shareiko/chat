@@ -4,6 +4,7 @@ import by.shareiko.chat.domain.Message;
 import by.shareiko.chat.dto.NewMessageDTO;
 import by.shareiko.chat.service.MessageService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -19,7 +20,7 @@ import java.util.List;
 public class MessageController {
     private final MessageService messageService;
 
-    public MessageController(MessageService messageService) {
+    public MessageController(@Qualifier("messageStompServiceImpl") MessageService messageService) {
         this.messageService = messageService;
     }
 
@@ -30,16 +31,24 @@ public class MessageController {
     }
 
     @Transactional
-    @MessageMapping("/chats/messages")
+    @MessageMapping("/messages/send")
     public void sendMessage(@Payload NewMessageDTO newMessage) {
         log.info("Request to send message: {}", newMessage);
-        messageService.saveMessageAndNotifyListeners(newMessage);
+        messageService.saveMessage(newMessage);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMessage(@PathVariable Long id) {
-        messageService.deleteMessage(id);
-        return ResponseEntity.noContent().build();
+    @Transactional
+    @MessageMapping("/messages/delete")
+    public void deleteMessage(@Payload Long messageId) {
+        log.info("Request to delete message: {}", messageId);
+        messageService.deleteMessage(messageId);
+    }
+
+    @Transactional
+    @MessageMapping("/messages/delete-all")
+    public void deleteMessages(@Payload List<Long> messageIds) {
+        log.info("Request to delete messages: {}", messageIds);
+        messageService.deleteAllMessages(messageIds);
     }
 
     @PatchMapping("/{id}")

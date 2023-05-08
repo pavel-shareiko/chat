@@ -9,4 +9,5 @@
     </Root>
 
     <logger name="by.shareiko" level="TRACE"/>
+    <logger name="org.springframework.web" level="TRACE"/>
 </configuration>

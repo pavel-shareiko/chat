@@ -8,9 +8,11 @@ import java.util.List;
 public interface MessageService {
     List<Message> getChatMessages(Long chatId);
 
-    Message saveMessageAndNotifyListeners(NewMessageDTO newMessage);
-
-    void deleteMessage(Long id);
+    Message saveMessage(NewMessageDTO newMessage);
 
     Message updateMessage(Long messageId, String newContent);
+
+    Message deleteMessage(Long id);
+
+    List<Message> deleteAllMessages(List<Long> messageIds);
 }

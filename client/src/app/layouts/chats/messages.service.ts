@@ -24,8 +24,29 @@ export class MessagesService {
   sendMessage(chatId: number, message: string): Observable<void> {
     return of(
       this.stompService.publish({
-        destination: `/app/chats/messages`,
+        destination: `/app/messages/send`,
         body: JSON.stringify({ chatId: chatId, content: message }),
+      })
+    );
+  }
+
+  deleteMessage(message: IMessage | number): Observable<void> {
+    const messageId: number = typeof message === 'number' ? message : message.id;
+    return of(
+      this.stompService.publish({
+        destination: `/app/messages/delete`,
+        body: JSON.stringify(messageId),
+      })
+    );
+  }
+
+  deleteMessages(messages: IMessage[] | number[]): Observable<void> {
+    const messageIds: number[] =
+      typeof messages === 'number' ? messages : (messages as IMessage[]).map(m => m.id);
+    return of(
+      this.stompService.publish({
+        destination: `/app/messages/delete-all`,
+        body: JSON.stringify(messageIds),
       })
     );
   }
