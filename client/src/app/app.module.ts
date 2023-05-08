@@ -9,12 +9,14 @@ import { LoginModule } from './features/login/login.module';
 import { RegistrationModule } from './features/registration/registration.module';
 import { DialogueModule } from './features/chats/dialogue/dialogue.module';
 import { ChatsModule } from './features/chats/chats.module';
+import { NotFoundModule } from './core/components/not-found/not-found.module';
 
 @NgModule({
   declarations: [MainComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    NotFoundModule,
     CoreModule,
     DialogueModule,
     FormValidationModule,
