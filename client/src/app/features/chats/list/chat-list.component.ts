@@ -47,10 +47,8 @@ export class ChatListComponent implements OnInit {
   }
 
   onMessageReceived(message: Message) {
-    console.log(`Current chats`, this.chats);
     const newMessage = JSON.parse(message.body) as IMessage;
     const chatIndex = this.chats.findIndex(chat => chat.chatId === newMessage.chatId);
-    console.log(`Message received for chat with index`, chatIndex);
     if (chatIndex !== -1) {
       this.chats[chatIndex].lastMessage = newMessage;
       this.raiseChat(chatIndex);
