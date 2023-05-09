@@ -8,6 +8,8 @@ import { Message } from '@stomp/stompjs';
 import { RxStompService } from 'src/app/shared/stomp/rx-stomp.service';
 import { ChatService } from '../services/chat.service';
 import { MessagesService } from '../services/messages.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
+import { notificationSounds } from 'src/app/core/constants/assets.constants';
 
 @Component({
   templateUrl: './dialogue.component.html',
@@ -32,7 +34,8 @@ export class DialogueComponent implements OnInit, OnChanges {
     private router: Router,
     private chatService: ChatService,
     private messagesService: MessagesService,
-    private stompService: RxStompService
+    private stompService: RxStompService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -81,13 +84,7 @@ export class DialogueComponent implements OnInit, OnChanges {
   async onMessageReceived(message: Message) {
     const newMessage = JSON.parse(message.body) as IMessage;
     this.messages = [newMessage, ...this.messages];
-
-    if (newMessage.sender.username !== this.currentUser?.username) {
-      const audio = new Audio();
-      audio.src = 'assets/audio/notifications/new-message.mp3';
-      audio.load();
-      audio.play();
-    }
+    this.notificationService.playSound(notificationSounds.NEW_MESSAGE)
     this.scrollToBottom();
   }
 

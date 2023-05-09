@@ -1,3 +1,4 @@
+import { NotificationService } from './../../../core/services/notification.service';
 import { Message } from '@stomp/stompjs';
 import { Component, ViewChild } from '@angular/core';
 import { OnInit } from '@angular/core';
@@ -8,6 +9,7 @@ import { IUser } from 'src/app/core/models/user.model';
 import { ChatService } from '../services/chat.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { notificationSounds } from 'src/app/core/constants/assets.constants';
 
 @Component({
   selector: 'app-chat-list',
@@ -25,7 +27,8 @@ export class ChatListComponent implements OnInit {
     private stompService: RxStompService,
     private accountService: AccountService,
     private modalService: NgbModal,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -58,13 +61,7 @@ export class ChatListComponent implements OnInit {
         });
       }, 0);
     }
-
-    if (newMessage.sender.username !== this.currentUser?.username) {
-      const audio = new Audio();
-      audio.src = 'assets/audio/notifications/new-message.mp3';
-      audio.load();
-      audio.play();
-    }
+    this.notificationService.playSound(notificationSounds.NEW_MESSAGE);
   }
 
   openFindChatsModal() {
