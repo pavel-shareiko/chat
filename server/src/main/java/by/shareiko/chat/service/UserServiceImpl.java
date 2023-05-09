@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
                 throw new BadRequestException("Invalid user id '" + usernamePattern + "'");
             }
         }
-        return userRepository.findDistinctByUsernameContainsIgnoreCase(usernamePattern);
+        return userRepository.findTop10ByUsernameContainsIgnoreCase(usernamePattern);
     }
 
     @Override
