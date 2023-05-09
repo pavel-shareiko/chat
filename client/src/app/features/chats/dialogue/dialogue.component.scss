@@ -171,7 +171,6 @@
 }
 
 .selected-messages-bar__edit-mode {
-  /* align text vertically and center horizontally */
   font-size: 18px;
   text-align: center;
   align-self: center;
@@ -188,7 +187,7 @@
 }
 
 .message-container {
-  height: calc(100vh - 240px);
+  height: calc(100vh - 250px);
 
   overflow: scroll;
   overflow-x: auto;
