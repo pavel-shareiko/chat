@@ -63,7 +63,9 @@ export class ChatListComponent implements OnInit {
         });
       }, 0);
     }
-    this.notificationService.playSound(notificationSounds.NEW_MESSAGE);
+    if (this.currentUser?.username !== newMessage.sender.username) {
+      this.notificationService.playSound(notificationSounds.NEW_MESSAGE);
+    }
   }
 
   openFindChatsModal() {

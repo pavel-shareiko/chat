@@ -29,7 +29,7 @@ export class DialogueComponent implements OnInit, OnChanges {
   private dialogueId!: number;
 
   faPaperPlane = faPaperPlane;
-  faXmark = faXmark
+  faXmark = faXmark;
   faTrashCan = faTrashCan;
   faPencilAlt = faPencilAlt;
 
@@ -90,7 +90,9 @@ export class DialogueComponent implements OnInit, OnChanges {
   async onMessageReceived(message: Message) {
     const newMessage = JSON.parse(message.body) as IMessage;
     this.messages = [newMessage, ...this.messages];
-    this.notificationService.playSound(notificationSounds.NEW_MESSAGE);
+    if (newMessage.sender.username !== this.currentUser?.username) {
+      this.notificationService.playSound(notificationSounds.NEW_MESSAGE);
+    }
     this.scrollToBottom();
   }
 
