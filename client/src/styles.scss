@@ -51,6 +51,23 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #757575;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
 .alert-danger {
   color: var(--bs-white) !important;
   background-color: var(--bs-red) !important;
