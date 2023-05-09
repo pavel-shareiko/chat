@@ -10,19 +10,28 @@ import by.shareiko.chat.repository.ChatRepository;
 import by.shareiko.chat.repository.MessageRepository;
 import by.shareiko.chat.security.SecurityUtils;
 import io.micrometer.common.util.StringUtils;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class MessageServiceImpl implements MessageService {
     private final MessageRepository messageRepository;
     private final ChatRepository chatRepository;
     private final MessageMapper messageMapper;
     private final ChatService chatService;
+
+    public MessageServiceImpl(MessageRepository messageRepository,
+                              ChatRepository chatRepository,
+                              MessageMapper messageMapper,
+                              @Qualifier("chatStompServiceImpl") ChatService chatService) {
+        this.messageRepository = messageRepository;
+        this.chatRepository = chatRepository;
+        this.messageMapper = messageMapper;
+        this.chatService = chatService;
+    }
 
     @Override
     public List<Message> getChatMessages(Long chatId) {

@@ -20,7 +20,10 @@ public class MessageStompServiceImpl implements MessageService {
     private final ChatService chatService;
     private final MessageMapper messageMapper;
 
-    public MessageStompServiceImpl(@Qualifier("messageServiceImpl") MessageService messageService, SimpMessagingTemplate messagingTemplate, ChatService chatService, MessageMapper messageMapper) {
+    public MessageStompServiceImpl(@Qualifier("messageServiceImpl") MessageService messageService,
+                                   @Qualifier("chatServiceImpl") ChatService chatService,
+                                   SimpMessagingTemplate messagingTemplate,
+                                   MessageMapper messageMapper) {
         this.messageService = messageService;
         this.messagingTemplate = messagingTemplate;
         this.chatService = chatService;

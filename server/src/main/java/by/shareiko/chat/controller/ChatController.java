@@ -3,12 +3,13 @@ package by.shareiko.chat.controller;
 import by.shareiko.chat.domain.Chat;
 import by.shareiko.chat.dto.ExtendedChatDTO;
 import by.shareiko.chat.service.ChatService;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Log4j2
@@ -16,7 +17,7 @@ import java.util.List;
 public class ChatController {
     private final ChatService chatService;
 
-    public ChatController(ChatService chatService) {
+    public ChatController(@Qualifier("chatStompServiceImpl") ChatService chatService) {
         this.chatService = chatService;
     }
 
@@ -39,8 +40,14 @@ public class ChatController {
     }
 
     @PostMapping("/{username}")
-    public ResponseEntity<Chat> createChat(@PathVariable String username) {
+    public ResponseEntity<Long> createChat(@PathVariable String username) {
         log.debug("REST request to create chat with user {}", username);
-        return ResponseEntity.ok(chatService.startChat(username));
+
+        Optional<Chat> optionalChat = chatService.getChatWithUser(username);
+        if (optionalChat.isPresent()) {
+            return ResponseEntity.ok(optionalChat.get().getId());
+        }
+
+        return ResponseEntity.ok(chatService.startChat(username).getId());
     }
 }
