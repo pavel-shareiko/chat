@@ -3,7 +3,7 @@
   max-height: 40px;
   min-height: 40px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr auto 1fr;
 }
 
 .chat-header__back {
