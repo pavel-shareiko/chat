@@ -2,7 +2,9 @@ package by.shareiko.chat.service;
 
 import by.shareiko.chat.domain.Role;
 import by.shareiko.chat.domain.User;
+import by.shareiko.chat.dto.user.SimpleUserDTO;
 import by.shareiko.chat.dto.user.UserWithAuthorities;
+import by.shareiko.chat.exception.BadRequestException;
 import by.shareiko.chat.exception.UserUnauthorizedException;
 import by.shareiko.chat.security.SecurityUtils;
 import by.shareiko.chat.dto.user.RegisterUser;
@@ -14,6 +16,7 @@ import by.shareiko.chat.security.RoleConstants;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.HashSet;
 import java.util.List;
@@ -35,11 +38,7 @@ public class UserServiceImpl implements UserService {
         this.userMapper = userMapper;
     }
 
-    public List<User> getAll() {
-        return userRepository.findAll();
-    }
-
-    public UserWithAuthorities getUserWithAuthorities() {
+    public UserWithAuthorities getCurrentUserWithAuthorities() {
         return userMapper.userToUserWithAuthorities(SecurityUtils.getCurrentUser()
                 .orElseThrow(() -> new UserUnauthorizedException("Current user is not logged in"))
                 .getDomainUser()
@@ -47,6 +46,9 @@ public class UserServiceImpl implements UserService {
     }
 
     public User register(RegisterUser registerUser) {
+        registerUser.setFirstName(StringUtils.capitalize(registerUser.getFirstName()));
+        registerUser.setLastName(StringUtils.capitalize(registerUser.getLastName()));
+
         User user = userMapper.registerUserToUser(registerUser);
 
         // FIXME: roleRepository -> roleService
@@ -67,6 +69,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public List<SimpleUserDTO> findAllByUsernamePattern(String usernamePattern) {
+        if (usernamePattern.startsWith("#")) {
+            usernamePattern = usernamePattern.substring(1);
+            try {
+                long userId = Long.parseLong(usernamePattern);
+                Optional<User> userById = userRepository.findById(userId);
+                if (userById.isEmpty()) {
+                    return List.of();
+                }
+
+                User user = userById.get();
+                return List.of(userMapper.userToSimpleUserDTO(user));
+            } catch (NumberFormatException e) {
+                throw new BadRequestException("Invalid user id '" + usernamePattern + "'");
+            }
+        }
+        return userRepository.findDistinctByUsernameContainsIgnoreCase(usernamePattern);
     }
 
     @Override

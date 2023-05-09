@@ -23,4 +23,8 @@ export class ChatService {
   doesChatExist(chatId: number): Observable<boolean> {
     return this.httpClient.get<boolean>(`${this.resourceUrl}/${chatId}/exists`);
   }
+
+  startChat(username: string) {
+    return this.httpClient.post<number>(`${this.resourceUrl}/${username}`, {});
+  }
 }

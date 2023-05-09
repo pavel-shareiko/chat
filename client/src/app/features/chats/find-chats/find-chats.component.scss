@@ -1,0 +1,47 @@
+.modal-header {
+  background-color: #292f3f;
+  color: white;
+}
+
+.modal-title {
+  color: white;
+}
+
+.close {
+  color: white;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.modal-body {
+  background-color: #292f3f;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.error-container {
+  margin-bottom: 1rem;
+}
+
+.form-inline {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-control {
+  background-color: #3b4252;
+  color: white;
+  border-color: #3b4252;
+  flex-grow: 1;
+  margin-right: 10px;
+  width: 0;
+}
+
+.btn-success {
+  flex-grow: 0;
+  width: auto;
+  margin-left: 10px;
+}

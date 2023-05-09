@@ -4,19 +4,15 @@ import by.shareiko.chat.domain.Chat;
 import by.shareiko.chat.domain.Message;
 import by.shareiko.chat.domain.User;
 import by.shareiko.chat.dto.ExtendedChatDTO;
-import by.shareiko.chat.dto.SimpleMessageDTO;
 import by.shareiko.chat.dto.user.SimpleUserDTO;
-import by.shareiko.chat.exception.BadRequestException;
-import by.shareiko.chat.exception.ChatAlreadyExists;
-import by.shareiko.chat.exception.ChatNotAllowedException;
-import by.shareiko.chat.exception.NotFoundException;
-import by.shareiko.chat.exception.UserUnauthorizedException;
+import by.shareiko.chat.exception.*;
 import by.shareiko.chat.mapper.ChatMapper;
 import by.shareiko.chat.repository.ChatRepository;
 import by.shareiko.chat.security.SecurityUtils;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.comparator.Comparators;
 
 import java.util.List;
@@ -43,14 +39,11 @@ public class ChatServiceImpl implements ChatService {
         List<Chat> currentUserChats = getCurrentUserChats();
         return currentUserChats.stream()
                 .map(this::getExtendedChat)
+                .filter(chat -> chat.getLastMessage() != null)
                 .sorted((o1, o2) -> Comparators.nullsLow().compare(
-                        Optional.ofNullable(o2.getLastMessage())
-                                .map(SimpleMessageDTO::getCreatedAt)
-                                .orElse(null),
-                        Optional.ofNullable(o1.getLastMessage())
-                                .map(SimpleMessageDTO::getCreatedAt)
-                                .orElse(null))
-                )
+                        o2.getLastMessage().getCreatedAt(),
+                        o1.getLastMessage().getCreatedAt()
+                ))
                 .toList();
     }
 
@@ -72,6 +65,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
+    @Transactional
     public Chat startChat(String username) {
         if (StringUtils.isBlank(username)) {
             throw new BadRequestException("Username cannot be blank");
@@ -93,12 +87,22 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
+    public Optional<Chat> getChatWithUser(String username) {
+        if (StringUtils.isBlank(username)) {
+            throw new BadRequestException("Username cannot be blank");
+        }
+
+        return chatRepository
+                .findChatWithOtherUsernameAndCurrentUser(username);
+    }
+
+    @Override
     public boolean hasChatWithUser(String username) {
         if (StringUtils.isBlank(username)) {
             throw new BadRequestException("Username cannot be blank");
         }
 
-        return chatRepository.existsByOtherUsernameAndCurrentUser(username);
+        return chatRepository.findChatWithOtherUsernameAndCurrentUser(username).isPresent();
     }
 
     private ExtendedChatDTO getExtendedChat(Chat chat) {
