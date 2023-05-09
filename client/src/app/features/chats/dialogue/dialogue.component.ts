@@ -10,7 +10,7 @@ import { ChatService } from '../services/chat.service';
 import { MessagesService } from '../services/messages.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { notificationSounds } from 'src/app/core/constants/assets.constants';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane, faPencilAlt, faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   templateUrl: './dialogue.component.html',
@@ -29,6 +29,9 @@ export class DialogueComponent implements OnInit, OnChanges {
   private dialogueId!: number;
 
   faPaperPlane = faPaperPlane;
+  faXmark = faXmark
+  faTrashCan = faTrashCan;
+  faPencilAlt = faPencilAlt;
 
   constructor(
     public dateFormatter: DateFormatterService,
@@ -87,7 +90,7 @@ export class DialogueComponent implements OnInit, OnChanges {
   async onMessageReceived(message: Message) {
     const newMessage = JSON.parse(message.body) as IMessage;
     this.messages = [newMessage, ...this.messages];
-    this.notificationService.playSound(notificationSounds.NEW_MESSAGE)
+    this.notificationService.playSound(notificationSounds.NEW_MESSAGE);
     this.scrollToBottom();
   }
 
@@ -182,6 +185,7 @@ export class DialogueComponent implements OnInit, OnChanges {
 
   unselectMessage(messageIndex: number, htmlElement: HTMLElement) {
     if (this.editMode) {
+      this.exitEditMode();
       return;
     }
     this.selectedMessages.splice(messageIndex, 1);
@@ -218,6 +222,12 @@ export class DialogueComponent implements OnInit, OnChanges {
     this.newMessage = this.selectedMessages[0].content;
   }
 
+  exitEditMode() {
+    this.editMode = false;
+    this.newMessage = '';
+    this.unselectAll();
+  }
+
   allSelectedMessagesAreFromCurrentUser(): boolean {
     return this.selectedMessages.every(
       message => message.sender.username === this.currentUser?.username
@@ -242,7 +252,12 @@ export class DialogueComponent implements OnInit, OnChanges {
       event.preventDefault();
       this.sendMessage();
     }
+
+    if (event.key === 'Escape' && this.editMode) {
+      this.exitEditMode();
+    }
   }
+
   onMessageClick(clickedMessage: IMessage, event: MouseEvent) {
     const messageIndex = this.selectedMessages.indexOf(clickedMessage);
     const target = event.currentTarget as HTMLElement;

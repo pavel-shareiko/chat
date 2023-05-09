@@ -7,7 +7,12 @@
     </div>
 
     <!-- selected messages management bar -->
-    <div class="chat-header selected-messages-bar" *ngIf="selectedMessages.length !== 0">
+    <div
+      class="chat-header selected-messages-bar"
+      *ngIf="selectedMessages.length !== 0 && !editMode">
+      <button class="btn btn-primary chat-header__back" (click)="unselectAll()">
+        <fa-icon [icon]="faXmark"></fa-icon> Cancel
+      </button>
       <div class="selected-messages-bar__count">
         {{ selectedMessages.length }} messages selected
       </div>
@@ -16,7 +21,7 @@
           class="btn selected-messages-bar__delete"
           *ngIf="allSelectedMessagesAreFromCurrentUser()"
           (click)="deleteSelected()">
-          Delete
+          <fa-icon [icon]="faTrashCan"></fa-icon> Delete
         </button>
         <button
           class="btn selected-messages-bar__edit"
@@ -25,9 +30,15 @@
             selectedMessages[0].sender.username === currentUser?.username
           "
           (click)="enterEditMode()">
-          Edit
+          <fa-icon [icon]="faPencilAlt"></fa-icon> Edit
         </button>
       </div>
+    </div>
+    <div class="chat-header" *ngIf="editMode">
+      <button class="btn btn-primary chat-header__back" (click)="exitEditMode()">
+        <fa-icon [icon]="faXmark"></fa-icon> Cancel
+      </button>
+      <p class="selected-messages-bar__edit-mode">You are in the edit mode</p>
     </div>
     <hr class="my-1" />
   </div>

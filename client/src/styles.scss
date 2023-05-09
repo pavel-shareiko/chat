@@ -46,6 +46,10 @@ $chat-theme: mat.define-light-theme(
   --msg-selected: #313b5c;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
