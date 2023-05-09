@@ -1,11 +1,12 @@
 import { Message } from '@stomp/stompjs';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { IChat, IMessage } from '../../../core/models/chat.model';
 import { RxStompService } from 'src/app/shared/stomp/rx-stomp.service';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { IUser } from 'src/app/core/models/user.model';
 import { ChatService } from '../services/chat.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-chat-list',
@@ -13,6 +14,7 @@ import { ChatService } from '../services/chat.service';
   styleUrls: ['./chat-list.component.scss'],
 })
 export class ChatListComponent implements OnInit {
+  @ViewChild('findChatsModal') findChatsModal: any;
   chats: IChat[] = [];
   chatsLoaded = false;
   currentUser: IUser | null = null;
@@ -20,7 +22,8 @@ export class ChatListComponent implements OnInit {
   constructor(
     private chatService: ChatService,
     private stompService: RxStompService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -54,5 +57,17 @@ export class ChatListComponent implements OnInit {
       audio.load();
       audio.play();
     }
+  }
+
+  openFindChatsModal() {
+    this.modalService.open(this.findChatsModal);
+  }
+
+  startChat(username: string) {
+    // Implement start chat logic here
+  }
+
+  closeFindChatsModal() {
+    this.modalService.dismissAll();
   }
 }

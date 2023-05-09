@@ -1,0 +1,35 @@
+.user {
+  display: flex;
+  align-items: center;
+  background-color: #181e2e;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  margin: 16px;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 3px;
+}
+
+.username {
+  font-size: 14px;
+  color: #999;
+}
+
+.chat-btn {
+  box-sizing: border-box;
+  width: 20%;
+  align-self: stretch;
+  border-radius: 0 8px 8px 0;
+}

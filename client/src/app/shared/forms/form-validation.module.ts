@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { FormValidationComponent } from './form-validation.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
-  imports: [],
+  imports: [CommonModule],
   declarations: [FormValidationComponent],
   exports: [FormValidationComponent],
 })

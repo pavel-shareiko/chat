@@ -1,0 +1,38 @@
+<div class="modal-header">
+  <h5 class="modal-title">Find Chats</h5>
+  <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div
+    *ngIf="error"
+    class="alert alert-danger flex-fill mb-2"
+    role="alert"
+    [innerHTML]="error"></div>
+  <form class="form-inline">
+    <input
+      type="text"
+      class="form-control"
+      id="username"
+      name="username"
+      placeholder="Username"
+      [(ngModel)]="username" />
+    <button
+      type="submit"
+      class="btn btn-success"
+      (click)="findUsers()"
+      [disabled]="!username || (username.charAt(0) === '#' && username.length === 1)">
+      Find user
+    </button>
+  </form>
+  <div *ngIf="usersLoaded" class="flex-fill">
+    <h5 class="my-2 text-center">Search results</h5>
+    <div *ngIf="searchResults.length === 0">
+      <p class="mt-2">No users found</p>
+    </div>
+    <div *ngIf="searchResults.length > 0">
+      <app-user *ngFor="let user of searchResults" [user]="user">{{ user.username }}</app-user>
+    </div>
+  </div>
+</div>
