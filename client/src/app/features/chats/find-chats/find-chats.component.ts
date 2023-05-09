@@ -1,5 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Output } from '@angular/core';
+import { faFaceSadTear } from '@fortawesome/free-regular-svg-icons';
+import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { IUser } from 'src/app/core/models/user.model';
 import { UserService } from 'src/app/shared/services/user.service';
 
@@ -16,6 +18,10 @@ export class FindChatsComponent {
   usersLoading: boolean = false;
   usersLoaded: boolean = false;
   searchResults: IUser[] = [];
+
+  faSearch = faSearch;
+  faFaceSadTear = faFaceSadTear;
+  faSpinner = faSpinner;
 
   constructor(private userService: UserService) {}
 

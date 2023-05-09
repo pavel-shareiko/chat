@@ -1,5 +1,6 @@
 <div class="user-wrapper">
   <div class="user mb-2">
+    <fa-icon [icon]="faUser" [size]="'lg'" class="user-icon"></fa-icon>
     <div class="info">
       <div class="name">
         {{ user.firstName }} {{ user.lastName }}
@@ -7,6 +8,12 @@
       </div>
       <span class="username">@{{ user.username }}</span>
     </div>
-    <button class="btn btn-success chat-btn" (click)="startChat()">Chat</button>
+    <button
+      *ngIf="user.id !== currentUser?.id"
+      class="btn btn-success chat-btn"
+      (click)="startChat()">
+      <fa-icon [icon]="faMessage"></fa-icon>
+      Chat
+    </button>
   </div>
 </div>

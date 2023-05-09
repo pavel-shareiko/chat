@@ -23,13 +23,17 @@
       class="btn btn-success"
       (click)="findUsers()"
       [disabled]="!username || (username.charAt(0) === '#' && username.length === 1)">
-      Find user
+      <fa-icon [icon]="faSearch"></fa-icon> Find user
     </button>
   </form>
+  <div *ngIf="usersLoading" class="flex-fill my-3 text-center">
+    <fa-icon [icon]="faSpinner" [size]="'5x'" [animation]="'spin-pulse'"></fa-icon>
+  </div>
   <div *ngIf="usersLoaded" class="flex-fill">
     <h5 class="my-2 text-center">Search results</h5>
-    <div *ngIf="searchResults.length === 0">
-      <p class="mt-2">No users found</p>
+    <div *ngIf="searchResults.length === 0" class="text-center">
+      <fa-icon [icon]="faFaceSadTear" size="5x" class="my-4"></fa-icon>
+      <p class="mt-2">No users found. Please, check your spelling</p>
     </div>
     <div *ngIf="searchResults.length > 0">
       <app-user

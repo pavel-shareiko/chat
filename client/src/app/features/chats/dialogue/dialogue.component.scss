@@ -133,7 +133,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #282d35;
+  background-color: transparent;
   color: var(--bs-white);
 
   button {
@@ -154,7 +154,7 @@
 }
 
 .selected-messages-bar__delete {
-  background-color: #c0392b;
+  background-color: #ce4d3f;
   margin-right: 16px;
 }
 
@@ -163,7 +163,7 @@
 }
 
 .selected-messages-bar__edit {
-  background-color: #2980b9;
+  background-color: #397faa;
 }
 
 .selected-messages-bar__edit:hover {

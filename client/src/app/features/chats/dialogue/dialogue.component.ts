@@ -10,6 +10,7 @@ import { ChatService } from '../services/chat.service';
 import { MessagesService } from '../services/messages.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { notificationSounds } from 'src/app/core/constants/assets.constants';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   templateUrl: './dialogue.component.html',
@@ -26,6 +27,8 @@ export class DialogueComponent implements OnInit, OnChanges {
   public newMessage: string = '';
   public editMode: boolean = false;
   private dialogueId!: number;
+
+  faPaperPlane = faPaperPlane;
 
   constructor(
     public dateFormatter: DateFormatterService,

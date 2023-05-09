@@ -10,6 +10,7 @@ import { ChatService } from '../services/chat.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { notificationSounds } from 'src/app/core/constants/assets.constants';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-chat-list',
@@ -21,6 +22,9 @@ export class ChatListComponent implements OnInit {
   chats: IChat[] = [];
   chatsLoaded = false;
   currentUser: IUser | null = null;
+
+  // icons
+  faPlus = faPlus;
 
   constructor(
     private chatService: ChatService,

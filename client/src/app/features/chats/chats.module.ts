@@ -5,9 +5,10 @@ import { ChatComponent } from './chat/chat.component';
 import { FormsModule } from '@angular/forms';
 import { FindChatsComponent } from './find-chats/find-chats.component';
 import { UserComponent } from './user/user.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, FontAwesomeModule],
   declarations: [ChatComponent, ChatListComponent, FindChatsComponent, UserComponent],
   exports: [ChatComponent, ChatListComponent],
 })

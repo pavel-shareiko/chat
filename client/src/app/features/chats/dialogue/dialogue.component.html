@@ -70,7 +70,7 @@
         class="btn send-button"
         (click)="sendMessage()"
         [disabled]="!newMessage || newMessage.trim().length === 0">
-        {{ editMode ? 'Edit' : 'Send' }}
+        <fa-icon [icon]="faPaperPlane"></fa-icon>
       </button>
     </div>
   </div>
