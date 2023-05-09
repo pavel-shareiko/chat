@@ -65,6 +65,6 @@ public class AuthenticationController {
     @GetMapping("/me")
     public UserWithAuthorities getCurrentUser() {
         log.debug("REST request to get current user");
-        return userService.getUserWithAuthorities();
+        return userService.getCurrentUserWithAuthorities();
     }
 }
