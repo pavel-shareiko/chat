@@ -32,7 +32,12 @@
       <p class="mt-2">No users found</p>
     </div>
     <div *ngIf="searchResults.length > 0">
-      <app-user *ngFor="let user of searchResults" [user]="user">{{ user.username }}</app-user>
+      <app-user
+        *ngFor="let user of searchResults"
+        [user]="user"
+        (startChatEvent)="startChat($event)"
+        >{{ user.username }}</app-user
+      >
     </div>
   </div>
 </div>

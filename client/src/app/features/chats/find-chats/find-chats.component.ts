@@ -1,4 +1,3 @@
-// find-chats.component.ts
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { IUser } from 'src/app/core/models/user.model';
@@ -53,6 +52,7 @@ export class FindChatsComponent {
 
   startChat(username: string) {
     this.startChatEvent.emit(username);
+    this.closeModal();
   }
 
   closeModal() {

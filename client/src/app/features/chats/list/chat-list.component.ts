@@ -7,6 +7,7 @@ import { AccountService } from 'src/app/shared/services/account.service';
 import { IUser } from 'src/app/core/models/user.model';
 import { ChatService } from '../services/chat.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat-list',
@@ -23,7 +24,8 @@ export class ChatListComponent implements OnInit {
     private chatService: ChatService,
     private stompService: RxStompService,
     private accountService: AccountService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -40,15 +42,21 @@ export class ChatListComponent implements OnInit {
       this.onMessageReceived(message);
     });
   }
+
   onMessageReceived(message: Message) {
+    console.log(`Current chats`, this.chats);
     const newMessage = JSON.parse(message.body) as IMessage;
     const chatIndex = this.chats.findIndex(chat => chat.chatId === newMessage.chatId);
+    console.log(`Message received for chat with index`, chatIndex);
     if (chatIndex !== -1) {
       this.chats[chatIndex].lastMessage = newMessage;
-    } else if (this.chatService.doesChatExist(newMessage.chatId)) {
-      this.chatService.getChat(newMessage.chatId).subscribe(response => {
-        this.chats.push(response);
-      });
+      this.raiseChat(chatIndex);
+    } else {
+      setTimeout(() => {
+        this.chatService.getChat(newMessage.chatId).subscribe(response => {
+          this.chats.unshift(response);
+        });
+      }, 0);
     }
 
     if (newMessage.sender.username !== this.currentUser?.username) {
@@ -64,10 +72,24 @@ export class ChatListComponent implements OnInit {
   }
 
   startChat(username: string) {
-    // Implement start chat logic here
+    this.chatService.startChat(username).subscribe({
+      next: res => {
+        this.router.navigate(['/chats', res]);
+      },
+    });
   }
 
   closeFindChatsModal() {
     this.modalService.dismissAll();
+  }
+
+  private raiseChat(chatIndex: number) {
+    if (chatIndex === 0) {
+      return;
+    }
+
+    const chatToRaise = this.chats[chatIndex];
+    this.chats.splice(chatIndex, 1);
+    this.chats.unshift(chatToRaise);
   }
 }
