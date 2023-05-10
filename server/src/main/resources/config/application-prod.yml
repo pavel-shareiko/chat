@@ -15,15 +15,18 @@ spring:
     show-sql: false
     properties:
       hibernate:
-        format_sql: true
         globally_quoted_identifiers: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+      platform: postgresql
 jwt:
   token:
     secret: ${CHAT_JWT_SECRET}
-    expiration-time: 1800000
+    expiration-time: 18000000
 server:
   port: 8080
   error:
