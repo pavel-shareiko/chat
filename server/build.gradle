@@ -37,12 +37,10 @@ dependencies {
 }
 
 var profile = project.hasProperty('prod') ? 'prod' : 'dev'
+println "Using profile: ${profile}"
+
 tasks.bootRun {
     args("--spring.profiles.active=${profile}")
-}
-
-tasks.processResources {
-    rename("application-${profile}.yml", "application.yml")
 }
 
 tasks.named('test') {
