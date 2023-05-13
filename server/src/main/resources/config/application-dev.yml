@@ -20,6 +20,8 @@ spring:
     database: h2
     database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
   sql:
     init:
       mode: always

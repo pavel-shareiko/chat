@@ -19,6 +19,8 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
   sql:
     init:
       mode: always
