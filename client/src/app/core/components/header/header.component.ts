@@ -35,7 +35,5 @@ export class HeaderComponent {
     });
   }
 
-  newChat() {
-    
-  }
+  newChat() {}
 }
