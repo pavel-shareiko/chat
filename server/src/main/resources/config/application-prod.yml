@@ -15,19 +15,24 @@ spring:
     show-sql: false
     properties:
       hibernate:
-        format_sql: true
         globally_quoted_identifiers: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+  sql:
+    init:
+      mode: always
+      platform: postgresql
 jwt:
   token:
     secret: ${CHAT_JWT_SECRET}
-    expiration-time: 1800000
+    expiration-time: 18000000
 server:
   port: 8080
   error:
     include-stacktrace: never
 cors:
-  allowed-origins: 'http://192.168.1.*, http://192.168.100.*, http://localhost:4200'
+  allowed-origins: 'http://localhost:*, http://192.168.1.*, http://192.168.100.*, https://online-chat-grsu.netlify.app/'
   allow-credentials: true

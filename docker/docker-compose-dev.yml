@@ -1,0 +1,16 @@
+version: '3'
+services:
+  server:
+    build:
+      context: ../server
+      dockerfile: docker/Dockerfile_dev
+    ports:
+      - "8080:8080"
+  client:
+    build:
+      context: ../client
+      dockerfile: docker/Dockerfile_dev
+    ports:
+      - "80:80"
+    depends_on:
+      - server

@@ -1,0 +1,14 @@
+FROM gradle:jdk19-alpine
+
+# Create application directory
+RUN mkdir /chat
+WORKDIR /chat
+
+# Copy application files
+COPY . /chat
+
+# Build the application
+RUN gradle assemble -Pprod
+
+# Set the entrypoint for the container
+ENTRYPOINT ["java","-jar", "./build/libs/chat-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=prod"]

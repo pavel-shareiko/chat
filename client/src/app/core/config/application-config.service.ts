@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../environment/environment';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApplicationConfigService {
-  private serverUrl = `${environment.protocol}://${environment.host}:${environment.port}/`;
+  private serverUrl = `${environment.apiUrl}`;
 
   getEndpointFor(api: string): string {
     if (api.startsWith('/')) {

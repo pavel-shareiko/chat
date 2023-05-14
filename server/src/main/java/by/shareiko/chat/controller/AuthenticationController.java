@@ -46,7 +46,7 @@ public class AuthenticationController {
         }
 
         String token = jwtTokenProvider.createToken(user);
-        AuthenticationResponse response = new AuthenticationResponse(username, token);
+        AuthenticationResponse response = new AuthenticationResponse(token);
 
         return ResponseEntity.ok(response);
     }
