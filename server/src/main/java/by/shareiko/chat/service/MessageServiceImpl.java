@@ -81,8 +81,7 @@ public class MessageServiceImpl implements MessageService {
         }
 
         message.setContent(newContent);
-        messageRepository.save(message);
-        return message;
+        return messageRepository.saveAndFlush(message);
     }
 
     @Override

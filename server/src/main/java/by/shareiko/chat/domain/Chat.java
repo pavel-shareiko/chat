@@ -3,6 +3,7 @@ package by.shareiko.chat.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Set;
 
@@ -10,6 +11,7 @@ import java.util.Set;
 @Table(name = "chat")
 @Getter
 @Setter
+@ToString
 public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chat_id_generator")
@@ -22,5 +24,8 @@ public class Chat {
             joinColumns = {@JoinColumn(name = "chat_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
+    @ToString.Exclude
     private Set<User> participants;
 }
+
+

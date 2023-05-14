@@ -60,7 +60,9 @@
           <div class="message__content" [innerHTML]="message.content | messageHtml"></div>
           <div class="message__timestamp text-muted small">
             {{ message.createdAt | date : 'HH:mm' }}
-            <span *ngIf="message.createdAt !== message.modifiedAt" class="ml-1">(Edited)</span>
+            <span *ngIf="message.createdAt.getTime() !== message.modifiedAt.getTime()" class="ml-1"
+              >(Edited)</span
+            >
           </div>
         </div>
       </div>

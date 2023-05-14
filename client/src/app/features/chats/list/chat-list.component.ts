@@ -11,6 +11,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { notificationSounds } from 'src/app/core/constants/assets.constants';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { MessagesService } from '../services/messages.service';
 
 @Component({
   selector: 'app-chat-list',
@@ -28,6 +29,7 @@ export class ChatListComponent implements OnInit {
 
   constructor(
     private chatService: ChatService,
+    private messagesService: MessagesService,
     private stompService: RxStompService,
     private accountService: AccountService,
     private modalService: NgbModal,
@@ -54,6 +56,12 @@ export class ChatListComponent implements OnInit {
     this.stompService.watch(`/user/queue/messages/new`).subscribe((message: Message) => {
       this.onMessageReceived(message);
     });
+    this.stompService.watch(`/user/queue/messages/delete`).subscribe((message: Message) => {
+      this.onMessageDeleted(message);
+    });
+    this.stompService.watch(`/user/queue/messages/edit`).subscribe((message: Message) => {
+      this.onMessageEdited(message);
+    });
   }
 
   /**
@@ -78,6 +86,31 @@ export class ChatListComponent implements OnInit {
     if (this.currentUser?.username !== newMessage.sender.username) {
       this.notificationService.playSound(notificationSounds.NEW_MESSAGE);
     }
+  }
+
+  onMessageDeleted(message: Message) {
+    const messageIds = JSON.parse(message.body) as number[];
+    const affectedChatIndexes = this.chats
+      .filter(chat => chat.lastMessage && messageIds.includes(chat.lastMessage.id))
+      .map((chat, index) => index);
+
+    affectedChatIndexes.forEach(chatIndex => {
+      this.chatService.getChat(this.chats[chatIndex].chatId).subscribe(response => {
+        this.chats[chatIndex] = response;
+        setTimeout(() => this.reorderChats(), 0);
+      });
+    });
+  }
+
+  onMessageEdited(message: Message) {
+    const updatedMessage = JSON.parse(message.body) as IMessage;
+    const affectedChats = this.chats.filter(
+      chat => chat.lastMessage && chat.lastMessage.id === updatedMessage.id
+    );
+
+    affectedChats.forEach(chat => {
+      chat.lastMessage = updatedMessage;
+    });
   }
 
   /**
@@ -122,5 +155,18 @@ export class ChatListComponent implements OnInit {
     const chatToRaise = this.chats[chatIndex];
     this.chats.splice(chatIndex, 1);
     this.chats.unshift(chatToRaise);
+  }
+
+  /**
+   * Sorts the `chats` array in descending order based on the `createdAt` property of the last message
+   * of each chat. If a chat has no last message or no `createdAt` property, it is considered to have
+   * a creation time of 0. This function mutates the `chats` array in place.
+   */
+  private reorderChats(): void {
+    this.chats.sort((a, b) => {
+      return (
+        (b.lastMessage?.createdAt?.getTime() ?? 0) - (a.lastMessage?.createdAt?.getTime() ?? 0)
+      );
+    });
   }
 }

@@ -8,12 +8,14 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { JsonDateInterceptor } from './interceptors/json-date.interceptor';
 
 @NgModule({
   imports: [CommonModule, FontAwesomeModule, MatTooltipModule],
   declarations: [HeaderComponent],
   exports: [HeaderComponent],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JsonDateInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthExpiredInterceptor, multi: true },
     { provide: RxStompService, useFactory: rxStompServiceFactory },

@@ -88,7 +88,7 @@ export class DialogueComponent implements OnInit, OnChanges {
   }
 
   async onMessageReceived(message: Message) {
-    const newMessage = JSON.parse(message.body) as IMessage;
+    const newMessage = this.extractMessageFromJson(message.body);
     this.messages = [newMessage, ...this.messages];
     if (newMessage.sender.username !== this.currentUser?.username) {
       this.notificationService.playSound(notificationSounds.NEW_MESSAGE);
@@ -102,7 +102,7 @@ export class DialogueComponent implements OnInit, OnChanges {
   }
 
   async onMessageEdited(message: Message) {
-    const updatedMessage = JSON.parse(message.body) as IMessage;
+    const updatedMessage = this.extractMessageFromJson(message.body);
     const messageIndex = this.messages.findIndex(m => m.id === updatedMessage.id);
     if (messageIndex !== -1) {
       const newMessages = [...this.messages]; // create a new array with all the old messages
@@ -268,5 +268,13 @@ export class DialogueComponent implements OnInit, OnChanges {
     } else {
       this.unselectMessage(messageIndex, target);
     }
+  }
+
+  private extractMessageFromJson(messageStr: string): IMessage {
+    const message = JSON.parse(messageStr) as IMessage;
+    message.createdAt = new Date(message.createdAt);
+    message.modifiedAt = new Date(message.modifiedAt);
+
+    return message;
   }
 }
