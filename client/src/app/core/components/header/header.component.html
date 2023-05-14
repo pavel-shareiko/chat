@@ -4,7 +4,10 @@
   </h3>
   <div *ngIf="currentUser" class="user-panel">
     <div class="user-info">
-      <span class="user-name">{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
+      <span class="user-name">
+        {{ currentUser.firstName }} {{ currentUser.lastName }}
+        <span class="text-muted user-id small">#{{ currentUser.id }}</span>
+      </span>
       <span class="username">@{{ currentUser.username }}</span>
     </div>
     <fa-icon
