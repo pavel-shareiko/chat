@@ -6,6 +6,7 @@ services:
       dockerfile: docker/Dockerfile_prod
     ports:
       - "8080:8080"
+    # should be located in secrets, but its hardcoded here for simplicity
     environment:
       - CHAT_DB_URL=jdbc:postgresql://db:5432/chat
       - CHAT_DB_USER=postgres
@@ -18,6 +19,7 @@ services:
     image: postgres:15.1
     ports:
       - "5432:5432"
+    # should be located in secrets, but its hardcoded here for simplicity
     environment:
       - POSTGRES_PASSWORD=HgqycDZ4gzG83vrh7fRYXy4wrsJ6X7J8EDB8WnS3gCz5Fhg2zP
       - POSTGRES_USER=postgres
