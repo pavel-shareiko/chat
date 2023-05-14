@@ -126,4 +126,9 @@ public class ChatServiceImpl implements ChatService {
     public boolean doesCurrentUserParticipateInChat(Long chatId) {
         return chatRepository.doesCurrentUserParticipateInChat(chatId);
     }
+
+    @Override
+    public boolean exists(Long chatId) {
+        return chatRepository.existsById(chatId);
+    }
 }

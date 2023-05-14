@@ -1,6 +1,7 @@
 package by.shareiko.chat.service;
 
 import by.shareiko.chat.domain.User;
+import by.shareiko.chat.dto.user.LoginUser;
 import by.shareiko.chat.dto.user.RegisterUser;
 import by.shareiko.chat.dto.user.SimpleUserDTO;
 import by.shareiko.chat.dto.user.UserWithAuthorities;
@@ -12,6 +13,8 @@ public interface UserService {
     UserWithAuthorities getCurrentUserWithAuthorities();
 
     User register(RegisterUser registerUser);
+
+    User login(LoginUser loginUser);
 
     Optional<User> findByUsername(String username);
 
