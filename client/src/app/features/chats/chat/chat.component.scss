@@ -34,15 +34,15 @@
   line-height: 16px;
   color: #888;
   white-space: nowrap;
+}
 
-  p {
-    margin-bottom: 0;
-    display: inline-block;
-    max-width: 80%;
+.chat-item__message-preview {
+  margin-bottom: 0;
+  display: inline-block;
+  max-width: 80%;
 
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .chat-item__sender {
@@ -57,4 +57,10 @@
 .chat-item:hover {
   cursor: pointer;
   background-color: #343c50;
+}
+
+@media (max-width: 440px) {
+  .chat-item__message-preview {
+    max-width: 70%;
+  }
 }

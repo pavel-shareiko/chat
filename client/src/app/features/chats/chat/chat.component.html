@@ -12,7 +12,7 @@
     </div>
     <div class="chat-item__message" *ngIf="chat.lastMessage">
       <p class="chat-item__sender">{{ getLastMessageSenderDisplayName() }}:</p>
-      <p class="mx-1">{{ chat.lastMessage.content }}</p>
+      <p class="chat-item__message-preview mx-1">{{ chat.lastMessage.content }}</p>
     </div>
   </div>
 </div>
