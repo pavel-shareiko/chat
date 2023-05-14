@@ -35,6 +35,12 @@ export class ChatListComponent implements OnInit {
     private notificationService: NotificationService
   ) {}
 
+  /**
+   * Initializes the component, getting all chats, setting the current user,
+   * and subscribing to watch for new messages.
+   *
+   * @return {void}
+   */
   ngOnInit(): void {
     this.chatService.getAllChats().subscribe(response => {
       this.chats = response ?? [];
@@ -50,6 +56,12 @@ export class ChatListComponent implements OnInit {
     });
   }
 
+  /**
+   * Handles a received message by updating the relevant chat and, if the chat is not currently open,
+   * adding it to the list of chats. Also plays a notification sound if the message is from another user.
+   *
+   * @param {Message} message - The received message.
+   */
   onMessageReceived(message: Message) {
     const newMessage = JSON.parse(message.body) as IMessage;
     const chatIndex = this.chats.findIndex(chat => chat.chatId === newMessage.chatId);
@@ -68,10 +80,20 @@ export class ChatListComponent implements OnInit {
     }
   }
 
+  /**
+   * Opens the find chats modal.
+   *
+   * @return {void}
+   */
   openFindChatsModal() {
     this.modalService.open(this.findChatsModal);
   }
 
+  /**`
+   * Starts a chat with the given username.
+   *
+   * @param {string} username - The username to start the chat with.
+   */
   startChat(username: string) {
     this.chatService.startChat(username).subscribe({
       next: res => {
@@ -80,10 +102,18 @@ export class ChatListComponent implements OnInit {
     });
   }
 
+  /**
+   * Closes the Find Chats Modal by dismissing all modals.
+   */
   closeFindChatsModal() {
     this.modalService.dismissAll();
   }
 
+  /**
+   * Moves the chat at the given index to the top of the list of chats.
+   *
+   * @param {number} chatIndex - The index of the chat to raise.
+   */
   private raiseChat(chatIndex: number) {
     if (chatIndex === 0) {
       return;
