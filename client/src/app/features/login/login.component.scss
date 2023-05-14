@@ -1,0 +1,91 @@
+$font-family: 'Abel';
+$font-style: normal;
+$font-weight: 400;
+$font-size: 20px;
+$line-height: 22px;
+
+$submit-btn-bg-color: #42566c;
+$darken-ratio: 10%;
+
+$form-input-border-color: #818182;
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border-style: none;
+}
+
+.form-text {
+  font-family: $font-family;
+  font-style: $font-style;
+  font-weight: $font-weight;
+  font-size: $font-size;
+  line-height: $line-height;
+  color: var(--bs-white);
+}
+
+.login-form {
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 350px;
+  height: auto;
+}
+
+.form-input {
+  height: 2rem;
+  width: 100%;
+  background: inherit;
+  border-color: $form-input-border-color;
+  border-radius: 10px;
+  border-style: solid;
+  color: var(--bs-white);
+  box-sizing: border-box;
+  padding-left: 0.4rem;
+  font-size: 15px;
+}
+
+.form-field {
+  margin-bottom: 0.8rem;
+}
+
+.form-field:last-child {
+  margin: 3px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 7px;
+}
+
+.submit-btn {
+  margin-top: 1.3rem;
+  height: 1.9rem;
+  width: 100%;
+  border-radius: 10px;
+  border-style: none;
+  background-color: $submit-btn-bg-color;
+}
+
+.register-block {
+  float: right;
+  font-size: calc(0.8 * $font-size);
+  color: rgb(138, 139, 143);
+
+  a {
+    text-decoration: underline;
+    color: inherit;
+  }
+}
+
+.error-container {
+  ::ng-deep ul {
+    margin: 0;
+  }
+}
+
+.submit-btn:hover {
+  filter: brightness(100% - $darken-ratio);
+}

@@ -1,0 +1,118 @@
+<form (ngSubmit)="register()" [formGroup]="form" class="login-form">
+  <div *ngIf="errorMessage">
+    <div class="alert alert-danger error-container" role="alert" [innerHTML]="errorMessage"></div>
+  </div>
+  <fieldset>
+    <div
+      [ngClass]="{
+        'shake invalid-input': formValidationService.isControlTouchedAndInvalid(
+          form.controls['firstname'],
+          isSubmitted
+        )
+      }"
+      class="form-field form-group">
+      <label class="form-text form-label" for="firstname-input">First name</label>
+      <input class="form-input" formControlName="firstname" id="firstname-input" />
+      <app-form-validation
+        [formSubmitted]="isSubmitted"
+        [validations]="[
+          {
+            control: form.controls['firstname'],
+            errorKey: 'required',
+            errorMessage: 'First name is required'
+          },
+          {
+            control: form.controls['firstname'],
+            errorKey: 'minlength',
+            errorMessage: 'First name must be at least 3 characters long'
+          },
+          {
+            control: form.controls['firstname'],
+            errorKey: 'maxlength',
+            errorMessage: 'First name must be at most 35 characters long'
+          }
+        ]" />
+    </div>
+    <div
+      [ngClass]="{
+        'shake invalid-input': formValidationService.isControlTouchedAndInvalid(
+          form.controls['lastname'],
+          isSubmitted
+        )
+      }"
+      class="form-field form-group">
+      <label class="form-text form-label" for="lastname-input">Last name</label>
+      <input class="form-input" formControlName="lastname" id="lastname-input" />
+
+      <app-form-validation
+        [formSubmitted]="isSubmitted"
+        [validations]="[
+          {
+            control: form.controls['lastname'],
+            errorKey: 'required',
+            errorMessage: 'Last name is required'
+          },
+          {
+            control: form.controls['lastname'],
+            errorKey: 'minlength',
+            errorMessage: 'Last name must be at least 3 characters long'
+          },
+          {
+            control: form.controls['lastname'],
+            errorKey: 'maxlength',
+            errorMessage: 'Last name must be at most 35 characters long'
+          }
+        ]" />
+    </div>
+    <div
+      [ngClass]="{
+        'shake invalid-input': formValidationService.isControlTouchedAndInvalid(
+          form.controls['username'],
+          isSubmitted
+        )
+      }"
+      class="form-field form-group">
+      <label class="form-text form-label" for="username-input">Username</label>
+      <input class="form-input" formControlName="username" id="username-input" />
+      <app-form-validation
+        [formSubmitted]="isSubmitted"
+        [validations]="[
+          {
+            control: form.controls['username'],
+            errorKey: 'required',
+            errorMessage: 'Username is required'
+          },
+          {
+            control: form.controls['username'],
+            errorKey: 'usernameValidator'
+          }
+        ]" />
+    </div>
+    <div
+      [ngClass]="{
+        'shake invalid-input': formValidationService.isControlTouchedAndInvalid(
+          form.controls['password'],
+          isSubmitted
+        )
+      }"
+      class="form-field form-group">
+      <label class="form-text form-label" for="password-input">Password</label>
+      <input class="form-input" formControlName="password" id="password-input" type="password" />
+      <app-form-validation
+        [formSubmitted]="isSubmitted"
+        [validations]="[
+          {
+            control: form.controls['password'],
+            errorKey: 'required',
+            errorMessage: 'Password is required'
+          },
+          {
+            control: form.controls['password'],
+            errorKey: 'passwordValidator'
+          }
+        ]" />
+    </div>
+  </fieldset>
+  <div class="form-text register-block">Already have an account? <a href="/login">Login</a></div>
+  <button class="submit-btn form-text" type="submit">Register</button>
+</form>

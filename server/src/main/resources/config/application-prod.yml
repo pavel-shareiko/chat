@@ -1,0 +1,38 @@
+spring:
+  security:
+    filter:
+      dispatcher-types: ASYNC, FORWARD, INCLUDE, REQUEST
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: ${CHAT_DB_URL}
+    username: ${CHAT_DB_USER}
+    password: ${CHAT_DB_PASS}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      pool-name: Hikari
+      auto-commit: false
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+  sql:
+    init:
+      mode: always
+      platform: postgresql
+jwt:
+  token:
+    secret: ${CHAT_JWT_SECRET}
+    expiration-time: 18000000
+server:
+  port: 8080
+  error:
+    include-stacktrace: never
+cors:
+  allowed-origins: 'http://localhost:*, http://192.168.1.*, http://192.168.100.*, https://online-chat-grsu.netlify.app/'
+  allow-credentials: true

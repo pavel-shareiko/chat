@@ -1,0 +1,18 @@
+<header class="header">
+  <h3 class="app-header mt-4">
+    <a href="/chats" tabindex="-1">{{ applicationName }}</a>
+  </h3>
+  <div *ngIf="currentUser" class="user-panel">
+    <div class="user-info">
+      <span class="user-name">{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
+      <span class="username">@{{ currentUser.username }}</span>
+    </div>
+    <fa-icon
+      role="button"
+      matTooltip="Logout"
+      [icon]="faSignOut"
+      [size]="'lg'"
+      (click)="logout()"
+      class="icon-btn exit-btn"></fa-icon>
+  </div>
+</header>

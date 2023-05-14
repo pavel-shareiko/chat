@@ -1,0 +1,19 @@
+.chats-container {
+  color: var(--bs-white);
+}
+
+.no-chats {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.no-chats-image {
+  width: 50%;
+  max-width: 300px;
+  margin-bottom: 20px;
+}

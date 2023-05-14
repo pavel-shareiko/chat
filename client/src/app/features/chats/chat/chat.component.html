@@ -1,0 +1,18 @@
+<div class="chat-item" (click)="openDialogue()">
+  <div class="chat-item__content">
+    <div class="chat-item__header">
+      <h4 class="chat-item__name">{{ chat.displayName }}</h4>
+      <span class="chat-item__time">{{
+        chat.lastMessage?.createdAt
+          | date : dateFormatter.getDateFormat(chat.lastMessage?.createdAt ?? '')
+      }}</span>
+    </div>
+    <div class="chat-item__no-message" *ngIf="!chat.lastMessage">
+      <p class="chat-item__message chat-item__empty">No messages yet</p>
+    </div>
+    <div class="chat-item__message" *ngIf="chat.lastMessage">
+      <p class="chat-item__sender">{{ getLastMessageSenderDisplayName() }}:</p>
+      <p class="mx-1">{{ chat.lastMessage.content }}</p>
+    </div>
+  </div>
+</div>

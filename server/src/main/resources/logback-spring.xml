@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+
+<configuration scan="true">
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <Root Level="INFO">
+        <appender-ref ref="console"/>
+    </Root>
+
+    <logger name="by.shareiko" level="TRACE"/>
+    <logger name="org.springframework.web" level="TRACE"/>
+</configuration>

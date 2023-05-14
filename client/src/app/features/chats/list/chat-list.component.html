@@ -1,0 +1,24 @@
+<div class="container chats-container">
+  <div *ngIf="chatsLoaded">
+    <div *ngIf="chats.length === 0" class="no-chats">
+      <img src="assets/img/dialogue.png" alt="No chats yet" class="no-chats-image" />
+      <h3 class="mt-3">Looks like you haven't started any chats yet.</h3>
+      <p>Why not try searching for someone to chat with?</p>
+      <button class="btn btn-primary btn-success mb-3" (click)="openFindChatsModal()">
+        <fa-icon [icon]="faPlus"></fa-icon> New chat
+      </button>
+    </div>
+    <div *ngIf="chats.length > 0">
+      <div class="controls mt-4">
+        <button class="btn btn-primary btn-success mb-3" (click)="openFindChatsModal()">
+          <fa-icon [icon]="faPlus"></fa-icon> New chat
+        </button>
+      </div>
+    </div>
+    <app-chat *ngFor="let chat of chats" [chat]="chat" />
+  </div>
+</div>
+
+<ng-template #findChatsModal>
+  <app-find-chats (startChatEvent)="startChat($event)" (closeModalEvent)="closeFindChatsModal()" />
+</ng-template>

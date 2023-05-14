@@ -1,0 +1,42 @@
+spring:
+  security:
+    filter:
+      dispatcher-types: ASYNC, FORWARD, INCLUDE, REQUEST
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:h2:file:./build/h2db/notes;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+    hikari:
+      pool-name: Hikari
+      auto-commit: false
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        globally_quoted_identifiers: true
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+  sql:
+    init:
+      mode: always
+      platform: h2
+  h2:
+    console:
+      enabled: true
+jwt:
+  token:
+    secret: 'CPasxTk)#Zdx+EThj*x%3@&VC4C9Ywft@x4yE^7hc#)DV(FrDTh&2yquJwn%Sxpg'
+    expiration-time: 1800000
+server:
+  port: 8080
+  error:
+    include-stacktrace: never
+cors:
+  allowed-origins: 'http://192.168.1.*, http://192.168.100.*, http://localhost:*, http://localhost'
+  allow-credentials: true

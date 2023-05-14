@@ -1,0 +1,88 @@
+<div class="text-white">
+  <div class="row mt-3 mb-3">
+    <hr class="my-1" />
+    <div class="chat-header" *ngIf="selectedMessages.length === 0">
+      <button class="btn btn-primary chat-header__back" (click)="goBack()">&lt; Back</button>
+      <h5 class="chat-header__chat-name">{{ chatName }}</h5>
+    </div>
+
+    <!-- selected messages management bar -->
+    <div
+      class="chat-header selected-messages-bar"
+      *ngIf="selectedMessages.length !== 0 && !editMode">
+      <button class="btn btn-primary chat-header__back" (click)="unselectAll()">
+        <fa-icon [icon]="faXmark"></fa-icon> Cancel
+      </button>
+      <div class="selected-messages-bar__count">
+        {{ selectedMessages.length }} messages selected
+      </div>
+      <div class="selected-messages-bar__controls">
+        <button
+          class="btn selected-messages-bar__delete"
+          *ngIf="allSelectedMessagesAreFromCurrentUser()"
+          (click)="deleteSelected()">
+          <fa-icon [icon]="faTrashCan"></fa-icon> Delete
+        </button>
+        <button
+          class="btn selected-messages-bar__edit"
+          *ngIf="
+            selectedMessages.length === 1 &&
+            selectedMessages[0].sender.username === currentUser?.username
+          "
+          (click)="enterEditMode()">
+          <fa-icon [icon]="faPencilAlt"></fa-icon> Edit
+        </button>
+      </div>
+    </div>
+    <div class="chat-header" *ngIf="editMode">
+      <button class="btn btn-primary chat-header__back" (click)="exitEditMode()">
+        <fa-icon [icon]="faXmark"></fa-icon> Cancel
+      </button>
+      <p class="selected-messages-bar__edit-mode">You are in the edit mode</p>
+    </div>
+    <hr class="my-1" />
+  </div>
+
+  <div class="message-container" #messageContainer>
+    <div class="px-2" *ngIf="!loadingMessages">
+      <div class="message-group" *ngFor="let group of messages | messageGrouping">
+        <div class="message-group__date text-center my-3">
+          {{ group[0].createdAt | date : dateFormatter.getDateFormat(group[0].createdAt) }}
+        </div>
+        <div
+          *ngFor="let message of group"
+          id="message-{{ message.id }}"
+          class="text-white message"
+          (click)="onMessageClick(message, $event)"
+          [ngClass]="
+            message.sender.username === currentUser?.username ? 'message-right' : 'message-left'
+          ">
+          <div class="message__content" [innerHTML]="message.content | messageHtml"></div>
+          <div class="message__timestamp text-muted small">
+            {{ message.createdAt | date : 'HH:mm' }}
+            <span *ngIf="message.createdAt !== message.modifiedAt" class="ml-1">(Edited)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="input-group mb-3">
+    <div class="chat-input-container">
+      <textarea
+        class="form-control chat-input"
+        placeholder="Type a message"
+        [(ngModel)]="newMessage"
+        #chatInput
+        (input)="onInput(chatInput)"
+        (keydown)="onKeydown($event)"></textarea>
+
+      <button
+        class="btn send-button"
+        (click)="sendMessage()"
+        [disabled]="!newMessage || newMessage.trim().length === 0">
+        <fa-icon [icon]="faPaperPlane"></fa-icon>
+      </button>
+    </div>
+  </div>
+</div>
