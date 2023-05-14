@@ -6,11 +6,11 @@ import { IUser } from 'src/app/core/models/user.model';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
-  selector: 'app-find-chats',
-  templateUrl: './find-chats.component.html',
-  styleUrls: ['./find-chats.component.scss'],
+  selector: 'app-chat-search',
+  templateUrl: './chat-search.component.html',
+  styleUrls: ['./chat-search.component.scss'],
 })
-export class FindChatsComponent {
+export class ChatSearchComponent {
   @Output() startChatEvent = new EventEmitter<string>();
   @Output() closeModalEvent = new EventEmitter<void>();
   error: string = '';
