@@ -1,4 +1,4 @@
-import { environment } from 'src/app/core/environment/environment';
+import { environment } from 'src/app/core/environments/environment';
 import { RxStompService } from './rx-stomp.service';
 
 export function rxStompServiceFactory() {

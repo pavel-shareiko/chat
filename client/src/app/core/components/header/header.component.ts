@@ -1,10 +1,10 @@
 import { AccountService } from './../../../shared/services/account.service';
-import { environment } from 'src/app/core/environment/environment';
 import { Component } from '@angular/core';
 import { IUser } from '../../models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { faPlus, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-header',
