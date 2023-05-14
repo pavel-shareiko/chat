@@ -2,8 +2,9 @@ package by.shareiko.chat.security.jwt;
 
 import by.shareiko.chat.domain.User;
 import by.shareiko.chat.dto.user.UserPrincipal;
+import by.shareiko.chat.repository.UserRepository;
 import by.shareiko.chat.security.exceptions.UserDeactivatedException;
-import by.shareiko.chat.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,16 +15,13 @@ import java.util.Optional;
 
 @Service
 @Log4j2
+@RequiredArgsConstructor
 public class JwtUserDetailsService implements UserDetailsService {
-    private final UserService userService;
-
-    public JwtUserDetailsService(UserService userService) {
-        this.userService = userService;
-    }
+    private final UserRepository userRepository;
 
     @Override
     public UserPrincipal loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = userService.findByUsername(username);
+        Optional<User> user = userRepository.findByUsername(username);
         if (user.isEmpty()) {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }

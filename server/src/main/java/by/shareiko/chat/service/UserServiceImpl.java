@@ -2,18 +2,23 @@ package by.shareiko.chat.service;
 
 import by.shareiko.chat.domain.Role;
 import by.shareiko.chat.domain.User;
+import by.shareiko.chat.dto.user.LoginUser;
 import by.shareiko.chat.dto.user.RegisterUser;
 import by.shareiko.chat.dto.user.SimpleUserDTO;
 import by.shareiko.chat.dto.user.UserWithAuthorities;
 import by.shareiko.chat.exception.BadRequestException;
 import by.shareiko.chat.exception.NotFoundException;
 import by.shareiko.chat.exception.UserUnauthorizedException;
+import by.shareiko.chat.exception.UsernameNotUniqueException;
 import by.shareiko.chat.mapper.UserMapper;
 import by.shareiko.chat.repository.UserRepository;
 import by.shareiko.chat.security.RoleConstants;
 import by.shareiko.chat.security.SecurityUtils;
+import by.shareiko.chat.security.exceptions.UserDeactivatedException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -31,6 +36,7 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final RoleService roleService;
     private final UserMapper userMapper;
+    private final AuthenticationManager authenticationManager;
 
     public UserWithAuthorities getCurrentUserWithAuthorities() {
         return userMapper.userToUserWithAuthorities(SecurityUtils.getCurrentUser()
@@ -40,6 +46,10 @@ public class UserServiceImpl implements UserService {
     }
 
     public User register(RegisterUser registerUser) {
+        if (!isUsernameUnique(registerUser.getUsername())) {
+            throw new UsernameNotUniqueException("Username is already taken");
+        }
+
         registerUser.setFirstName(StringUtils.capitalize(registerUser.getFirstName()));
         registerUser.setLastName(StringUtils.capitalize(registerUser.getLastName()));
 
@@ -57,6 +67,22 @@ public class UserServiceImpl implements UserService {
         log.debug("Saved user with id: {}", registeredUser.getId());
 
         return registeredUser;
+    }
+
+    @Override
+    public User login(LoginUser loginUser) {
+        String username = loginUser.getUsername();
+        String password = loginUser.getPassword();
+
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+
+        // we are sure that the user exists after 'authenticate' call
+        User user = userRepository.findByUsername(username).orElseThrow();
+        if (!user.isActive()) {
+            throw new UserDeactivatedException("User with username " + username + " is inactive");
+        }
+
+        return user;
     }
 
     @Override
