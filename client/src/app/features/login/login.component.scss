@@ -78,3 +78,9 @@ fieldset {
 .submit-btn:hover {
   filter: brightness(100% - 10%);
 }
+
+@media (max-width: 350px) {
+  .login-form {
+    width: 100%;
+  }
+}
