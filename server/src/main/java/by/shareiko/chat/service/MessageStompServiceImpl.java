@@ -6,6 +6,7 @@ import by.shareiko.chat.domain.User;
 import by.shareiko.chat.dto.NewMessageDTO;
 import by.shareiko.chat.dto.SimpleMessageDTO;
 import by.shareiko.chat.mapper.MessageMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Slf4j
 public class MessageStompServiceImpl implements MessageService {
     private final MessageService messageService;
     private final SimpMessagingTemplate messagingTemplate;

@@ -66,4 +66,9 @@ public class ChatStompServiceImpl implements ChatService {
     public boolean doesCurrentUserParticipateInChat(Long id) {
         return chatService.doesCurrentUserParticipateInChat(id);
     }
+
+    @Override
+    public boolean exists(Long chatId) {
+        return chatService.exists(chatId);
+    }
 }

@@ -6,6 +6,12 @@ import { Injectable } from '@angular/core';
 export class DateFormatterService {
   constructor() {}
 
+  /**
+   * Returns a string representing the format of the given date.
+   *
+   * @param {Date | string | undefined} date - the date to format
+   * @return {string} the format of the given date as a string
+   */
   getDateFormat(date: Date | string | undefined): string {
     if (date === undefined) {
       return '';

@@ -22,4 +22,6 @@ public interface ChatService {
     boolean hasChatWithUser(String username);
 
     boolean doesCurrentUserParticipateInChat(Long id);
+
+    boolean exists(Long chatId);
 }

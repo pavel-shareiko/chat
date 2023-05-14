@@ -74,7 +74,7 @@ export class RegistrationComponent {
             this.errorMessage = errorResponse.error.message;
           }
 
-          // Clear the error message after 5 seconds
+          // Clear the error message after 8 seconds
           setTimeout(() => {
             this.errorMessage = '';
           }, 8000);

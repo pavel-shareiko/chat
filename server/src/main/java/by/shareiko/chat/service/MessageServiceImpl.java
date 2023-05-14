@@ -19,23 +19,20 @@ import java.util.List;
 @Service
 public class MessageServiceImpl implements MessageService {
     private final MessageRepository messageRepository;
-    private final ChatRepository chatRepository;
     private final MessageMapper messageMapper;
     private final ChatService chatService;
 
     public MessageServiceImpl(MessageRepository messageRepository,
-                              ChatRepository chatRepository,
                               MessageMapper messageMapper,
                               @Qualifier("chatStompServiceImpl") ChatService chatService) {
         this.messageRepository = messageRepository;
-        this.chatRepository = chatRepository;
         this.messageMapper = messageMapper;
         this.chatService = chatService;
     }
 
     @Override
     public List<Message> getChatMessages(Long chatId) {
-        if (!chatRepository.existsById(chatId)) {
+        if (!chatService.exists(chatId)) {
             throw new NotFoundException("Chat with id [" + chatId + "] not found");
         }
         if (!chatService.doesCurrentUserParticipateInChat(chatId)) {
@@ -81,8 +78,7 @@ public class MessageServiceImpl implements MessageService {
         }
 
         message.setContent(newContent);
-        messageRepository.save(message);
-        return message;
+        return messageRepository.saveAndFlush(message);
     }
 
     @Override
