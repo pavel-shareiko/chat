@@ -25,7 +25,7 @@ export class ChatSearchComponent {
 
   constructor(private userService: UserService) {}
 
-    /**
+  /**
    * Finds users based on the entered username.
    * If the username is empty or starts with '#' and is not followed by a number, an error message is displayed.
    * Upon success, the results are displayed in the searchResults array.
@@ -63,7 +63,7 @@ export class ChatSearchComponent {
     });
   }
 
-    /**
+  /**
    * Emits a startChatEvent with the given username and closes the modal.
    *
    * @param {string} username - The username of the user starting the chat.
@@ -77,7 +77,7 @@ export class ChatSearchComponent {
     this.closeModalEvent.emit();
   }
 
-    /**
+  /**
    * Sets the error message to display and clears it after 5 seconds if no error is currently displayed
    *
    * @param {string} error - The error message to display

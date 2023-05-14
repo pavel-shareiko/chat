@@ -7,7 +7,7 @@ import { environment } from '../environments/environment';
 export class ApplicationConfigService {
   private serverUrl = `${environment.apiUrl}`;
 
-    /**
+  /**
    * Returns the full endpoint URL for the given API route by appending it to the server URL.
    *
    * @param {string} api - The API route to get the endpoint for.

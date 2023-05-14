@@ -34,17 +34,17 @@ export class LoginComponent {
   login() {
     this.isSubmitted = true;
     const val = this.form.value;
-  
+
     if (!val) {
       return;
     }
-  
+
     const { username, password } = val;
-  
+
     if (!username || !password) {
       return;
     }
-  
+
     this.authService.login({ username, password }).subscribe({
       complete: () => {
         this.router.navigateByUrl('/chats');

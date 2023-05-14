@@ -7,8 +7,7 @@
     },
     {
       "files": ["*.html"],
-      "extends": ["plugin:@angular-eslint/template/recommended"],
-      "rules": {}
+      "extends": ["plugin:@angular-eslint/template/recommended"]
     },
     {
       "files": ["*.html"],
@@ -16,10 +15,10 @@
       "extends": ["plugin:prettier/recommended"],
       "rules": {
         "prettier/prettier": [
-          "error", 
-          { 
+          "error",
+          {
             "parser": "angular",
-            "endOfLine": "auto" 
+            "endOfLine": "auto"
           }
         ]
       }
